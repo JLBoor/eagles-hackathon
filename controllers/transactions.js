@@ -4,7 +4,7 @@
 
 const Transaction = require('../models/Transaction');
 
- let headers = [
+ const headers = [
  "Source_Name",
  "Source_System_Transaction_Identifier",
  "Source_Account_Number",
@@ -74,7 +74,7 @@ const Transaction = require('../models/Transaction');
 
 
 exports.get = (req, res) => {
-  let result = Transaction.find({}, function(err, docs) {
+  var result = Transaction.find({}, function(err, docs) {
     if (!err) {
         console.log(docs);
         res.send(docs);
@@ -84,10 +84,10 @@ exports.get = (req, res) => {
 
 exports.save = (req, res) => {
 
-  let columns = req.body.csvLine.split('|');
-  let result = new Transaction();
+  var columns = req.body.csvLine.split('|');
+  var result = new Transaction();
 
-  for(let i = 0; i < columns.length; i++) {
+  for(var i = 0; i < columns.length; i++) {
     console.log(i, headers[i], columns[i]);
     result[headers[i]] = columns[i];
   }
