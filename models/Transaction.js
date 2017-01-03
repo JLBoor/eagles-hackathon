@@ -68,11 +68,6 @@ const transactionSchema = new mongoose.Schema({
   Trade_Source_Code_Description: String
 });
 
-transactionSchema.pre('save', function save(next) {
-  console.log(this);
-  next();
-});
-
 const Transaction = mongoose.model('Transaction', transactionSchema);
 
 module.exports = Transaction;

@@ -74,7 +74,12 @@ const Transaction = require('../models/Transaction');
 
 
 exports.get = (req, res) => {
-  res.send('hello');
+  let result = Transaction.find({}, function(err, docs) {
+    if (!err) {
+        console.log(docs);
+        res.send(docs);
+    } else {throw err;}
+  });
 };
 
 exports.save = (req, res) => {
