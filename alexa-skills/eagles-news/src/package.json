@@ -1,11 +1,10 @@
 {
-  "name": "topmovers",
+  "name": "historybuff",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "alexa-sdk": "^1.0.6",
-    "dateformat": "^2.0.0",
     "request": "^2.79.0"
   },
   "devDependencies": {},

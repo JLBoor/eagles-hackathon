@@ -149,9 +149,9 @@ TopMoversSkill.prototype.intentHandlers = {
 function getWelcomeResponse(response) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     var cardTitle = "Top Movers";
-    var repromptText = "With Top Mover, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
-    var speechText = "<p>Top Mover.</p> <p>What day do you want events for?</p>";
-    var cardOutput = "Top Mover. What day do you want events for?";
+    var repromptText = "With Top Mover, you can get transactions for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+    var speechText = "<p>Top Mover.</p> <p>What day do you want transactions for?</p>";
+    var cardOutput = "Top Mover. What day do you want transactions for?";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
 
@@ -233,8 +233,8 @@ function handleNextEventRequest(intent, session, response) {
         speechText = "With Top Mover, you can get your top moving positions for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
         cardContent = speechText;
     } else if (sessionAttributes.index >= result.length) {
-        speechText = "There are no more events for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
-        cardContent = "There are no more events for this date. Try another date by saying, get events for august thirtieth.";
+        speechText = "There are no more transactions for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
+        cardContent = "There are no more transactions for this date. Try another date by saying, get top performers for august thirtieth.";
     } else {
         for (i = 0; i < paginationSize; i++) {
             if (sessionAttributes.index>= result.length) {
