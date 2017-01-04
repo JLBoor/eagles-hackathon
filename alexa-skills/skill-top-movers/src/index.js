@@ -18,14 +18,14 @@
  *
  * Examples:
  * One-shot model:
- * User:  "Alexa, ask History Buff what happened on August thirtieth."
+ * User:  "Alexa, ask Top Mover what happened on August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
  * User: "No."
  * Alexa: "Good bye!"
  *
  * Dialog model:
- * User:  "Alexa, open History Buff"
- * Alexa: "History Buff. What day do you want events for?"
+ * User:  "Alexa, open Top Mover"
+ * Alexa: "Top Mover. What day do you want events for?"
  * User:  "August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
  * User:  "Yes."
@@ -48,17 +48,16 @@ var https = require('https');
 var AlexaSkill = require('./AlexaSkill');
 
 /**
- * URL prefix to download history content from Wikipedia
+ * URL prefix to download transactions content from Eagles Dashboard
  */
-var urlPrefix = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&explaintext=&exsectionformat=plain&redirects=&titles=';
 
-var newsApiPrefix  = 'https://api.cognitive.microsoft.com/bing/v5.0/news/search';
+var transUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions?date=';
 
 
 /**
  * Variable defining number of events to be read at one time
  */
-var paginationSize = 3;
+var paginationSize = 5;
 
 /**
  * Variable defining the length of the delimiter between events
@@ -66,39 +65,39 @@ var paginationSize = 3;
 var delimiterSize = 2;
 
 /**
- * HistoryBuffSkill is a child of AlexaSkill.
+ * TopMoversSkill is a child of AlexaSkill.
  * To read more about inheritance in JavaScript, see the link below.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#Inheritance
  */
-var HistoryBuffSkill = function() {
+var TopMoversSkill = function() {
     AlexaSkill.call(this, APP_ID);
 };
 
 // Extend AlexaSkill
-HistoryBuffSkill.prototype = Object.create(AlexaSkill.prototype);
-HistoryBuffSkill.prototype.constructor = HistoryBuffSkill;
+TopMoversSkill.prototype = Object.create(AlexaSkill.prototype);
+TopMoversSkill.prototype.constructor = TopMoversSkill;
 
-HistoryBuffSkill.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
-    console.log("HistoryBuffSkill onSessionStarted requestId: " + sessionStartedRequest.requestId
+TopMoversSkill.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {
+    console.log("TopMoversSkill onSessionStarted requestId: " + sessionStartedRequest.requestId
         + ", sessionId: " + session.sessionId);
 
     // any session init logic would go here
 };
 
-HistoryBuffSkill.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
-    console.log("HistoryBuffSkill onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
+TopMoversSkill.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
+    console.log("TopMoversSkill onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
     getWelcomeResponse(response);
 };
 
-HistoryBuffSkill.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
+TopMoversSkill.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, session) {
     console.log("onSessionEnded requestId: " + sessionEndedRequest.requestId
         + ", sessionId: " + session.sessionId);
 
     // any session cleanup logic would go here
 };
 
-HistoryBuffSkill.prototype.intentHandlers = {
+TopMoversSkill.prototype.intentHandlers = {
 
     "GetFirstEventIntent": function (intent, session, response) {
         handleFirstEventRequest(intent, session, response);
@@ -109,7 +108,7 @@ HistoryBuffSkill.prototype.intentHandlers = {
     },
 
     "AMAZON.HelpIntent": function (intent, session, response) {
-        var speechText = "With History Buff, you can get historical events for any day of the year.  " +
+        var speechText = "With Top Mover, you can get historical events for any day of the year.  " +
             "For example, you could say today, or August thirtieth, or you can say exit. Now, which day do you want?";
         var repromptText = "Which day do you want?";
         var speechOutput = {
@@ -147,9 +146,9 @@ HistoryBuffSkill.prototype.intentHandlers = {
 function getWelcomeResponse(response) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     var cardTitle = "This Day in History";
-    var repromptText = "With History Buff, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
-    var speechText = "<p>History buff.</p> <p>What day do you want events for?</p>";
-    var cardOutput = "History Buff. What day do you want events for?";
+    var repromptText = "With Top Mover, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+    var speechText = "<p>Top Mover.</p> <p>What day do you want events for?</p>";
+    var cardOutput = "Top Mover. What day do you want events for?";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
 
@@ -169,12 +168,12 @@ function getWelcomeResponse(response) {
  */
 function handleFirstEventRequest(intent, session, response) {
     var daySlot = intent.slots.day;
-    var repromptText = "With History Buff, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+    var repromptText = "With Top Mover, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
     var monthNames = ["January", "February", "March", "April", "May", "June",
                       "July", "August", "September", "October", "November", "December"
     ];
     var sessionAttributes = {};
-    // Read the first 3 events, then set the count to 3
+    // Read the first 5 events, then set the count to 5
     sessionAttributes.index = paginationSize;
     var date = "";
 
@@ -186,26 +185,23 @@ function handleFirstEventRequest(intent, session, response) {
         date = new Date();
     }
 
-    var prefixContent = "<p>For " + monthNames[date.getMonth()] + " " + date.getDate() + ", </p>";
-    var cardContent = "For " + monthNames[date.getMonth()] + " " + date.getDate() + ", ";
+    var prefixContent = "<p>The top movers on " + monthNames[date.getMonth()] + " " + date.getDate() + ", </p>";
+    var cardContent = "The top movers on " + monthNames[date.getMonth()] + " " + date.getDate() + ", ";
 
     var cardTitle = "Events on " + monthNames[date.getMonth()] + " " + date.getDate();
 
-    getJsonEventsFromWikipedia(monthNames[date.getMonth()], date.getDate(), function (events) {
-        var speechText = "",
-            i;
-        sessionAttributes.text = events;
-        session.attributes = sessionAttributes;
-        if (events.length == 0) {
-            speechText = "There is a problem connecting to Wikipedia at this time. Please try again later.";
+    getTransactions(monthNames[date.getMonth()], date.getDate(), function (results) {
+        var speechText = "", i;
+        if(results.length == 0){
+            speechText = "There is a problem connecting to the Eagles Dashboard at this time. Please try again later.";
             cardContent = speechText;
             response.tell(speechText);
-        } else {
+        }else{
             for (i = 0; i < paginationSize; i++) {
-                cardContent = cardContent + events[i] + " ";
-                speechText = "<p>" + speechText + events[i] + "</p> ";
+                cardContent = cardContent + results[i].Security_Short_Name + " ";
+                speechText = speechText + "<p>" + results[i].Security_Short_Name + "</p> ";
             }
-            speechText = speechText + "<p>Wanna go deeper in history?</p>";
+            speechText = speechText + "<p>Do you want to get the next " + paginationSize + " results?</p>";
             var speechOutput = {
                 speech: "<speak>" + prefixContent + speechText + "</speak>",
                 type: AlexaSkill.speechOutputType.SSML
@@ -231,7 +227,7 @@ function handleNextEventRequest(intent, session, response) {
         repromptText = "Do you want to know more about what happened on this date?",
         i;
     if (!result) {
-        speechText = "With History Buff, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+        speechText = "With Top Mover, you can get your top moving positions for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
         cardContent = speechText;
     } else if (sessionAttributes.index >= result.length) {
         speechText = "There are no more events for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
@@ -241,13 +237,13 @@ function handleNextEventRequest(intent, session, response) {
             if (sessionAttributes.index>= result.length) {
                 break;
             }
-            speechText = speechText + "<p>" + result[sessionAttributes.index] + "</p> ";
-            cardContent = cardContent + result[sessionAttributes.index] + " ";
+            speechText = speechText + "<p>" + result[sessionAttributes.index].Security_Short_Name + "</p> ";
+            cardContent = cardContent + result[sessionAttributes.index].Security_Short_Name + " ";
             sessionAttributes.index++;
         }
         if (sessionAttributes.index < result.length) {
-            speechText = speechText + " Wanna go deeper in history?";
-            cardContent = cardContent + " Wanna go deeper in history?";
+            speechText = speechText + " Do you want to hear more?";
+            cardContent = cardContent + " Do you want to hear more?";
         }
     }
     var speechOutput = {
@@ -261,28 +257,8 @@ function handleNextEventRequest(intent, session, response) {
     response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
 }
 
-function getJsonEventsFromBingNews (query) {
-    var params = "?q=" + query + "&count=10&offset=0&mkt=en-us&safeSearch=Moderate";
-    var url = newsApiPrefix + params;
-    https.get(url, function(res) {
-        var body = '';
-
-        res.on('data', function (chunk) {
-            body += chunk;
-        });
-
-        res.on('end', function () {
-            var stringResult = parseJson(body);
-            eventCallback(stringResult);
-        });
-    }).on('error', function (e) {
-        console.log("Got error: ", e);
-    });
-
-}
-
-function getJsonEventsFromWikipedia(day, date, eventCallback) {
-    var url = urlPrefix + day + '_' + date;
+function getTransactions(day, date, eventCallback) {
+    var url = transUrlPrefix + day + '_' + date;
 
     https.get(url, function(res) {
         var body = '';
@@ -292,51 +268,18 @@ function getJsonEventsFromWikipedia(day, date, eventCallback) {
         });
 
         res.on('end', function () {
-            var stringResult = parseJson(body);
+            var stringResult = JSON.parse(body);
             eventCallback(stringResult);
         });
     }).on('error', function (e) {
         console.log("Got error: ", e);
     });
-}
-
-function parseJson(inputText) {
-    // sizeOf (/nEvents/n) is 10
-    var text = inputText.substring(inputText.indexOf("\\nEvents\\n")+10, inputText.indexOf("\\n\\n\\nBirths")),
-        retArr = [],
-        retString = "",
-        endIndex,
-        startIndex = 0;
-
-    if (text.length == 0) {
-        return retArr;
-    }
-
-    while(true) {
-        endIndex = text.indexOf("\\n", startIndex+delimiterSize);
-        var eventText = (endIndex == -1 ? text.substring(startIndex) : text.substring(startIndex, endIndex));
-        // replace dashes returned in text from Wikipedia's API
-        eventText = eventText.replace(/\\u2013\s*/g, '');
-        // add comma after year so Alexa pauses before continuing with the sentence
-        eventText = eventText.replace(/(^\d+)/,'$1,');
-        eventText = 'In ' + eventText;
-        startIndex = endIndex+delimiterSize;
-        retArr.push(eventText);
-        if (endIndex == -1) {
-            break;
-        }
-    }
-    if (retString != "") {
-        retArr.push(retString);
-    }
-    retArr.reverse();
-    return retArr;
 }
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
-    // Create an instance of the HistoryBuff Skill.
-    var skill = new HistoryBuffSkill();
+    // Create an instance of the TopMovers Skill.
+    var skill = new TopMoversSkill();
     skill.execute(event, context);
 };
 
