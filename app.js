@@ -110,8 +110,8 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * Eagles APIs
  */
-app.post('/transactions', transactionsController.save);
 app.get('/transactions', transactionsController.get);
+app.post('/transactions', transactionsController.save);
 app.delete('/transactions', transactionsController.delete);
 
 /**

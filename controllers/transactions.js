@@ -72,6 +72,13 @@ const Transaction = require('../models/Transaction');
  "Security_Identifier_Bank_Internal",
  "Trade_Source_Code_Description"];
 
+var _count = function(res) {
+  Transaction.count({}, function(err, count) {
+    if (!err) {
+        res.send(`There are ${count} transactions.`);
+    } else {throw err;}
+  });
+};
 
  exports.delete = (req, res) => {
    Transaction.find({}, function(err, allTransactions) {
@@ -84,6 +91,11 @@ const Transaction = require('../models/Transaction');
  };
 
   exports.get = (req, res) => {
+
+    if(req.query.countOnly != undefined) {
+      return _count(res);
+    }
+
     Transaction.find({}, function(err, docs) {
       if (!err) {
           console.log(docs);
