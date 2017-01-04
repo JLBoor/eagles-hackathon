@@ -15,7 +15,7 @@
           <div class="card-content">
             <ul>
               <template is="dom-repeat" items="{{news}}" as="news-item">
-                <li>{{news-item.title}} - {{news-item.symbol}}</li>
+                <li> <a href={{news-item.link}} target="_blank">{{news-item.title}}</a> - {{news-item.symbol}}<p>{{news-item.description}}</p></li>
               </template>
             </ul>
           </div>
