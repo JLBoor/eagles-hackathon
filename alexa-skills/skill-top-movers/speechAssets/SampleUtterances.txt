@@ -1,5 +1,5 @@
-GetFirstEventIntent get events for {day}
-GetFirstEventIntent give me events for {day}
+GetFirstEventIntent get top movers for {day}
+GetFirstEventIntent give me top movers for {day}
 GetFirstEventIntent what happened on {day}
 GetFirstEventIntent what happened
 GetFirstEventIntent {day}
@@ -7,9 +7,12 @@ GetFirstEventIntent {day}
 GetNextEventIntent yes
 GetNextEventIntent yup
 GetNextEventIntent sure
+GetNextEventIntent ok
+GetNextEventIntent why not
 GetNextEventIntent yes please
 
 AMAZON.StopIntent no
 AMAZON.StopIntent nope
+AMAZON.StopIntent nah
 AMAZON.StopIntent no thanks
 AMAZON.StopIntent no thank you

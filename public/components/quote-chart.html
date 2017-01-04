@@ -1,0 +1,33 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/google-chart/google-chart.html">
+
+<dom-module id="quote-chart">
+
+  <template>
+
+    <h2>Quote Chart</h2>
+    <p>TODO</p>
+
+    <google-chart
+      type='pie'
+      options='{"title": "Distribution of days in 2001Q1"}'
+      cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
+      rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
+  </google-chart>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'quote-chart',
+      properties: {
+        transactions : {
+          type: Array
+        }
+      },
+      handleResponse: function(response) {
+        // this.news = response.detail.response;
+      }
+    });
+  </script>

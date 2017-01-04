@@ -1,0 +1,43 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+
+<dom-module id="news-list">
+
+  <template>
+
+    <iron-ajax
+        auto
+        url="/api/news"
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+
+        <div>
+          <h2>News</h2>
+          <div class="card-content">
+            <template is="dom-repeat" items="{{news}}" as="news-item">
+              <h5><a href={{news-item.link}} target="_blank">{{news-item.title}} - {{news-item.symbol}}</a></h5>
+              <p><small>{{news-item.description}}</small></p>
+            </template>
+          </div>
+          <div class="card-actions">
+            <paper-button>PREV</paper-button>
+            <paper-button>NEXT</paper-button>
+          </div>
+        </div>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'news-list',
+      properties: {
+        transactions : {
+          type: Array
+        }
+      },
+      handleResponse: function(response) {
+        this.news = response.detail.response;
+      }
+    });
+  </script>

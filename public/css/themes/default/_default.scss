@@ -38,16 +38,45 @@
 // Navbar
 // -------------------------
 
+.navbar > .container .navbar-brand {
+  color: white;
+  padding-top: 25px;
+  font-size: 48px;
+  font-weight: normal;
+  transition: 1s;
+  opacity: .4;
+   &:hover { opacity: 1; color: $yellow; }
+}
+
+
+
 .navbar-default {
+  height: 100px;
   border: 0;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-
+  border-radius: 0;
   .navbar-nav {
+
     > li > a {
+      color: white;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: normal;
       text-transform: uppercase;
       transition: all 0.2s linear;
+
+      &:hover { color: $yellow; }
+
     }
+
+    &.navbar-nav-main > li > a {
+      padding-top: 45px;
+      font-size: 16px;
+      &:hover {
+        color: white;
+        font-weight: bold;
+        border-bottom: 3px solid yellow;
+      }
+    }
+
   }
 }

@@ -1,0 +1,25 @@
+{
+  "name": "hackathon-starter",
+  "description": "A boilerplate for Node.js web applications",
+  "main": "",
+  "authors": [
+    "Eagles"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/JLBoor/eagles-hackathon",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-card": "PolymerElements/paper-card#^1.1.4",
+    "paper-button": "PolymerElements/paper-button#^1.0.14",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.4.3",
+    "polymer": "Polymer/polymer#^1.7.1",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.10",
+    "google-chart": "GoogleWebComponents/google-chart#^1.1.1"
+  }
+}
