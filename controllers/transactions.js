@@ -81,11 +81,9 @@ var _count = function(res) {
 };
 
  exports.delete = (req, res) => {
-   Transaction.find({}, function(err, allTransactions) {
+   Transaction.remove({}, function(err, allTransactions) {
      if (!err) {
-        var numberOfTransactions = allTransactions.length;
-        allTransactions.forEach((t) => t.remove());
-        res.send(numberOfTransactions + ' deleted.');
+        res.send('done.');
      } else {throw err;}
    });
  };
@@ -96,12 +94,14 @@ var _count = function(res) {
       return _count(res);
     }
 
-    Transaction.find({}, function(err, docs) {
-      if (!err) {
-          console.log(docs);
-          res.send(docs);
-      } else {throw err;}
-    });
+    Transaction.find({})
+      .limit(parseInt(req.query.limit) || 25)
+      .exec(function(err, docs) {
+        if (!err) {
+            console.log(docs);
+            res.send(docs);
+        } else {throw err;}
+      });
   };
 
   exports.save = (req, res) => {
