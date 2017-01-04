@@ -7,6 +7,7 @@
 
 // Scaffolding
 // -------------------------
+h1, h2, h3, h4 { color: $bright-blue; }
 
 html {
   position: relative;
@@ -14,7 +15,6 @@ html {
 }
 
 body {
-  padding-top: 60px;
   margin-bottom: 75px;
 }
 
