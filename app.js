@@ -35,6 +35,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const transactionsController = require('./controllers/transactions');
+const newsController = require('./controllers/news');
 
 /**
  * API keys and Passport configuration.
@@ -114,6 +115,7 @@ app.use(express.static(path.join(__dirname, 'bower_components'), { maxAge: 31557
 app.get('/api/transactions', transactionsController.get);
 app.post('/api/transactions', transactionsController.save);
 app.delete('/api/transactions', transactionsController.delete);
+app.get('/api/news', newsController.get);
 
 /**
  * Primary app routes.
@@ -226,7 +228,8 @@ app.use(errorHandler());
  * Start Express server.
  */
 app.listen(app.get('port'), () => {
-  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
+  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
+
   console.log('  Press CTRL-C to stop\n');
 });
 
