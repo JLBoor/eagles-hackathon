@@ -1,0 +1,25 @@
+{
+  "intents": [
+    {
+      "intent": "GetNewsIntent",
+      "slots": [
+        {
+          "name": "company",
+          "type": "AMAZON.FinancialService"
+        }
+      ]
+    },
+    {
+      "intent": "GetNextEventIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
