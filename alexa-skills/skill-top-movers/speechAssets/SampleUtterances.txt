@@ -1,7 +1,6 @@
-GetFirstEventIntent get top movers for {day}
-GetFirstEventIntent give me top movers for {day}
-GetFirstEventIntent what happened on {day}
-GetFirstEventIntent what happened
+GetFirstEventIntent get top performers {day}
+GetFirstEventIntent get top performers for {day}
+GetFirstEventIntent get top performers
 GetFirstEventIntent {day}
 
 GetNextEventIntent yes
