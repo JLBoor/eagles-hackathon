@@ -14,11 +14,10 @@
         <div>
           <h2>News</h2>
           <div class="card-content">
-            <ul>
-              <template is="dom-repeat" items="{{news}}" as="news-item">
-                <li> <a href={{news-item.link}} target="_blank">{{news-item.title}}</a> - {{news-item.symbol}}<p>{{news-item.description}}</p></li>
-              </template>
-            </ul>
+            <template is="dom-repeat" items="{{news}}" as="news-item">
+              <h5><a href={{news-item.link}} target="_blank">{{news-item.title}} - {{news-item.symbol}}</a></h5>
+              <p><small>{{news-item.description}}</small></p>
+            </template>
           </div>
           <div class="card-actions">
             <paper-button>PREV</paper-button>

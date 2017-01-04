@@ -8925,8 +8925,10 @@ button.close {
       font-weight: bold;
       border-bottom: 3px solid yellow; }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   color: #002888; }
+  h1 > a, h2 > a, h3 > a, h4 > a, h5 > a {
+    color: #154bcc; }
 
 html {
   position: relative;
@@ -8962,3 +8964,6 @@ textarea {
 
 .fa {
   margin-right: 6px; }
+
+.news-list p {
+  color: #707478; }

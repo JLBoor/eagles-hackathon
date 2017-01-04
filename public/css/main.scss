@@ -7,7 +7,10 @@
 
 // Scaffolding
 // -------------------------
-h1, h2, h3, h4 { color: $bright-blue; }
+h1, h2, h3, h4, h5 {
+  color: $bright-blue;
+  & > a { color: $bright-blue-2; }
+}
 
 html {
   position: relative;
@@ -67,4 +70,11 @@ textarea {
 
 .fa {
   margin-right: 6px;
+}
+
+// News List
+// -------------------------
+
+.news-list p {
+  color: $silver;
 }
