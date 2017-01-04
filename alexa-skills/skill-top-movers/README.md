@@ -41,7 +41,7 @@ To run this example skill you need to do two things. The first is to deploy the 
 9. Your skill is now saved and once you are finished testing you can continue to publish your skill.
 
 ## Examples
-Example user interactions:
+Example user interactions: s
 
 ### One-shot model:
     User:  "Alexa, ask History Buff what happened on August thirtieth."
