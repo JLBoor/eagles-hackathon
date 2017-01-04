@@ -19,7 +19,7 @@
  * Examples:
  * One-shot model:
  * User:  "Alexa, ask Top Mover what happened on August thirtieth."
- * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
+ * Alexa: "For August thirtieth, in 2003, [...] . Do you want to hear more?"
  * User: "No."
  * Alexa: "Good bye!"
  *
@@ -29,7 +29,7 @@
  * User:  "August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
  * User:  "Yes."
- * Alexa: "In 1995, Bosnian war [...] . Wanna go deeper in history?"
+ * Alexa: "In 1995, Bosnian war [...] . Do you want to hear more?"
  * User: "No."
  * Alexa: "Good bye!"
  */
@@ -46,6 +46,8 @@ var https = require('https');
  * The AlexaSkill Module that has the AlexaSkill prototype and helper functions
  */
 var AlexaSkill = require('./AlexaSkill');
+
+var dateFormat = require('dateformat');
 
 /**
  * URL prefix to download transactions content from Eagles Dashboard
@@ -190,7 +192,7 @@ function handleFirstEventRequest(intent, session, response) {
 
     var cardTitle = "Events on " + monthNames[date.getMonth()] + " " + date.getDate();
 
-    getTransactions(monthNames[date.getMonth()], date.getDate(), function (results) {
+    getTransactions(date, function (results) {
         var speechText = "", i;
         if(results.length == 0){
             speechText = "There is a problem connecting to the Eagles Dashboard at this time. Please try again later.";
@@ -257,8 +259,9 @@ function handleNextEventRequest(intent, session, response) {
     response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
 }
 
-function getTransactions(day, date, eventCallback) {
-    var url = transUrlPrefix + day + '_' + date;
+function getTransactions(date, eventCallback) {
+    var day =dateFormat(date, "yyyymmdd");
+    var url = transUrlPrefix + day;
 
     https.get(url, function(res) {
         var body = '';
