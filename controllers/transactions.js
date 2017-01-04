@@ -73,25 +73,35 @@ const Transaction = require('../models/Transaction');
  "Trade_Source_Code_Description"];
 
 
-exports.get = (req, res) => {
-  var result = Transaction.find({}, function(err, docs) {
-    if (!err) {
-        console.log(docs);
-        res.send(docs);
-    } else {throw err;}
-  });
-};
+ exports.delete = (req, res) => {
+   Transaction.find({}, function(err, allTransactions) {
+     if (!err) {
+        var numberOfTransactions = allTransactions.length;
+        allTransactions.forEach((t) => t.remove());
+        res.send(numberOfTransactions + ' deleted.');
+     } else {throw err;}
+   });
+ };
 
-exports.save = (req, res) => {
+  exports.get = (req, res) => {
+    Transaction.find({}, function(err, docs) {
+      if (!err) {
+          console.log(docs);
+          res.send(docs);
+      } else {throw err;}
+    });
+  };
 
-  var columns = req.body.csvLine.split('|');
-  var result = new Transaction();
+  exports.save = (req, res) => {
 
-  for(var i = 0; i < columns.length; i++) {
-    console.log(i, headers[i], columns[i]);
-    result[headers[i]] = columns[i];
-  }
+    var columns = req.body.csvLine.split('|');
+    var result = new Transaction();
 
-  result.save();
-  res.send(result);
-};
+    for(var i = 0; i < columns.length; i++) {
+      console.log(i, headers[i], columns[i]);
+      result[headers[i]] = columns[i];
+    }
+
+    result.save();
+    res.send(result);
+  };

@@ -112,6 +112,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  */
 app.post('/transactions', transactionsController.save);
 app.get('/transactions', transactionsController.get);
+app.delete('/transactions', transactionsController.delete);
 
 /**
  * Primary app routes.
