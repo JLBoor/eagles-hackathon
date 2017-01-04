@@ -10,12 +10,12 @@ Project details:
 
 ## APIs
 
-### /transactions
+### /api/transactions
 - GET
  - if ```countOnly``` is present, it will only return the count.
  - ```limit``` the numbers of transactions that will be returned. 25 by default.
 
-- POST /transactions
+- POST
  - ```{ "csvLine": "..."}```
 
-- DELETE /transactions
+- DELETE
