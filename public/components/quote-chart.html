@@ -15,9 +15,10 @@
         debounce="500"
         on-response="handleResponse"></iron-ajax>
 
-      <input type="text" id="symbol" on-input="handleChange" value="NASDAQ:GOOGL">
+      <input type="text" id="symbol" on-input="handleChange" value="AAPL">
 
       <google-chart
+        options='{"legend": "none"}'
         style="width: 100%"
         type='candlestick'
         cols='[{"label":"Day", "type":"string"}, {"label":"Low", "type":"number"}, {"label":"Start", "type":"number"}, {"label":"End", "type":"number"}, {"label":"High", "type":"number"}]'

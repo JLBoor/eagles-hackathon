@@ -121,6 +121,7 @@ app.delete('/api/transactions', transactionsController.delete);
 app.get('/api/news', newsController.get);
 
 app.get('/api/quotes', quotesController.quotes);
+app.get('/api/52w', quotesController.fiftytwoweeks);
 
 /**
  * Primary app routes.
