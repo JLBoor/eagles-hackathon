@@ -6,14 +6,23 @@
   <template>
 
     <h2>Quote Chart</h2>
-    <p>TODO</p>
 
-    <google-chart
-      type='pie'
-      options='{"title": "Distribution of days in 2001Q1"}'
-      cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
-      rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
-  </google-chart>
+    <iron-ajax
+        auto
+        url="/api/quotes"
+        params='{{params}}'
+        handle-as="json"
+        debounce="500"
+        on-response="handleResponse"></iron-ajax>
+
+      <input type="text" id="symbol" on-input="handleChange" value="NASDAQ:GOOGL">
+
+      <google-chart
+        style="width: 100%"
+        type='candlestick'
+        cols='[{"label":"Day", "type":"string"}, {"label":"Low", "type":"number"}, {"label":"Start", "type":"number"}, {"label":"End", "type":"number"}, {"label":"High", "type":"number"}]'
+        rows='{{quotes}}'>
+      </google-chart>
 
   </template>
 </dom-module>
@@ -22,12 +31,32 @@
     Polymer({
       is: 'quote-chart',
       properties: {
-        transactions : {
+        quotes : {
           type: Array
         }
       },
+
+      ready: function() {
+        this.params = {"symbol": this.$.symbol.value, "from":"2016-12-01", "to": "2017-01-05"}
+      },
+      handleChange: function(event) {
+        this.params = {"symbol": this.$.symbol.value, "from":"2016-12-01", "to": "2017-01-05"}
+      },
+
       handleResponse: function(response) {
-        // this.news = response.detail.response;
+        var quotes = response.detail.response;
+
+        this.quotes = [];
+
+        for(var i=0; i<quotes.length; i++) {
+          var q = quotes[i];
+          this.quotes.push([
+            moment(new Date(q.date)).format('MMM, DD'),
+            q.low,
+            q.open,
+            q.close,
+            q.high]);
+        }
       }
     });
   </script>

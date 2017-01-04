@@ -11,9 +11,9 @@
 
   exports.quotes = (req, res) => {
     googleFinance.historical({
-      symbol: 'NASDAQ:AAPL',
-      from: '2016-12-25',
-      to: '2017-01-05'
+      symbol: req.query.symbol,
+      from: req.query.from,
+      to: req.query.to
     }, function (err, quotes) {
       res.send(quotes);
     });

@@ -98,7 +98,6 @@ var _count = function(res) {
       .limit(parseInt(req.query.limit) || 25)
       .exec(function(err, docs) {
         if (!err) {
-            console.log(docs);
             res.send(docs);
         } else {throw err;}
       });
@@ -110,7 +109,6 @@ var _count = function(res) {
     var result = new Transaction();
 
     for(var i = 0; i < columns.length; i++) {
-      console.log(i, headers[i], columns[i]);
       result[headers[i]] = columns[i];
     }
 
