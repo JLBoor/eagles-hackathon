@@ -36,6 +36,8 @@ const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const transactionsController = require('./controllers/transactions');
 const newsController = require('./controllers/news');
+const quotesController = require('./controllers/quotes');
+
 
 /**
  * API keys and Passport configuration.
@@ -115,7 +117,10 @@ app.use(express.static(path.join(__dirname, 'bower_components'), { maxAge: 31557
 app.get('/api/transactions', transactionsController.get);
 app.post('/api/transactions', transactionsController.save);
 app.delete('/api/transactions', transactionsController.delete);
+
 app.get('/api/news', newsController.get);
+
+app.get('/api/quotes', quotesController.quotes);
 
 /**
  * Primary app routes.
