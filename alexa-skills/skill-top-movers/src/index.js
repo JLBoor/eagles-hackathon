@@ -11,8 +11,8 @@
 /**
  * This sample shows how to create a Lambda function for handling Alexa Skill requests that:
  *
- * - Web service: communicate with an external web service to get events for specified days in history (Wikipedia API)
- * - Pagination: after obtaining a list of events, read a small subset of events and wait for user prompt to read the next subset of events by maintaining session state
+ * - Web service: communicate with an external web service to get Transaction data
+ * - Pagination: after obtaining a list of transactions, read a small subset of transactions and wait for user prompt to read the next subset of events by maintaining session state
  * - Dialog and Session state: Handles two models, both a one-shot ask and tell model, and a multi-turn dialog model.
  * - SSML: Using SSML tags to control how Alexa renders the text-to-speech.
  *
@@ -25,11 +25,11 @@
  *
  * Dialog model:
  * User:  "Alexa, open Top Mover"
- * Alexa: "Top Mover. What day do you want events for?"
+ * Alexa: "Top Mover. What day do you want transcations for?"
  * User:  "August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
  * User:  "Yes."
- * Alexa: "In 1995, Bosnian war [...] . Do you want to hear more?"
+ * Alexa: "In 1995, ABC [...] . Do you want to hear more?"
  * User: "No."
  * Alexa: "Good bye!"
  */
@@ -40,7 +40,8 @@
  */
 var APP_ID = 'amzn1.ask.skill.54e7b3de-2a39-4d98-95c6-66490182ed74'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
-var https = require('https');
+var request = require('request');
+
 
 /**
  * The AlexaSkill Module that has the AlexaSkill prototype and helper functions
@@ -147,7 +148,7 @@ TopMoversSkill.prototype.intentHandlers = {
 
 function getWelcomeResponse(response) {
     // If we wanted to initialize the session to have some attributes we could add those here.
-    var cardTitle = "This Day in History";
+    var cardTitle = "Top Movers";
     var repromptText = "With Top Mover, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
     var speechText = "<p>Top Mover.</p> <p>What day do you want events for?</p>";
     var cardOutput = "Top Mover. What day do you want events for?";
@@ -221,7 +222,7 @@ function handleFirstEventRequest(intent, session, response) {
  * Gets a poster prepares the speech to reply to the user.
  */
 function handleNextEventRequest(intent, session, response) {
-    var cardTitle = "More events on this day in history",
+    var cardTitle = "More events on this date",
         sessionAttributes = session.attributes,
         result = sessionAttributes.text,
         speechText = "",
@@ -263,19 +264,12 @@ function getTransactions(date, eventCallback) {
     var day =dateFormat(date, "yyyymmdd");
     var url = transUrlPrefix + day;
 
-    https.get(url, function(res) {
-        var body = '';
-
-        res.on('data', function (chunk) {
-            body += chunk;
-        });
-
-        res.on('end', function () {
-            var stringResult = JSON.parse(body);
-            eventCallback(stringResult);
-        });
-    }).on('error', function (e) {
-        console.log("Got error: ", e);
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            eventCallback(JSON.parse(body));
+        }else{
+            console.log("Got error: "+response.statusCode, error);
+        }
     });
 }
 
