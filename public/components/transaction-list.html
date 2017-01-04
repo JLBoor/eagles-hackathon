@@ -1,0 +1,43 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+
+<dom-module id="transaction-list">
+
+  <template>
+
+    <iron-ajax
+        auto
+        url="/api/transactions"
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+
+        <div>
+          <div class="card-content">
+            <ul>
+              <template is="dom-repeat" items="{{transactions}}" as="tr">
+                <li>{{tr.Security_Short_Name}} - {{tr.Security_Identifier_ISIN}}</li>
+              </template>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <paper-button>PREV</paper-button>
+            <paper-button>NEXT</paper-button>
+          </div>
+        </div>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'transaction-list',
+      properties: {
+        transactions : {
+          type: Array
+        }
+      },
+      handleResponse: function(response) {
+        this.transactions = response.detail.response;
+      }
+    });
+  </script>
