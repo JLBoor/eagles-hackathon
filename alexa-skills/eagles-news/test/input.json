@@ -1,0 +1,29 @@
+{
+  "session": {
+    "sessionId": "SessionId.9437bcd0-d134-4f5d-a940-444eace43949",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c1c6e5a3-26bd-4f1b-a56b-1a8b16dfa576"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AHNBBTAQLUESZNFJXUZ5OR5P2G4EUVECB72CSU26RVSTIYGCBUXLTIGL4APU4OCS5EIIB2DIWLRHPQUFA22FQZM7HSHFKB4WBJLRHSAXKHRDGBQH7QR5AMFAHYCQ5IHSDDXHLEB4X3TVKVKXE4IIUERTUYZDUIXC6SWZRCGX6UXKUR7ADUW5BWFF7Y2G4B6BGUQBJWJDJEVKONQ"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.1ee9afa2-19db-4c0a-b2ea-028c2395f279",
+    "locale": "en-US",
+    "timestamp": "2017-01-04T22:14:14Z",
+    "intent": {
+      "name": "GetNewsIntent",
+      "slots": {
+        "company": {
+          "name": "company",
+          "value": "apple"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
