@@ -17,6 +17,29 @@ var lineReader = require('readline').createInterface({
  input: fs.createReadStream(CSV)
 });
 
+const ISIN_KEYS = {};
+const ISIN_ARRAY = [];
+
+lineReader.on('close', function (line) {
+  console.log('done', ISIN_ARRAY.length);
+
+  var z = [];
+  for(var j=0; j<ISIN_ARRAY.length; j++) {
+
+      if(j % 100 == 0) {
+        if(z.length) {
+          fs.appendFile('mapping-query.txt', JSON.stringify(z) + '\n', function (err) {});
+        }
+        z = [];
+
+      } else {
+        z.push(ISIN_ARRAY[j]);
+      }
+
+  }
+
+});
+
 lineReader.on('line', function (line) {
 
   var values = line.split('|');
@@ -27,9 +50,11 @@ lineReader.on('line', function (line) {
     return;
   }
 
+  if(!ISIN_KEYS[isin]) {
+    ISIN_KEYS[isin] = true;
+    ISIN_ARRAY.push({ "idType":"ID_ISIN","idValue": isin });
+  }
 
-  fs.appendFile('eq.csv', line, function (err) {
-  });
 
   return;
 
