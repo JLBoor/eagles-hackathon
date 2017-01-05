@@ -23,7 +23,7 @@ const transactionSchema = new mongoose.Schema({
   Transaction_Type: String,
   Location_Code: String,
   Trade_Source_Code: String,
-  Trade_Date_and_Time: String,
+  Trade_Date_and_Time: Date,
   Received_Date_and_Time: String,
   Contractual_Settlement_Date_and_Time: String,
   Actual_Settlement_Date_and_Time: String,
@@ -65,7 +65,8 @@ const transactionSchema = new mongoose.Schema({
   TAR_Trade_Action: String,
   TAR_From_Currency: String,
   Security_Identifier_Bank_Internal: String,
-  Trade_Source_Code_Description: String
+  Trade_Source_Code_Description: String,
+  Ticker_Symbol: String
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);

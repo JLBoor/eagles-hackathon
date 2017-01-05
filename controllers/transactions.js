@@ -3,13 +3,20 @@
  */
 
 const Transaction = require('../models/Transaction');
+const moment = require('moment');
+
+const CSV_DATE_FORMAT = 'YYYYMMDD HH:mm:ss';
+const CSV_DATE_OFFSET_IN_DAYS = 35;
+
+const INDEX_TYPE_CODE = 18;
+const INDEX_ISIN = 6;
 
  const headers = [
+ "Mysterious_Header",
  "Source_Name",
  "Source_System_Transaction_Identifier",
  "Source_Account_Number",
  "Source_Portfolio_Number",
- "Mysterious_Number",
  "Source_Account_Name",
  "Security_Identifier_ISIN",
  "Security_Identifier_CUSIP",
@@ -112,7 +119,7 @@ var _count = function(res) {
             res.send(docs);
         } else {throw err;}
       });
-    }  
+    }
   };
 
   exports.save = (req, res) => {
@@ -120,7 +127,23 @@ var _count = function(res) {
     var columns = req.body.csvLine.split('|');
     var result = new Transaction();
 
+    var typeCode = columns[INDEX_TYPE_CODE];
+    var isin = columns[INDEX_ISIN];
+
+    if(typeCode !== 'EQ' || !isin) {
+      res.send(204);
+      return;
+    }
+
     for(var i = 0; i < columns.length; i++) {
+
+      // Offseting the Trade date by +35 days.. For demo purposes
+      if(headers[i] === 'Trade_Date_and_Time') {
+        columns[i] = moment(columns[i], CSV_DATE_FORMAT)
+          .add(35, 'days')
+          .toDate();
+      }
+
       result[headers[i]] = columns[i];
     }
 

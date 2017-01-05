@@ -20,13 +20,14 @@ lineReader.on('line', function (line) {
 
   var jsonLine = { "csvLine": line };
 
-//  pooledRequest.post('https://eagles-app.mybluemix.net/api/transactions',
-  pooledRequest.post('http://localhost:3000/api/transactions',
+  pooledRequest.post('https://eagles-app.mybluemix.net/api/transactions',
+  // pooledRequest.post('http://localhost:3000/api/transactions',
   { json: jsonLine },
       function (error, response, body) {
 
-          if (!error && response.statusCode == 200) {
-              console.log('uploaded ', ++i);
+          if (!error) {
+              if(response.statusCode == 200) { console.log('uploaded ', ++i); }
+              if(response.statusCode == 204) { console.log('skipped '); }
           } else {
             console.log('error: ', error);
             console.log('response: ', response);
