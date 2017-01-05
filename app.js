@@ -115,6 +115,7 @@ app.use(express.static(path.join(__dirname, 'bower_components'), { maxAge: 31557
  * Eagles APIs
  */
 app.get('/api/transactions', transactionsController.get);
+app.get('/api/transactions/stats', transactionsController.stats);
 app.post('/api/transactions', transactionsController.save);
 app.delete('/api/transactions', transactionsController.delete);
 

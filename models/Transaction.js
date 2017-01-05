@@ -29,7 +29,7 @@ const transactionSchema = new mongoose.Schema({
   Actual_Settlement_Date_and_Time: String,
   Maturity_Date_and_Time: String,
   Settlement_Currency: String,
-  Quantity: String,
+  Quantity: Number,
   Deal_Price: String,
   Net_Settlement_Amount: String,
   Gross_Transaction_Amount: String,
@@ -70,5 +70,5 @@ const transactionSchema = new mongoose.Schema({
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
-
+mongoose.set('debug', true);
 module.exports = Transaction;

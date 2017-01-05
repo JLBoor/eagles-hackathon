@@ -102,8 +102,8 @@ var _count = function(res) {
     }
 
     if(req.query.date != undefined){
-      var dateTime = req.query.date+' 00:00:00';
-      Transaction.find({'Trade_Date_and_Time': dateTime})
+      var isoDate = moment.tz(req.query.date, "America/Toronto");
+      Transaction.find({'Trade_Date_and_Time': isoDate})
       .limit(parseInt(req.query.limit) || 25)
       .exec(function(err, docs) {
         if (!err) {
@@ -149,4 +149,24 @@ var _count = function(res) {
 
     result.save();
     res.send(result);
+  };
+
+exports.stats = (req, res) => {
+      var d = new Date(req.query.date).toISOString;
+      Transaction.aggregate([
+            { $match: {
+                'Trade_Date_and_Time': d
+            }},
+            { $group: {
+                _id: "$Trade_Date_and_Time",
+                count: { $sum: 1  }
+            }}
+        ], function (err, result) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('result: '+result[0]);
+            res.send(result[0]);
+        });
   };

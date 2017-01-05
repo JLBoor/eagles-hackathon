@@ -1,24 +1,22 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
 
-<dom-module id="transaction-list">
+<dom-module id="transaction-stats">
 
   <template>
 
     <iron-ajax
         auto
-        url="/api/transactions"
+        url="/api/transactions/stats"
         params='{{params}}'
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
         <div>
-          <h2>Transactions</h2>
+          <h2>Transactions Stats</h2>
           <div class="card-content">
             <ul>
-              <template is="dom-repeat" items="{{transactions}}" as="tr">
-                <li>{{getDate(tr.Trade_Date_and_Time)}} [{{tr.Trade_Source_Code}}] {{tr.Security_Short_Name}} - {{tr.Security_Identifier_ISIN}}</li>
-              </template>
+              Count: {{count}}
             </ul>
           </div>
           <div class="card-actions"></div>
@@ -30,20 +28,17 @@
   <script>
  
     Polymer({
-      is: 'transaction-list',
+      is: 'transaction-stats',
       properties: {
-        transactions : {
-          type: Array
+        count : {
+          type: Number
         }
       },
       ready: function() {
-        this.params = {};
+        this.params = {'date': '2016-11-21'};//{'date': "20161021"}
       },
       handleResponse: function(response) {
-        this.transactions = response.detail.response;
+       this.count = response.detail.response.count;
       },
-      getDate:function(date){
-        return moment(new Date(date)).format('YYYY-M-DD');
-      }
     });
   </script>

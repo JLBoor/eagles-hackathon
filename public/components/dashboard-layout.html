@@ -7,6 +7,7 @@
 <link rel="import" href="/app-datepicker/app-datepicker-dialog.html">
 
 <link rel="import" href="./transaction-list.html">
+<link rel="import" href="./transaction-stats.html">
 <link rel="import" href="/components/news-list.html">
 <link rel="import" href="/components/quote-chart.html">
 <link rel="import" href="/components/fifty-two-week.html">
@@ -43,6 +44,9 @@
         </div>
         <div class="col-sm-4">
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+        </div>
+        <div class="col-sm-4">
+            <transaction-stats></transaction-stats>
         </div>
       </div>
       <div class="row">
