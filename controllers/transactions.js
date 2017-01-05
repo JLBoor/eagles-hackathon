@@ -94,14 +94,25 @@ var _count = function(res) {
       return _count(res);
     }
 
+    if(req.query.date != undefined){
+      var dateTime = req.query.date+' 00:00:00';
+      Transaction.find({'Trade_Date_and_Time': dateTime})
+      .limit(parseInt(req.query.limit) || 25)
+      .exec(function(err, docs) {
+        if (!err) {
+            res.send(docs);
+        } else {throw err;}
+      });
+    } else {
+
     Transaction.find({})
       .limit(parseInt(req.query.limit) || 25)
       .exec(function(err, docs) {
         if (!err) {
-            console.log(docs);
             res.send(docs);
         } else {throw err;}
       });
+    }  
   };
 
   exports.save = (req, res) => {
@@ -110,7 +121,6 @@ var _count = function(res) {
     var result = new Transaction();
 
     for(var i = 0; i < columns.length; i++) {
-      console.log(i, headers[i], columns[i]);
       result[headers[i]] = columns[i];
     }
 

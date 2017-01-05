@@ -1,0 +1,42 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/google-chart/google-chart.html">
+
+<dom-module id="fifty-two-week">
+
+  <template>
+
+    <h2>52-Week</h2>
+
+    <iron-ajax
+        auto
+        url="/api/52w"
+        params='{{params}}'
+        handle-as="json"
+        debounce="500"
+        on-response="handleResponse"></iron-ajax>
+
+      <div>high: {{quote.52WeekHigh}}</div>
+      <div>low: {{quote.52WeekLow}}</div>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'fifty-two-week',
+      properties: {
+        symbol : {
+          type: String,
+          observer: '_symbolChanged'
+        }
+      },
+
+      _symbolChanged: function() {
+        this.params = { "symbol": this.symbol }
+      },
+
+      handleResponse: function(response) {
+        this.quote = response.detail.response;
+      }
+    });
+  </script>

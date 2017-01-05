@@ -13,6 +13,7 @@ Project details:
 ### /api/transactions
 - GET
  - if ```countOnly``` is present, it will only return the count.
+ - if ```date``` is present, it will return list of transactions by date.
  - ```limit``` the numbers of transactions that will be returned. 25 by default.
 
 - POST

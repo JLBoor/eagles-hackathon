@@ -3,17 +3,22 @@
  * GET /news
  */
 
-  var googleFinance = require('google-finance');
+  var yahooFinance = require('yahoo-finance');
 
   exports.fiftytwoweeks = (req, res) => {
-    res.send('Not implemented yet.');
+    yahooFinance.snapshot({
+      symbol: req.query.symbol,
+      fields: ['k', 'j']
+    }, function (err, quotes) {
+      res.send(quotes);
+    });
   };
 
   exports.quotes = (req, res) => {
-    googleFinance.historical({
-      symbol: 'NASDAQ:AAPL',
-      from: '2016-12-25',
-      to: '2017-01-05'
+    yahooFinance.historical({
+      symbol: req.query.symbol,
+      from: req.query.from,
+      to: req.query.to
     }, function (err, quotes) {
       res.send(quotes);
     });

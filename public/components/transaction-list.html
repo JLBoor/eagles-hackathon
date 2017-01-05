@@ -8,6 +8,7 @@
     <iron-ajax
         auto
         url="/api/transactions"
+        params='{{params}}'
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
@@ -16,20 +17,18 @@
           <div class="card-content">
             <ul>
               <template is="dom-repeat" items="{{transactions}}" as="tr">
-                <li>{{tr.Security_Short_Name}} - {{tr.Security_Identifier_ISIN}}</li>
+                <li>{{getDate(tr.Trade_Date_and_Time)}} [{{tr.Trade_Source_Code}}] {{tr.Security_Short_Name}} - {{tr.Security_Identifier_ISIN}}</li>
               </template>
             </ul>
           </div>
-          <div class="card-actions">
-            <paper-button>PREV</paper-button>
-            <paper-button>NEXT</paper-button>
-          </div>
+          <div class="card-actions"></div>
         </div>
 
   </template>
 </dom-module>
 
   <script>
+ 
     Polymer({
       is: 'transaction-list',
       properties: {
@@ -37,8 +36,15 @@
           type: Array
         }
       },
+      ready: function() {
+        this.params = {};//{'date': "20161021"}
+      },
       handleResponse: function(response) {
         this.transactions = response.detail.response;
+      },
+      getDate:function(date){
+        var d = date.match(/^(\d{4})(\d{2})(\d{2}) 00:00:00$/);
+        return moment(new Date(d[1], d[2]-1, d[3])).format('YYYY-M-DD');
       }
     });
   </script>

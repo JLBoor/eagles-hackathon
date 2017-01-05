@@ -3,8 +3,14 @@
  * Home page.
  */
 
-exports.index = (req, res) => {
+exports.quickQuote = (req, res) => {
+  res.render('quick-quote', {
+    title: 'Quick Quote'
+  });
+};
+
+exports.dashboard = (req, res) => {
   res.render('home', {
-    title: 'Home'
+    title: 'Dashboard'
   });
 };

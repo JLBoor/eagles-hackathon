@@ -1,4 +1,4 @@
- 
+
 /**
  * GET /news
  */
@@ -7,7 +7,7 @@
 
   exports.get = (req, res) => {
     googleFinance.companyNews({
-      symbol: 'NASDAQ:AAPL'
+      symbol: req.query.symbol
     }, function (err, news) {
       res.send(news);
     });

@@ -12,6 +12,8 @@
       ul.nav.navbar-nav.navbar-nav-main
         li(class=(title == 'Dashboard') ? 'active' : undefined)
           a(href='/') Dashboard
+        li(class=(title == 'Quick Quote') ? 'active' : undefined)
+          a(href='/quick-quote') Quick Quote
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)

@@ -1,0 +1,92 @@
+<link rel="import" href="/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-input/paper-input.html">
+<link rel="import" href="/paper-tabs/paper-tabs.html">
+<link rel="import" href="/app-datepicker/app-datepicker-dialog.html">
+
+<link rel="import" href="./transaction-list.html">
+<link rel="import" href="/components/news-list.html">
+<link rel="import" href="/components/quote-chart.html">
+<link rel="import" href="/components/fifty-two-week.html">
+
+<dom-module id="quick-quote-layout">
+
+  <template>
+
+    <style>
+
+      paper-input {
+        width: 125px;
+        margin: 0 20px;
+        display: inline-block;
+      }
+      app-datepicker-dialog {
+        --app-datepicker-selection-bg: #002144;
+        --app-datepicker-selected-day-bg: #002144;
+        --app-datepicker-icon-button-color: #002144;
+        --app-datepicker-button-color: #002144;
+      }
+    </style>
+
+    <div style="background: #DFE6ED; padding:0 25px;" class="row">
+
+      <paper-input label="Symbol" id="symbol" on-input="handleChange">
+        <paper-icon-button suffix icon="clear"></paper-icon-button>
+      </paper-input>
+
+      <paper-input size="10" label="From" id="from" on-click="handleFromClick" value={{fromDate}}>
+        <paper-icon-button suffix icon="clear"></paper-icon-button>
+      </paper-input>
+
+      <paper-input label="To" id="to" on-click="handleToClick" value={{toDate}}>
+        <paper-icon-button suffix icon="clear"></paper-icon-button>
+      </paper-input>
+
+      <app-datepicker-dialog id="fromDatepicker" with-backdrop date="{{fromDate}}"></app-datepicker-dialog>
+      <app-datepicker-dialog id="toDatepicker" with-backdrop date="{{toDate}}"></app-datepicker-dialog>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-10">
+        <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+      </div>
+      <div class="col-sm-2">
+        <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <news-list symbol="{{symbol}}"></news-list>
+        </div>
+      </div>
+
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'quick-quote-layout',
+
+      ready: function() {
+        this.$.symbol.value = this.symbol = 'RY';
+        this.fromDate = '2016-01-01';
+        this.toDate = '2016-12-31';
+      },
+
+      handleFromClick: function() {
+        this.$.fromDatepicker.open();
+      },
+
+      handleToClick: function() {
+        this.$.toDatepicker.open();
+      },
+
+      handleChange: function(event) {
+        this.symbol = this.$.symbol.value;
+      }
+
+    });
+  </script>
