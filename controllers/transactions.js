@@ -4,6 +4,7 @@
 
 const Transaction = require('../models/Transaction');
 const moment = require('moment');
+const isinMapping = require('../config/mapping-isin-ticker.js');
 
 const CSV_DATE_FORMAT = 'YYYYMMDD HH:mm:ss';
 const CSV_DATE_OFFSET_IN_DAYS = 35;
@@ -130,7 +131,7 @@ var _count = function(res) {
     var typeCode = columns[INDEX_TYPE_CODE];
     var isin = columns[INDEX_ISIN];
 
-    if(typeCode !== 'EQ' || !isin) {
+    if(typeCode !== 'EQ' || !isin || !isinMapping.mapping[isin]) {
       res.send(204);
       return;
     }
@@ -144,6 +145,7 @@ var _count = function(res) {
           .toDate();
       }
 
+      result['Ticker_Symbol'] = isinMapping.mapping[isin];
       result[headers[i]] = columns[i];
     }
 

@@ -123,6 +123,7 @@ app.get('/api/news', newsController.get);
 
 app.get('/api/quotes', quotesController.quotes);
 app.get('/api/52w', quotesController.fiftytwoweeks);
+app.get('/api/snapshot', quotesController.snapshot);
 
 /**
  * Primary app routes.
