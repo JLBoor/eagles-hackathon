@@ -70,5 +70,5 @@ const transactionSchema = new mongoose.Schema({
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
-mongoose.set('debug', true);
+//mongoose.set('debug', true);
 module.exports = Transaction;
