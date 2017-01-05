@@ -131,7 +131,7 @@ var _count = function(res) {
     var typeCode = columns[INDEX_TYPE_CODE];
     var isin = columns[INDEX_ISIN];
 
-    if(typeCode !== 'EQ' || !isin) {
+    if(typeCode !== 'EQ' || !isin || !isinMapping.mapping[isin]) {
       res.send(204);
       return;
     }
