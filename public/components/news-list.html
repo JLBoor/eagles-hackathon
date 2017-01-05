@@ -8,6 +8,7 @@
     <iron-ajax
         auto
         url="/api/news"
+        params='{{params}}'
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
@@ -29,10 +30,16 @@
     Polymer({
       is: 'news-list',
       properties: {
-        transactions : {
-          type: Array
+        symbol : {
+          type: String,
+          observer: '_symbolChanged'
         }
       },
+
+      _symbolChanged: function() {
+        this.params = { "symbol": this.symbol }
+      },
+
       handleResponse: function(response) {
         this.news = response.detail.response;
       }

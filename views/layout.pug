@@ -13,15 +13,15 @@ html
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
 
-    link(rel='import', href='/components/transaction-list.html')
-    link(rel='import', href='/components/news-list.html')
-    link(rel='import', href='/components/quote-chart.html')
-    link(rel='import', href='/components/fifty-two-week.html')
+    script(src='/moment/min/moment.min.js')
+    
+    link(rel='import', href='/components/dashboard-layout.html')
+    link(rel='import', href='/components/quick-quote-layout.html')
 
   body
     include partials/header
 
-    .container
+    .container-fluid
       include partials/flash
       block content
 

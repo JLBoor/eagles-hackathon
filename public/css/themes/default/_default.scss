@@ -48,13 +48,12 @@
    &:hover { opacity: 1; color: $yellow; }
 }
 
-
-
 .navbar-default {
   height: 100px;
   border: 0;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   border-radius: 0;
+  margin: 0;
   .navbar-nav {
 
     > li > a {
@@ -71,11 +70,18 @@
     &.navbar-nav-main > li > a {
       padding-top: 45px;
       font-size: 16px;
+      margin-right: 25px;
       &:hover {
         color: white;
         font-weight: bold;
         border-bottom: 3px solid yellow;
       }
+    }
+
+    &.navbar-nav-main > li.active > a {
+      color: white;
+      font-weight: bold;
+      border-bottom: 3px solid yellow;
     }
 
   }

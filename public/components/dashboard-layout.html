@@ -1,0 +1,106 @@
+<link rel="import" href="/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-input/paper-input.html">
+<link rel="import" href="/paper-tabs/paper-tabs.html">
+<link rel="import" href="/app-datepicker/app-datepicker-dialog.html">
+
+<link rel="import" href="./transaction-list.html">
+<link rel="import" href="/components/news-list.html">
+<link rel="import" href="/components/quote-chart.html">
+<link rel="import" href="/components/fifty-two-week.html">
+
+<dom-module id="dashboard-layout">
+
+  <template>
+
+    <style>
+
+      :root { --paper-tab-ink: #002144; }
+
+      paper-tabs {
+        background: #DFE6ED;
+        --paper-tabs-selection-bar-color: #002144;
+        --paper-tabs-selection-bar {
+          height: 5px;
+          color: red;
+        }
+      }
+
+    </style>
+
+    <paper-tabs id="tabs" class="row" selected="0" on-iron-select="_onTabChanged">
+      <paper-tab>Today</paper-tab>
+      <paper-tab>Last Week</paper-tab>
+      <paper-tab>Last Month</paper-tab>
+      <paper-tab>Last Year</paper-tab>
+    </paper-tabs>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+        </div>
+        <div class="col-sm-4">
+            <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <transaction-list></transaction-list>
+        </div>
+
+        <div class="col-sm-8">
+          <news-list symbol="{{symbol}}"></news-list>
+        </div>
+      </div>
+
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'dashboard-layout',
+
+      ready: function() {
+          this.symbol = 'AAPL';
+          this.fromDate = moment().format('YYYY-MM-DD');
+          this.toDate = moment().format('YYYY-MM-DD');
+      },
+
+      _onTabChanged: function() {
+        switch(this.$.tabs.selected) {
+          case 0:
+            this.fromDate = moment().format('YYYY-MM-DD');
+            this.toDate = moment().format('YYYY-MM-DD');
+            break;
+          case 1:
+            this.fromDate = moment().subtract(1, 'week').format('YYYY-MM-DD');
+            this.toDate = moment().format('YYYY-MM-DD');
+            break;
+          case 2:
+            this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
+            this.toDate = moment().format('YYYY-MM-DD');
+            break;
+          case 3:
+            this.fromDate = moment().subtract(1, 'year').format('YYYY-MM-DD');
+            this.toDate = moment().format('YYYY-MM-DD');
+            break;
+        }
+      },
+
+      handleFromClick: function() {
+        this.$.fromDatepicker.open();
+      },
+
+      handleToClick: function() {
+        this.$.toDatepicker.open();
+      },
+
+      handleChange: function(event) {
+        this.symbol = this.$.symbol.value;
+      }
+
+    });
+  </script>

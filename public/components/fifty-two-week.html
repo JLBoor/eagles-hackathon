@@ -15,8 +15,6 @@
         debounce="500"
         on-response="handleResponse"></iron-ajax>
 
-      <input type="text" id="symbol" on-input="handleChange" value="AAPL">
-
       <div>high: {{quote.52WeekHigh}}</div>
       <div>low: {{quote.52WeekLow}}</div>
 
@@ -27,16 +25,14 @@
     Polymer({
       is: 'fifty-two-week',
       properties: {
-        quotes : {
-          type: Object
+        symbol : {
+          type: String,
+          observer: '_symbolChanged'
         }
       },
 
-      ready: function() {
-        this.params = { "symbol": this.$.symbol.value }
-      },
-      handleChange: function(event) {
-        this.params = { "symbol": this.$.symbol.value }
+      _symbolChanged: function() {
+        this.params = { "symbol": this.symbol }
       },
 
       handleResponse: function(response) {

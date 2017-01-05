@@ -21,6 +21,10 @@
     "polymer": "Polymer/polymer#^1.7.1",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "google-chart": "GoogleWebComponents/google-chart#^1.1.1",
-    "moment": "^2.17.1"
+    "moment": "^2.17.1",
+    "paper-input": "PolymerElements/paper-input#^1.1.22",
+    "app-datepicker": "motss/app-datepicker#^2.9.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.7.0"
   }
 }

@@ -126,7 +126,8 @@ app.get('/api/52w', quotesController.fiftytwoweeks);
 /**
  * Primary app routes.
  */
-app.get('/', homeController.index);
+app.get('/', homeController.dashboard);
+app.get('/quick-quote', homeController.quickQuote);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

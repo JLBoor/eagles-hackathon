@@ -12,6 +12,8 @@ h1, h2, h3, h4, h5 {
   & > a { color: $bright-blue-2; }
 }
 
+a { color: $dark-blue; }
+
 html {
   position: relative;
   min-height: 100%;

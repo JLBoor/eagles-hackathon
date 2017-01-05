@@ -15,8 +15,6 @@
         debounce="500"
         on-response="handleResponse"></iron-ajax>
 
-      <input type="text" id="symbol" on-input="handleChange" value="AAPL">
-
       <google-chart
         options='{"legend": "none"}'
         style="width: 100%"
@@ -32,16 +30,22 @@
     Polymer({
       is: 'quote-chart',
       properties: {
-        quotes : {
-          type: Array
+        symbol : {
+          type: String,
+          observer: '_inputChanged'
+        },
+        fromDate : {
+          type: String,
+          observer: '_inputChanged'
+        },
+        toDate : {
+          type: String,
+          observer: '_inputChanged'
         }
       },
 
-      ready: function() {
-        this.params = {"symbol": this.$.symbol.value, "from":"2016-12-01", "to": "2017-01-05"}
-      },
-      handleChange: function(event) {
-        this.params = {"symbol": this.$.symbol.value, "from":"2016-12-01", "to": "2017-01-05"}
+      _inputChanged: function() {
+        this.params = { "symbol": this.symbol, "from": this.fromDate, "to": this.toDate }
       },
 
       handleResponse: function(response) {
