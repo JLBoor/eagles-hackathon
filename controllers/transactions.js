@@ -94,6 +94,17 @@ var _count = function(res) {
       return _count(res);
     }
 
+    if(req.query.date != undefined){
+      var dateTime = req.query.date+' 00:00:00';
+      Transaction.find({'Trade_Date_and_Time': dateTime})
+      .limit(parseInt(req.query.limit) || 25)
+      .exec(function(err, docs) {
+        if (!err) {
+            res.send(docs);
+        } else {throw err;}
+      });
+    } else {
+
     Transaction.find({})
       .limit(parseInt(req.query.limit) || 25)
       .exec(function(err, docs) {
@@ -101,6 +112,7 @@ var _count = function(res) {
             res.send(docs);
         } else {throw err;}
       });
+    }  
   };
 
   exports.save = (req, res) => {
