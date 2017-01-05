@@ -34,13 +34,14 @@
  * Alexa: "Good bye!"
  */
 
-
 /**
  * App ID for the skill
  */
 var APP_ID = 'amzn1.ask.skill.c1c6e5a3-26bd-4f1b-a56b-1a8b16dfa576'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 var https = require('https');
+
+var emailer = require("./emailer.js");
 
 /**
  * The AlexaSkill Module that has the AlexaSkill prototype and helper functions
@@ -213,7 +214,6 @@ function handleNewsRequest(intent, session, response) {
                 speech: repromptText,
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
-            response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
         }
         session.attributes = sessionAttributes;
          
