@@ -23,3 +23,8 @@
       res.send(quotes);
     });
   };
+
+
+exports.snapshot = (req, res) => {
+  yahooFinance.snapshot({symbol: req.query.symbol, fields: ['p2']}, (err, quotes) => res.send(quotes));
+};
