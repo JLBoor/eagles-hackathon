@@ -1,5 +1,7 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-item/paper-item.html">
+<link rel="import" href="/paper-listbox/paper-listbox.html">
 <link rel="import" href="/paper-dropdown-menu/paper-dropdown-menu-light.html">
 
 <dom-module id="transaction-clients">
@@ -10,16 +12,16 @@
         url="/api/transactions/clients"
         handle-as="json"
         last-response="{{clients}}"></iron-ajax>
-        
+
         <template is="dom-if" if="{{clients}}">
-        <paper-dropdown-menu-light label="Clients" no-animations selected-item="null">
-          <paper-listbox class="dropdown-content">
-            <template is="dom-repeat" items="[[clients]]">
-              <paper-item>[[item]]</paper-item>
-            </template>
-          </paper-listbox>
-        </paper-dropdown-menu-light>  
-      </template>
+          <paper-dropdown-menu-light label="Clients" no-animations selected-item="null">
+            <paper-listbox class="dropdown-content">
+              <template is="dom-repeat" items="[[clients]]">
+                <paper-item>[[item]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu-light>
+        </template>
 
   </template>
 </dom-module>
