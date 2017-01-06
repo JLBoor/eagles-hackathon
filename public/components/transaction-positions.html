@@ -43,7 +43,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <div>
-          <h2>{{client}}: Positions</h2>
+          <h2>Positions: {{posType}}</h2>
           <div class="card-content container-fluid">
 
               <div class="row row-header">
@@ -86,6 +86,12 @@
           type: String,
           observer: '_clientChanged'
         },
+        least:{
+          type: Boolean
+        },
+        posType:{
+          type: String
+        },
         ticker : {
           type: String,
           notify: true
@@ -98,11 +104,11 @@
 
       ready: function() {
         this.selected = 0;
-        this.params = {client: 'Billy Speno'};
+        this.params = {client: this.client, least: this.least};
       },
 
       _clientChanged: function() {
-        this.params = { "client": this.client }
+        this.params = { "client": this.client, least: this.least }
       },
 
       handleResponse: function(response) {
