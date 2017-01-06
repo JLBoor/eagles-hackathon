@@ -8981,6 +8981,9 @@ textarea {
   color: #707478;
   margin-bottom: 40px; }
 
+.dashboard-row {
+  margin-top: 15px; }
+
 .card {
   margin-top: 15px;
   background: white;
