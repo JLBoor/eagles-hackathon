@@ -20,8 +20,8 @@ lineReader.on('line', function (line) {
 
   var jsonLine = { "csvLine": line };
 
-  //pooledRequest.post('https://eagles-app.mybluemix.net/api/transactions',
-  pooledRequest.post('http://localhost:3000/api/transactions',
+  pooledRequest.post('https://eagles-app.mybluemix.net/api/transactions',
+  // pooledRequest.post('http://localhost:3000/api/transactions',
   { json: jsonLine },
       function (error, response, body) {
 
