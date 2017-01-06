@@ -23,6 +23,7 @@
         auto
         url="/api/transactions/clients"
         handle-as="json"
+        on-response="_handleResponse"
         last-response="{{clients}}"></iron-ajax>
 
         <template is="dom-if" if="{{clients}}">
@@ -44,6 +45,10 @@
       clientChanged: function(event) {
         this.client = this.clients[this.selected];
         this.fire('client-selected', {client: this.client})
+      },
+      _handleResponse: function() {
+        this.selected = 0;
+        this.clientChanged();
       }
     });
   </script>

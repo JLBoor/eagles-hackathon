@@ -29,7 +29,10 @@
         font-size: 12px;
         padding: 0;
         --paper-item-selected: {
-          background-color: #D0DBE5;
+          background-color: #EDF1F5;
+        };
+        --paper-item-focused: {
+          background-color: #EDF1F5;
         }
       }
 
@@ -42,7 +45,7 @@
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
-        <div>
+        <div class="card">
           <h2>{{client}}: Positions</h2>
           <div class="card-content container-fluid">
 

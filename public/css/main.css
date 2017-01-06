@@ -8982,6 +8982,7 @@ textarea {
   margin-bottom: 40px; }
 
 .card {
+  margin-top: 15px;
   background: white;
   margin: 0px;
   border: 1px solid #0051a5;
