@@ -42,30 +42,31 @@
     </paper-tabs>
 
       <div class="row">
+        <div class="row">
+          <div class="col-sm-4">
+            <transaction-clients client="{{client}}"></transaction-clients>
+          </div>
+
+          <div class="col-sm-4">
+            <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+          </div>
+
+          <div class="col-sm-4">
+          </div>
+        </div>
+
         <div class="col-sm-4">
-          <transaction-clients client="{{client}}"></transaction-clients>
-          <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+          <transaction-positions client="{{client}}"></transaction-positions>
         </div>
         <div class="col-sm-4">
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
         </div>
         <div class="col-sm-4">
-            <transaction-positions client="{{client}}"></transaction-positions>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <categories-pie-chart client="Tamesha Hamby TRUST"></categories-pie-chart>
-        </div>
-
-        <div class="col-sm-4">
-          <transaction-list></transaction-list>
-        </div>
-
-        <div class="col-sm-4">
           <news-list symbol="{{symbol}}"></news-list>
         </div>
+
       </div>
+
 
   </template>
 

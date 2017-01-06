@@ -17,7 +17,7 @@ exports.settlementCurrency = (req, res) => {
             console.log(err);
             return;
         }
-        res.send(result);
+        res.send(result.map((type) => [type._id, type.count]));
     });
 };
 

@@ -5,11 +5,9 @@
 
   <template>
 
-    <h2>Pie Chart</h2>
-
     <iron-ajax
         auto
-        url="/api/categories/securityType"
+        url="{{api}}"
         params='{{params}}'
         handle-as="json"
         last-response="{{securityTypes}}"
@@ -17,7 +15,7 @@
 
         <google-chart
           type='pie'
-          cols='[{"label":"Category", "type":"string"}, {"label":"# of Equities", "type":"number"}]'
+          cols='{{cols}}'
           rows='{{securityTypes}}'>
         </google-chart>
 
@@ -28,14 +26,25 @@
     Polymer({
       is: 'categories-pie-chart',
       properties: {
+        label : {
+          type: String
+        },
+        api : {
+          type: String
+        },
         client : {
           type: String,
           observer: '_inputChanged'
         }
       },
 
+      ready: function() {
+        this.cols = [{"label": this.label, "type":"string"}, {"label":"# of Equities", "type":"number"}];
+        this.api = this.api;
+      },
+
       _inputChanged: function() {
-        this.params = { "client": "Tamesha Hamby TRUST" }
+        this.params = { "client": this.client }
       }
 
     });
