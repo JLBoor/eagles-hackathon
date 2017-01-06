@@ -36,13 +36,13 @@
 
     </style>
 
-    <paper-tabs id="tabs" class="row" selected="0" on-iron-select="_onTabChanged">
+    <paper-tabs id="tabs" class="row" selected="2" on-iron-select="_onTabChanged">
       <paper-tab>Today</paper-tab>
       <paper-tab>Last Week</paper-tab>
       <paper-tab>Last Month</paper-tab>
       <paper-tab>Last Year</paper-tab>
     </paper-tabs>
-    
+
       <div class="row">
         <section class="col-lg-8 connectedSortable ui-sortable">
 
@@ -51,7 +51,7 @@
               <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
             </div>
             <div class="col-sm-6">
-             <categories-pie-chart title="Sector: Gainers" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
+             <categories-pie-chart title="Top 5 performing by sector (revenue)" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
             </div>
           </div>
 
@@ -60,17 +60,17 @@
               <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
             </div>
             <div class="col-sm-6">
-             <categories-pie-chart title="Sector: Losers" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+             <categories-pie-chart title="Top 5 losing sectors (revenue)" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
             </div>
           </div>
-          
+
           <div class="row dashboard-row">
             <div class="col-sm-12">
               <news-list symbol="{{symbol}}"></news-list>
               </div>
             </div>
 
-          
+
         </section>
 
         <section class="col-lg-4 connectedSortable ui-sortable">
@@ -86,7 +86,7 @@
               <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
             </div>
 
-            
+
           </div>
 
           <div class="row dashboard-row">
@@ -97,8 +97,8 @@
 
         </section>
         </div>
-        
-       
+
+
 
   </template>
 
