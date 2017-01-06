@@ -168,7 +168,6 @@ exports.stats = (req, res) => {
                 console.log(err);
                 return;
             }
-            console.log('result: '+result[0]);
             res.send(result[0]);
         });
   };
