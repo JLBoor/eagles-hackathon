@@ -112,7 +112,7 @@
       handleResponse: function(response) {
         this.positions = response.detail.response.stocks;
         this.client = response.detail.response._id;
-        if(this.posType === 'Gainers') {
+        if(this.title === 'Gainers') {
           this.ticker = this.positions[0].ticker;
         }
       },
