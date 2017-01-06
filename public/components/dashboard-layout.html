@@ -14,6 +14,8 @@
 <link rel="import" href="/components/fifty-two-week.html">
 <link rel="import" href="/components/categories-pie-chart.html">
 <link rel="import" href="./transaction-clients.html">
+<link rel="import" href="./active-stock.html">
+<link rel="import" href="./transaction-performers.html">
 
 <dom-module id="dashboard-layout">
 
@@ -21,7 +23,7 @@
 
     <style>
 
-      :root { --paper-tab-ink: #002144; }
+      :root { --paper-tab-ink: #002144; padding: 0 25px; }
 
       paper-tabs {
         background: #DFE6ED;
@@ -42,31 +44,42 @@
     </paper-tabs>
 
       <div class="row">
-        <div class="row">
+        <div class="row dashboard-row">
           <div class="col-sm-4">
-            <transaction-clients client="{{client}}"></transaction-clients>
+            <categories-pie-chart title="Sector: Gainers" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
-            <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+              <categories-pie-chart title="Sector: Losers" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
+            <transaction-perfromers client="{{client}}"></transaction-perfromers>
+
           </div>
         </div>
 
-        <div class="col-sm-4">
-          <transaction-positions client="{{client}}"></transaction-positions>
-        </div>
-        <div class="col-sm-4">
-            <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
-        </div>
-        <div class="col-sm-4">
-          <news-list symbol="{{symbol}}"></news-list>
-        </div>
+        <div class="row dashboard-row">
+          <div class="col-sm-5">
+            <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
+            <br>
+            <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
+          </div>
+          <div class="col-sm-3">
+            <div class="card">
+              <h2>Quote: {{symbol}}</h2>
+              <h5 class=text-center>52-week</h5>
+              <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+              <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
+              <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <news-list symbol="{{symbol}}"></news-list>
+          </div>
 
+        </div>
       </div>
-
 
   </template>
 
@@ -77,12 +90,18 @@
       is: 'dashboard-layout',
 
       ready: function() {
-          this.symbol = 'AAPL';
-          this.fromDate = moment().format('YYYY-MM-DD');
+          this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
           this.toDate = moment().format('YYYY-MM-DD');
+          var that =this;
+          addEventListener('client-selected', function(e) {
+              that.client = e.detail.client;
+          });
       },
 
       _onTabChanged: function() {
+        // Temporarly disabled rabs
+        return;
+
         switch(this.$.tabs.selected) {
           case 0:
             this.fromDate = moment().format('YYYY-MM-DD');

@@ -5,8 +5,6 @@
 
   <template>
 
-    <h2>Quote Chart</h2>
-
     <iron-ajax
         auto
         url="/api/quotes"
@@ -20,8 +18,8 @@
         style="width: 100%"
         type='candlestick'
         cols='[{"label":"Day", "type":"string"}, {"label":"Low", "type":"number"}, {"label":"Start", "type":"number"}, {"label":"End", "type":"number"}, {"label":"High", "type":"number"}]'
-        rows='{{quotes}}'>
-      </google-chart>
+      rows='{{quotes}}'>
+    </google-chart>
 
   </template>
 </dom-module>

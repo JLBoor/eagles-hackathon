@@ -109,7 +109,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 0 }));
 app.use(express.static(path.join(__dirname, 'bower_components'), { maxAge: 31557600000 }));
 
 
@@ -119,6 +119,8 @@ app.use(express.static(path.join(__dirname, 'bower_components'), { maxAge: 31557
 app.get('/api/transactions', transactionsController.get);
 app.get('/api/transactions/stats', transactionsController.stats);
 app.get('/api/transactions/positions', transactionsController.getPositionsByClient);
+app.get('/api/transactions/active', transactionsController.getMostActive);
+app.get('/api/transactions/performers', transactionsController.getTopPerformers);
 app.get('/api/transactions/clients', transactionsController.getClients);
 app.post('/api/transactions', transactionsController.save);
 app.delete('/api/transactions', transactionsController.delete);
@@ -131,6 +133,7 @@ app.get('/api/snapshot', quotesController.snapshot);
 
 app.get('/api/categories/currencies', categoriesController.settlementCurrency);
 app.get('/api/categories/securityType', categoriesController.securityType);
+app.get('/api/categories/securityTypeByAmt', categoriesController.securityTypeByAmt);
 
 /**
  * Primary app routes.

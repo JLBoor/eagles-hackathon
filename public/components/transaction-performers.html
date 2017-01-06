@@ -1,0 +1,119 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/cpol-currency/cpol-currency.html">
+
+
+<dom-module id="transaction-perfromers">
+
+  <template>
+
+    <style>
+
+      .text-0{
+        font-size: 140%;
+        font-weight: 900;
+        color: green;
+      }
+
+       .text-1{
+        font-size: 130%;
+        font-weight: 700;
+      }
+
+       .text-2{
+        font-size: 110%;
+        font-weight: 500;
+      }
+
+      .row-header {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+      }
+
+      paper-item {
+        font-size: 12px;
+        padding: 0;
+        --paper-item-selected: {
+          background-color: #D0DBE5;
+        }
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+        border: 2px solid lightslategrey;
+        border-radius: 50%;
+      }
+      .chat .item > .online {
+        border: 2px solid #00a65a;
+      }
+
+    </style>
+
+    <iron-ajax
+        auto
+        url="/api/transactions/performers"
+        params='{{params}}'
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+
+        <div class="card">
+          <h2>Top Performers</h2>
+          <div class="card-content container-fluid">
+
+              <div class="row row-header">
+                <div class="col-sm-1">#.</div>
+                <div class="col-sm-6">Investment Mgr</div>
+                <div class="col-sm-5 text-right">Net Settled $</div>
+              </div>
+
+                <paper-listbox class="row">
+                  <template is="dom-repeat" items="{{performers}}" as="p">
+                    <paper-item>
+                        <div class$="text-{{index}} col-sm-1 text-left">[[addOne(index)]].</div>
+                        <div class$="text-{{index}} col-sm-6">[[p.i_mgr]]</div>
+                        <div class$="text-{{index}} col-sm-5 text-right" style="white-space: nowrap">
+                          <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
+                         </div>
+                  </paper-item>
+                </template>
+              </paper-listbox>
+          </div>
+          <div class="card-actions"></div>
+        </div>
+
+  </template>
+</dom-module>
+
+  <script>
+
+    Polymer({
+      is: 'transaction-perfromers',
+      properties: {
+        performers : {
+          type: Array
+        },
+        client: {
+          type: String,
+          observer: '_clientChanged'
+        }
+      },
+
+      ready: function() {
+        this.selected = 0;
+        this.params = {client: this.client};
+      },
+
+      _clientChanged: function() {
+        this.params = { "client": this.client }
+      },
+
+      handleResponse: function(response) {
+        this.performers = response.detail.response.top_performers;
+        this.client = response.detail.response._id;
+      },
+      addOne: function(idx) {
+        return idx+1;
+      }
+    });
+  </script>

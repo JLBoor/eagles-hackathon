@@ -1,6 +1,7 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/cpol-currency/cpol-currency.html">
+<link rel="import" href="./quote-ss.html">
 
 
 <dom-module id="transaction-positions">
@@ -19,6 +20,22 @@
         color: red;
       }
 
+      .row-header {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+      }
+
+      paper-item {
+        font-size: 12px;
+        padding: 0;
+        --paper-item-selected: {
+          background-color: #dae9ff;
+        }
+        --paper-item-focused: {
+          background-color: #dae9ff;
+        }
+      }
+
     </style>
 
     <iron-ajax
@@ -28,29 +45,31 @@
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
-        <div>
-          <h2>{{client}}: Positions</h2>
-          <div class="card-content">
-            <table class="table table-hover table-condensed">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>Symbol</th>
-                  <th>Sector</th>
-                  <th class="text-right">Postion</th>
-                  <th class="text-right">Total $</th>
-                </tr>
-                <template is="dom-repeat" items="{{positions}}" as="p">
-                        <tr >
-                          <td>[[addOne(index)]].</td>
-                          <td>[[p.ticker]]</td>
-                          <td>[[p.sector]]</td>
-                          <td><p class="text-right">[[p.num_shares]]</p></td>
-                          <td class$="{{getClasses(p.pos_amt)}}"><p class="text-right">
-                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency></p></td>
-                        </tr>
-                    </template>
-                
-              </tbody></table>
+        <div class="card">
+          <h2>Positions: {{title}}</h2>
+          <div class="card-content container-fluid">
+
+              <div class="row row-header">
+                <div class="col-sm-3">#. Symbol</div>
+                <div class="col-sm-4">Sector</div>
+                <div class="col-sm-2 text-right">Quantity</div>
+                <div class="col-sm-3 text-right">Net Settled $</div>
+              </div>
+
+                <paper-listbox class="row" selected="{{ticker}}" attr-for-selected="ticker">
+                  <template is="dom-repeat" items="{{positions}}" as="p">
+                    <paper-item ticker="[[p.ticker]]">
+                        <div class="col-sm-3 text-left">[[addOne(index)]]. [[p.ticker]] <quote-ss symbol=[[p.ticker]]></quote-ss></div>
+                        <div class="col-sm-4">[[p.sector]]</div>
+                        <div class="col-sm-2 text-right"><p class="text-right">[[p.num_shares]]</p></div>
+                        <div class="col-sm-3 text-right">
+                          <p class="text-right" class$="{{getClasses(p.pos_amt)}}">
+                           <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
+                         </p>
+                         </div>
+                  </paper-item>
+                </template>
+              </paper-listbox>
           </div>
           <div class="card-actions"></div>
         </div>
@@ -59,7 +78,7 @@
 </dom-module>
 
   <script>
- 
+
     Polymer({
       is: 'transaction-positions',
       properties: {
@@ -69,18 +88,33 @@
         client: {
           type: String,
           observer: '_clientChanged'
-        }
+        },
+        least:{
+          type: Boolean
+        },
+        title:{
+          type: String
+        },
+        ticker : {
+          type: String,
+          notify: true
+        },
+      },
+
+      ready: function() {
+        this.params = {client: this.client, least: this.least};
       },
 
       _clientChanged: function() {
-        this.params = { "client": this.client }
+        this.params = { "client": this.client, least: this.least }
       },
-      ready: function() {
-        this.params = {client: 'Billy Speno'};
-      },
+
       handleResponse: function(response) {
         this.positions = response.detail.response.stocks;
         this.client = response.detail.response._id;
+        if(this.title === 'Gainers') {
+          this.ticker = this.positions[0].ticker;
+        }
       },
       addOne: function(idx) {
         return idx+1;

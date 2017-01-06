@@ -14,18 +14,20 @@ html
     link(rel='stylesheet', href='/css/main.css')
 
     script(src='/moment/min/moment.min.js')
-    
+
+    link(rel='import', href='/components/transaction-clients.html')
     link(rel='import', href='/components/dashboard-layout.html')
     link(rel='import', href='/components/quick-quote-layout.html')
 
   body
-    include partials/header
+    app-layout(client="{{client}}")
+      include partials/header
 
-    .container-fluid
-      include partials/flash
-      block content
+      .container-fluid
+        include partials/flash
+        block content
 
-    include partials/footer
+      include partials/footer
 
     script(src='/webcomponentsjs/webcomponents.min.js')
     script(src='/js/lib/jquery-2.2.4.min.js')

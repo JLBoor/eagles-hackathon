@@ -8893,14 +8893,14 @@ button.close {
   border-radius: 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
-.navbar > .container .navbar-brand {
+.navbar > .container-fluid .navbar-brand {
   color: white;
   padding-top: 25px;
   font-size: 48px;
   font-weight: normal;
   transition: 1s;
   opacity: .4; }
-  .navbar > .container .navbar-brand:hover {
+  .navbar > .container-fluid .navbar-brand:hover {
     opacity: 1;
     color: #FEDF01; }
 
@@ -8932,9 +8932,11 @@ button.close {
     border-bottom: 3px solid yellow; }
 
 h1, h2, h3, h4, h5 {
-  color: #002888; }
+  color: #0051a5;
+  font-family: 'Fira Sans';
+  font-weight: 100; }
   h1 > a, h2 > a, h3 > a, h4 > a, h5 > a {
-    color: #154bcc; }
+    color: #0051a5; }
 
 a {
   color: #002144; }
@@ -8944,7 +8946,8 @@ html {
   min-height: 100%; }
 
 body {
-  margin-bottom: 75px; }
+  margin-bottom: 75px;
+  background: #EDF1F5; }
 
 footer {
   position: absolute;
@@ -8975,4 +8978,22 @@ textarea {
   margin-right: 6px; }
 
 .news-list p {
-  color: #707478; }
+  color: #707478;
+  margin-bottom: 40px; }
+
+.dashboard-row {
+  margin-top: 15px; }
+
+.card {
+  margin-top: 15px;
+  background: white;
+  margin: 0px;
+  border: 1px solid #0051a5;
+  border-radius: 5px;
+  border-top-width: 4px;
+  padding: 10px; }
+  .card h2 {
+    color: #0051a5;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 20px; }
