@@ -154,7 +154,7 @@ var _count = function(res) {
   };
 
 exports.stats = (req, res) => {
-      var d = new Date(req.query.date).toISOString;
+      var d = new Date(req.query.date).toISOString();
       Transaction.aggregate([
             { $match: {
                 'Trade_Date_and_Time': d
@@ -163,6 +163,36 @@ exports.stats = (req, res) => {
                 _id: "$Trade_Date_and_Time",
                 count: { $sum: 1  }
             }}
+        ], function (err, result) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            res.send(result[0]);
+        });
+  };
+
+
+exports.getPositionsByClient = (req, res) => {
+      var client = req.query.client;
+      Transaction.aggregate([
+            { $project: {'Ticker_Symbol':1, 'Net_Settlement_Amount':1, 'Quantity':1, 'Counterparty_Name':1} },
+            { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
+            { $group : {_id:{'client':'$Counterparty_Name', 'ticker':'$Ticker_Symbol'}, 
+                        'net_amt': { $sum: '$Net_Settlement_Amount' },
+                        'qty':{$sum:'$Quantity'}}},
+            { $group : { _id :  "$_id.client",
+                  stocks: { 
+                      $push: { 
+                          ticker:"$_id.ticker",
+                          num_shares:'$qty',
+                          pos_amt:'$net_amt'
+                      }
+                  }
+          }},
+          { $unwind: "$stocks"}, 
+          { $sort: {'stocks.pos_amt': -1}},
+          { $group: {_id:"$_id", stocks: {$push:"$stocks"}}}
         ], function (err, result) {
             if (err) {
                 console.log(err);
