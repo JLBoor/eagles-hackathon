@@ -35,6 +35,7 @@
                 <tbody><tr>
                   <th style="width: 10px">#</th>
                   <th>Symbol</th>
+                  <th>Sector</th>
                   <th class="text-right">Postion</th>
                   <th class="text-right">Total $</th>
                 </tr>
@@ -42,6 +43,7 @@
                         <tr >
                           <td>[[addOne(index)]].</td>
                           <td>[[p.ticker]]</td>
+                          <td>[[p.sector]]</td>
                           <td><p class="text-right">[[p.num_shares]]</p></td>
                           <td class$="{{getClasses(p.pos_amt)}}"><p class="text-right">
                             <cpol-currency amount=[[p.pos_amt]]></cpol-currency></p></td>

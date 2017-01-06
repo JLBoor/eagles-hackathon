@@ -176,15 +176,20 @@ exports.stats = (req, res) => {
 exports.getPositionsByClient = (req, res) => {
       var client = req.query.client;
       Transaction.aggregate([
-            { $project: {'Ticker_Symbol':1, 'Net_Settlement_Amount':1, 'Quantity':1, 'Counterparty_Name':1} },
+            { $project: {'Ticker_Symbol':1, 
+                         'Net_Settlement_Amount':1, 
+                         'Quantity':1, 
+                         'Counterparty_Name':1,
+                         'Security_Type_Description':1} },
             { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
-            { $group : {_id:{'client':'$Counterparty_Name', 'ticker':'$Ticker_Symbol'}, 
+            { $group : {_id:{'client':'$Counterparty_Name', 'sector':'$Security_Type_Description', 'ticker':'$Ticker_Symbol'}, 
                         'net_amt': { $sum: '$Net_Settlement_Amount' },
                         'qty':{$sum:'$Quantity'}}},
-            { $group : { _id :  "$_id.client",
+            { $group : { _id :  '$_id.client',
                   stocks: { 
                       $push: { 
-                          ticker:"$_id.ticker",
+                          ticker:'$_id.ticker',
+                          sector:'$_id.sector',
                           num_shares:'$qty',
                           pos_amt:'$net_amt'
                       }
