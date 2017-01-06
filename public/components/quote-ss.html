@@ -5,7 +5,7 @@
 
   <template>
     <style>
-
+      :root { display: inline-block; }
       .text-up{
         color: green;
       }
@@ -24,7 +24,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <template is="dom-if" if="{{quote}}">
-          <p class$="{{getClasses(quote)}}">[[quote]]%</p>
+          (<p class$="{{getClasses(quote)}}">[[quote]]%</p>)
         </template>
   </template>
 </dom-module>
