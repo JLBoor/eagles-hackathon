@@ -196,7 +196,9 @@ exports.getPositionsByClient = (req, res) => {
                   }
           }},
           { $unwind: "$stocks"}, 
-          { $sort: {'stocks.pos_amt': -1}},
+          {$match: {'stocks.pos_amt': {$gt: 0}}},
+          {$sort: {'stocks.pos_amt': -1}},
+          {$limit:5},
           { $group: {_id:"$_id", stocks: {$push:"$stocks"}}}
         ], function (err, result) {
             if (err) {
@@ -214,4 +216,37 @@ exports.getPositionsByClient = (req, res) => {
             res.send(result);
         } else {throw err;}
       });
+  };
+
+  exports.getTopPerformers = (req, res) => {
+      var client = req.query.client;
+      Transaction.aggregate([
+            { $project: {'Ticker_Symbol':1, 'Net_Settlement_Amount':1, 'Quantity':1, 'Counterparty_Name':1, 
+                'Security_Type_Description':1,
+                'Investment_Manager_Name':1} },
+            { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
+            { $group : {_id:{'client':'$Counterparty_Name', 'imgr':'$Investment_Manager_Name'}, 
+                        'net_amt': { $sum: '$Net_Settlement_Amount' },
+                        'qty':{$sum:'$Quantity'}}},
+            { $group : { _id :  "$_id.client",
+                  stocks: { 
+                      $push: { 
+                          i_mgr: '$_id.imgr',
+                          num_shares:{$abs: '$qty'},
+                          pos_amt:'$net_amt'
+                      }
+                  }
+          }},
+          {$unwind: "$stocks"}, 
+          {$match: {'stocks.pos_amt': {$gt: 0}}},
+          {$sort: {'stocks.pos_amt': -1}},
+          {$limit:3},
+          {$group: {_id:"$_id", top_performers: {$push:"$stocks"}}},
+        ], function (err, result) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            res.send(result[0]);
+        });
   };
