@@ -14,6 +14,7 @@
 <link rel="import" href="/components/fifty-two-week.html">
 <link rel="import" href="/components/categories-pie-chart.html">
 <link rel="import" href="./transaction-clients.html">
+<link rel="import" href="./transaction-performers.html">
 
 <dom-module id="dashboard-layout">
 
@@ -51,6 +52,7 @@
           </div>
 
           <div class="col-sm-4">
+            <transaction-perfromers client="{{client}}"></transaction-perfromers>
           </div>
         </div>
 
