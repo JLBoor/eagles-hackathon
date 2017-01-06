@@ -215,3 +215,22 @@ exports.getPositionsByClient = (req, res) => {
         } else {throw err;}
       });
   };
+
+exports.getMostActive = (req, res) => {
+    var date = moment('2014-12-12');
+    console.log( date.toISOString());
+    Transaction.aggregate([
+        { $group: {
+            _id: "$Ticker_Symbol",
+            count: { $sum: 1  }
+        }},
+        { $sort: {'count': -1}},
+        { $limit : 5 }
+    ], function (err, result) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.send(result);
+    });
+}
