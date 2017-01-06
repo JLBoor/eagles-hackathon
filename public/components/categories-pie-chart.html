@@ -13,12 +13,14 @@
         last-response="{{securityTypes}}"
         debounce="500"></iron-ajax>
 
-        <google-chart
-          type='pie'
-          class="card"
-          cols='{{cols}}'
-          rows='{{securityTypes}}'>
-        </google-chart>
+        <div class="card" style="overflow: hidden;">
+          <h2>{{title}}</h2>
+          <google-chart
+            type='pie'
+            cols='{{cols}}'
+            rows='{{securityTypes}}'>
+          </google-chart>
+        </div>
 
   </template>
 </dom-module>
@@ -27,6 +29,9 @@
     Polymer({
       is: 'categories-pie-chart',
       properties: {
+        title : {
+          type: String
+        },
         label : {
           type: String
         },

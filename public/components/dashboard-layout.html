@@ -50,7 +50,7 @@
           </div>
 
           <div class="col-sm-4">
-              <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+              <categories-pie-chart title="Diversity" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
@@ -63,7 +63,7 @@
           <div class="col-sm-5">
             <transaction-positions ticker="{{symbol}}" client="{{client}}" pos-type="Gainers"></transaction-positions>
             <br>
-            <transaction-positions client="{{client}}" least="true" pos-type="Losers"></transaction-positions>
+            <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" pos-type="Losers"></transaction-positions>
           </div>
           <div class="col-sm-3">
             <div class="card">
