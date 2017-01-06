@@ -61,7 +61,7 @@
                     <paper-item ticker="[[p.ticker]]">
                         <div class="col-sm-3 text-left">[[addOne(index)]]. [[p.ticker]] <quote-ss symbol=[[p.ticker]]></quote-ss></div>
                         <div class="col-sm-4">[[p.sector]]</div>
-                        <div class="col-sm-2 text-right"><p class="text-right">[[p.num_shares]]</p></div>
+                        <div class="col-sm-2 text-right"><p class="text-right">[[abs(p.num_shares)]]</p></div>
                         <div class="col-sm-3 text-right">
                           <p class="text-right" class$="{{getClasses(p.pos_amt)}}">
                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
@@ -103,6 +103,10 @@
 
       ready: function() {
         this.params = {client: this.client, least: this.least};
+      },
+
+      abs: function(num) {
+        return Math.abs(num);
       },
 
       _clientChanged: function() {
