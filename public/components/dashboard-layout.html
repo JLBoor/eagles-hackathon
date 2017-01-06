@@ -12,6 +12,7 @@
 <link rel="import" href="/components/news-list.html">
 <link rel="import" href="/components/quote-chart.html">
 <link rel="import" href="/components/fifty-two-week.html">
+<link rel="import" href="/components/categories-pie-chart.html">
 <link rel="import" href="./transaction-clients.html">
 
 <dom-module id="dashboard-layout">
@@ -41,26 +42,31 @@
     </paper-tabs>
 
       <div class="row">
+        <div class="row">
+          <div class="col-sm-4">
+            <transaction-clients client="{{client}}"></transaction-clients>
+          </div>
+
+          <div class="col-sm-4">
+            <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+          </div>
+
+          <div class="col-sm-4">
+          </div>
+        </div>
+
         <div class="col-sm-4">
-          <transaction-clients client="{{client}}"></transaction-clients>
-          <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+          <transaction-positions client="{{client}}"></transaction-positions>
         </div>
         <div class="col-sm-4">
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
         </div>
         <div class="col-sm-4">
-            <transaction-positions client="{{client}}"></transaction-positions>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <transaction-list></transaction-list>
-        </div>
-
-        <div class="col-sm-8">
           <news-list symbol="{{symbol}}"></news-list>
         </div>
+
       </div>
+
 
   </template>
 

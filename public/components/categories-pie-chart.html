@@ -1,0 +1,51 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/google-chart/google-chart.html">
+
+<dom-module id="categories-pie-chart">
+
+  <template>
+
+    <iron-ajax
+        auto
+        url="{{api}}"
+        params='{{params}}'
+        handle-as="json"
+        last-response="{{securityTypes}}"
+        debounce="500"></iron-ajax>
+
+        <google-chart
+          type='pie'
+          cols='{{cols}}'
+          rows='{{securityTypes}}'>
+        </google-chart>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'categories-pie-chart',
+      properties: {
+        label : {
+          type: String
+        },
+        api : {
+          type: String
+        },
+        client : {
+          type: String,
+          observer: '_inputChanged'
+        }
+      },
+
+      ready: function() {
+        this.cols = [{"label": this.label, "type":"string"}, {"label":"# of Equities", "type":"number"}];
+        this.api = this.api;
+      },
+
+      _inputChanged: function() {
+        this.params = { "client": this.client }
+      }
+
+    });
+  </script>
