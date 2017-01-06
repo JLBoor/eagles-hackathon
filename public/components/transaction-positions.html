@@ -1,7 +1,6 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/cpol-currency/cpol-currency.html">
-<link rel="import" href="./transaction-clients.html">
 
 
 <dom-module id="transaction-positions">
@@ -21,8 +20,6 @@
       }
 
     </style>
-
-    <transaction-clients></transaction-clients>
 
     <iron-ajax
         auto
@@ -68,8 +65,13 @@
           type: Array
         },
         client: {
-          type: String
+          type: String,
+          observer: '_clientChanged'
         }
+      },
+
+      _clientChanged: function() {
+        this.params = { "client": this.client }
       },
       ready: function() {
         this.params = {client: 'Billy Speno'};

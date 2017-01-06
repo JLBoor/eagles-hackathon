@@ -2,7 +2,7 @@
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/paper-item/paper-item.html">
 <link rel="import" href="/paper-listbox/paper-listbox.html">
-<link rel="import" href="/paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <dom-module id="transaction-clients">
   <template>
@@ -14,13 +14,13 @@
         last-response="{{clients}}"></iron-ajax>
 
         <template is="dom-if" if="{{clients}}">
-          <paper-dropdown-menu-light label="Clients" no-animations selected-item="null">
-            <paper-listbox class="dropdown-content">
+          <paper-dropdown-menu label="Clients" no-animations selected-item="null" on-iron-select="clientChanged">
+            <paper-listbox class="dropdown-content"  selected="{{selected}}">
               <template is="dom-repeat" items="[[clients]]">
                 <paper-item>[[item]]</paper-item>
               </template>
             </paper-listbox>
-          </paper-dropdown-menu-light>
+          </paper-dropdown-menu>
         </template>
 
   </template>
@@ -29,5 +29,14 @@
   <script>
     Polymer({
       is: 'transaction-clients',
+      properties: {
+        client: {
+          type: String,
+          notify: true
+        }
+      },
+      clientChanged: function(event) {
+        this.client = this.clients[this.selected];
+      }
     });
   </script>
