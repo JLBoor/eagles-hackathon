@@ -1,0 +1,90 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/cpol-currency/cpol-currency.html">
+<link rel="import" href="./transaction-clients.html">
+
+
+<dom-module id="transaction-positions">
+
+  <template>
+
+    <style>
+
+      .text-gain{
+        font-weight: bold;
+        color: green;
+      }
+
+      .text-loss{
+        font-weight: bold;
+        color: red;
+      }
+
+    </style>
+
+    <transaction-clients></transaction-clients>
+
+    <iron-ajax
+        auto
+        url="/api/transactions/positions"
+        params='{{params}}'
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+
+        <div>
+          <h2>{{client}}: Positions</h2>
+          <div class="card-content">
+            <table class="table table-hover table-condensed">
+                <tbody><tr>
+                  <th style="width: 10px">#</th>
+                  <th>Symbol</th>
+                  <th class="text-right">Postion</th>
+                  <th class="text-right">Total $</th>
+                </tr>
+                <template is="dom-repeat" items="{{positions}}" as="p">
+                        <tr >
+                          <td>[[addOne(index)]].</td>
+                          <td>[[p.ticker]]</td>
+                          <td><p class="text-right">[[p.num_shares]]</p></td>
+                          <td class$="{{getClasses(p.pos_amt)}}"><p class="text-right">
+                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency></p></td>
+                        </tr>
+                    </template>
+                
+              </tbody></table>
+          </div>
+          <div class="card-actions"></div>
+        </div>
+
+  </template>
+</dom-module>
+
+  <script>
+ 
+    Polymer({
+      is: 'transaction-positions',
+      properties: {
+        positions : {
+          type: Array
+        },
+        client: {
+          type: String
+        }
+      },
+      ready: function() {
+        this.params = {client: 'Billy Speno'};
+      },
+      handleResponse: function(response) {
+        this.positions = response.detail.response.stocks;
+        this.client = response.detail.response._id;
+      },
+      addOne: function(idx) {
+        return idx+1;
+      },
+      getClasses: function (amt) {
+        var classes = 'text-loss';
+        if(amt > 0) classes = 'text-gain';
+        return classes;
+      }
+    });
+  </script>

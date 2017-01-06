@@ -201,3 +201,12 @@ exports.getPositionsByClient = (req, res) => {
             res.send(result[0]);
         });
   };
+
+  exports.getClients = (req, res) => {
+    Transaction.distinct( 'Counterparty_Name' ).sort()
+      .exec(function(err, result) {
+        if (!err) {
+            res.send(result);
+        } else {throw err;}
+      });
+  };
