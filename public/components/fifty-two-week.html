@@ -5,7 +5,11 @@
 
   <template>
 
-    <h2>52-Week</h2>
+  <style>
+    .col-sm-6 { font-size: 25px; }
+    .high { color: #008500; }
+    .low { color: #c71d06; }
+  </style>
 
     <iron-ajax
         auto
@@ -15,8 +19,18 @@
         debounce="500"
         on-response="handleResponse"></iron-ajax>
 
-      <div>high: {{quote.52WeekHigh}}</div>
-      <div>low: {{quote.52WeekLow}}</div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6 text-center high">
+            <div class="fa fa-arrow-up"></div>
+            {{quote.52WeekHigh}}
+          </div>
+          <div class="col-sm-6 text-center low">
+            <div class="fa fa-arrow-down"></div>
+            {{quote.52WeekLow}}
+          </div>
+        </div>
+      </div>
 
   </template>
 </dom-module>

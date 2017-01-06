@@ -59,6 +59,10 @@
           <transaction-positions ticker="{{symbol}}" client="{{client}}"></transaction-positions>
         </div>
         <div class="col-sm-3">
+            <h2>Quote: {{symbol}}</h2>
+            <h5 class=text-center>52-week</h5>
+            <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+            <h5 class=text-center>Last month</h5>
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
         </div>
         <div class="col-sm-4">
@@ -77,11 +81,14 @@
       is: 'dashboard-layout',
 
       ready: function() {
-          this.fromDate = moment().format('YYYY-MM-DD');
+          this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
           this.toDate = moment().format('YYYY-MM-DD');
       },
 
       _onTabChanged: function() {
+        // Temporarly disabled rabs
+        return;
+
         switch(this.$.tabs.selected) {
           case 0:
             this.fromDate = moment().format('YYYY-MM-DD');
