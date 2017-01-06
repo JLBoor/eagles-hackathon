@@ -7,6 +7,18 @@
 <dom-module id="transaction-clients">
   <template>
 
+<style>
+  :root { padding-top: 15px; }
+  paper-dropdown-menu {
+    --paper-dropdown-menu-input {
+      --paper-input-container-input-color: white;
+      --paper-input-container-color: white;
+      --paper-input-container-focus-color: #FEDF01;
+    }
+  }
+</style>
+
+
     <iron-ajax
         auto
         url="/api/transactions/clients"
@@ -29,14 +41,9 @@
   <script>
     Polymer({
       is: 'transaction-clients',
-      properties: {
-        client: {
-          type: String,
-          notify: true
-        }
-      },
       clientChanged: function(event) {
         this.client = this.clients[this.selected];
+        this.fire('client-selected', {client: this.client})
       }
     });
   </script>
