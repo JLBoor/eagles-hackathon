@@ -44,41 +44,40 @@
     </paper-tabs>
     
       <div class="row">
-        <div class="row dashboard-row">
-          <div class="col-sm-4">
-            <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
-            
+        <section class="col-lg-8 connectedSortable ui-sortable">
+
+          <div class="row dashboard-row">
+            <div class="col-sm-6">
+              <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
+            </div>
+            <div class="col-sm-6">
+             <categories-pie-chart title="Sector: Gainers" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
+            </div>
           </div>
 
-          <div class="col-sm-4">
-            <categories-pie-chart title="Sector: Gainers" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
-              
+          <div class="row dashboard-row">
+            <div class="col-sm-6">
+              <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
+            </div>
+            <div class="col-sm-6">
+             <categories-pie-chart title="Sector: Losers" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+            </div>
           </div>
+          
+          <div class="row dashboard-row">
+            <div class="col-sm-12">
+              <news-list symbol="{{symbol}}"></news-list>
+              </div>
+            </div>
 
-          <div class="col-sm-4">
+          
+        </section>
+
+        <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="row dashboard-row">
             <transaction-perfromers client="{{client}}"></transaction-perfromers>
           </div>
-        </div>
-
-        <div class="row dashboard-row">
-          <div class="col-sm-4">
-            <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
-          </div>
-          <div class="col-sm-4">
-            <categories-pie-chart title="Sector: Losers" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
-            
-          </div>
-         
-          <div class="col-sm-4">
-            <div class="card">
-            <active-stock client="{{client}}"></active-stock>
-              </div>
-          </div>
-
-        </div>
-
-        <div class="row dashboard-row">
-            <div class="col-sm-4">
+          <div class="row dashboard-row">
             <div class="card">
               <h2>Quote: {{symbol}}</h2>
               <h5 class=text-center>52-week</h5>
@@ -87,12 +86,19 @@
               <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
             </div>
 
-            </div>
-             <div class="col-sm-8">
-            <news-list symbol="{{symbol}}"></news-list>
+            
           </div>
+
+          <div class="row dashboard-row">
+              <div class="card">
+                <active-stock client="{{client}}"></active-stock>
+              </div>
+            </div>
+
+        </section>
         </div>
-      </div>
+        
+       
 
   </template>
 
