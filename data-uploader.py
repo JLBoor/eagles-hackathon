@@ -3,7 +3,8 @@
 import requests
 
 dataFile="../rbc_sectran.csv"
-url="http://localhost:3000/api/transactions"
+#url="http://localhost:3000/api/transactions"
+url="https://eagles-app.mybluemix.net/api/transactions"
 
 def postData( line ):
     try:
