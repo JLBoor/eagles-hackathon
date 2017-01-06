@@ -29,7 +29,10 @@
         font-size: 12px;
         padding: 0;
         --paper-item-selected: {
-          background-color: #D0DBE5;
+          background-color: #EDF1F5;
+        };
+        --paper-item-focused: {
+          background-color: #EDF1F5;
         }
       }
 
@@ -42,15 +45,15 @@
         handle-as="json"
         on-response="handleResponse"></iron-ajax>
 
-        <div>
-          <h2>{{client}}: Positions</h2>
+        <div class="card">
+          <h2>Positions: {{posType}}</h2>
           <div class="card-content container-fluid">
 
               <div class="row row-header">
                 <div class="col-sm-3">#. Symbol</div>
                 <div class="col-sm-4">Sector</div>
-                <div class="col-sm-2 text-right">Postion</div>
-                <div class="col-sm-3 text-right">Total $</div>
+                <div class="col-sm-2 text-right">Quantity</div>
+                <div class="col-sm-3 text-right">Net Settled $</div>
               </div>
 
                 <paper-listbox class="row" selected="{{ticker}}" attr-for-selected="ticker">
@@ -86,6 +89,12 @@
           type: String,
           observer: '_clientChanged'
         },
+        least:{
+          type: Boolean
+        },
+        posType:{
+          type: String
+        },
         ticker : {
           type: String,
           notify: true
@@ -98,11 +107,11 @@
 
       ready: function() {
         this.selected = 0;
-        this.params = {client: 'Billy Speno'};
+        this.params = {client: this.client, least: this.least};
       },
 
       _clientChanged: function() {
-        this.params = { "client": this.client }
+        this.params = { "client": this.client, least: this.least }
       },
 
       handleResponse: function(response) {

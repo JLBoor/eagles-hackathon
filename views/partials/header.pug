@@ -1,5 +1,5 @@
 .navbar.navbar-default
-  .container
+  .container-fluid
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
         span.sr-only Toggle navigation
@@ -16,10 +16,8 @@
           a(href='/quick-quote') Quick Quote
       ul.nav.navbar-nav.navbar-right
         if !user
-          li(class=(title == 'Login') ? 'active' : undefined)
-            a(href='/login') Login
-          li(class=(title == 'Create Account') ? 'active' : undefined)
-            a(href='/signup') Create Account
+          transaction-clients
+
         else
           li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')

@@ -8,8 +8,10 @@
 // Scaffolding
 // -------------------------
 h1, h2, h3, h4, h5 {
-  color: $bright-blue;
-  & > a { color: $bright-blue-2; }
+  color: $bright-blue-3;
+  font-family: 'Fira Sans';
+  font-weight: 100;
+  & > a { color: $bright-blue-3; }
 }
 
 a { color: $dark-blue; }
@@ -21,6 +23,7 @@ html {
 
 body {
   margin-bottom: 75px;
+  background: #EDF1F5;
 }
 
 footer {
@@ -79,4 +82,25 @@ textarea {
 
 .news-list p {
   color: $silver;
+  margin-bottom: 40px;
+}
+
+// Card
+// -------------------------
+
+.card {
+  $card-color: $bright-blue-3;
+  h2 {
+    color: $card-color;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  margin-top: 15px;
+  background: white;
+  margin: 0px;
+  border: 1px solid $card-color;
+  border-radius: 5px;
+  border-top-width: 4px;
+  padding: 10px;
 }

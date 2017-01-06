@@ -120,6 +120,7 @@ app.get('/api/transactions', transactionsController.get);
 app.get('/api/transactions/stats', transactionsController.stats);
 app.get('/api/transactions/positions', transactionsController.getPositionsByClient);
 app.get('/api/transactions/active', transactionsController.getMostActive);
+app.get('/api/transactions/performers', transactionsController.getTopPerformers);
 app.get('/api/transactions/clients', transactionsController.getClients);
 app.post('/api/transactions', transactionsController.save);
 app.delete('/api/transactions', transactionsController.delete);
