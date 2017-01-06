@@ -12,6 +12,7 @@
 <link rel="import" href="/components/news-list.html">
 <link rel="import" href="/components/quote-chart.html">
 <link rel="import" href="/components/fifty-two-week.html">
+<link rel="import" href="/components/categories-pie-chart.html">
 
 <dom-module id="dashboard-layout">
 
@@ -52,10 +53,14 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
+          <categories-pie-chart client="Tamesha Hamby TRUST"></categories-pie-chart>
+        </div>
+
+        <div class="col-sm-4">
           <transaction-list></transaction-list>
         </div>
 
-        <div class="col-sm-8">
+        <div class="col-sm-4">
           <news-list symbol="{{symbol}}"></news-list>
         </div>
       </div>

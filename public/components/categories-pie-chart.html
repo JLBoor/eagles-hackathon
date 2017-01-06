@@ -1,0 +1,42 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/google-chart/google-chart.html">
+
+<dom-module id="categories-pie-chart">
+
+  <template>
+
+    <h2>Pie Chart</h2>
+
+    <iron-ajax
+        auto
+        url="/api/categories/securityType"
+        params='{{params}}'
+        handle-as="json"
+        last-response="{{securityTypes}}"
+        debounce="500"></iron-ajax>
+
+        <google-chart
+          type='pie'
+          cols='[{"label":"Category", "type":"string"}, {"label":"# of Equities", "type":"number"}]'
+          rows='{{securityTypes}}'>
+        </google-chart>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'categories-pie-chart',
+      properties: {
+        client : {
+          type: String,
+          observer: '_inputChanged'
+        }
+      },
+
+      _inputChanged: function() {
+        this.params = { "client": "Tamesha Hamby TRUST" }
+      }
+
+    });
+  </script>
