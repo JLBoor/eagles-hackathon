@@ -29,14 +29,9 @@
   <script>
     Polymer({
       is: 'transaction-clients',
-      properties: {
-        client: {
-          type: String,
-          notify: true
-        }
-      },
       clientChanged: function(event) {
         this.client = this.clients[this.selected];
+        this.fire('client-selected', {client: this.client})
       }
     });
   </script>

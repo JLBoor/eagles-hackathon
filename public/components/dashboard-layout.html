@@ -41,10 +41,11 @@
       <paper-tab>Last Year</paper-tab>
     </paper-tabs>
 
+
+
       <div class="row">
         <div class="row">
           <div class="col-sm-4">
-            <transaction-clients client="{{client}}"></transaction-clients>
           </div>
 
           <div class="col-sm-4">
@@ -71,7 +72,6 @@
 
       </div>
 
-
   </template>
 
 </dom-module>
@@ -83,6 +83,10 @@
       ready: function() {
           this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
           this.toDate = moment().format('YYYY-MM-DD');
+          var that =this;
+          addEventListener('client-selected', function(e) {
+              that.client = e.detail.client;
+          });
       },
 
       _onTabChanged: function() {
