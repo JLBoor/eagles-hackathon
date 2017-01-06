@@ -174,18 +174,18 @@ exports.stats = (req, res) => {
 
 function getLeastPositions(req, res, client){
   Transaction.aggregate([
-            { $project: {'Ticker_Symbol':1, 
-                         'Net_Settlement_Amount':1, 
-                         'Quantity':1, 
+            { $project: {'Ticker_Symbol':1,
+                         'Net_Settlement_Amount':1,
+                         'Quantity':1,
                          'Counterparty_Name':1,
                          'Security_Type_Description':1} },
             { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
-            { $group : {_id:{'client':'$Counterparty_Name', 'sector':'$Security_Type_Description', 'ticker':'$Ticker_Symbol'}, 
+            { $group : {_id:{'client':'$Counterparty_Name', 'sector':'$Security_Type_Description', 'ticker':'$Ticker_Symbol'},
                         'net_amt': { $sum: '$Net_Settlement_Amount' },
                         'qty':{$sum:'$Quantity'}}},
             { $group : { _id :  '$_id.client',
-                  stocks: { 
-                      $push: { 
+                  stocks: {
+                      $push: {
                           ticker:'$_id.ticker',
                           sector:'$_id.sector',
                           num_shares:{ $abs: '$qty'},
@@ -193,7 +193,7 @@ function getLeastPositions(req, res, client){
                       }
                   }
           }},
-          { $unwind: "$stocks"}, 
+          { $unwind: "$stocks"},
           {$match: {'stocks.pos_amt': {$lt: 0}}},
           {$sort: {'stocks.pos_amt': 1}},
           {$limit:5},
@@ -210,7 +210,7 @@ function getLeastPositions(req, res, client){
 exports.getPositionsByClient = (req, res) => {
       var client = req.query.client;
       var least = req.query.least;
-      
+
       if(least === 'true'){
         getLeastPositions(req, res, client);
       }else{
@@ -259,35 +259,54 @@ exports.getPositionsByClient = (req, res) => {
       });
   };
 
-  exports.getTopPerformers = (req, res) => {
-      var client = req.query.client;
-      Transaction.aggregate([
-            { $project: {'Ticker_Symbol':1, 'Net_Settlement_Amount':1, 'Quantity':1, 'Counterparty_Name':1, 
-                'Security_Type_Description':1,
-                'Investment_Manager_Name':1} },
-            { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
-            { $group : {_id:{'client':'$Counterparty_Name', 'imgr':'$Investment_Manager_Name'}, 
-                        'net_amt': { $sum: '$Net_Settlement_Amount' },
-                        'qty':{$sum:'$Quantity'}}},
-            { $group : { _id :  "$_id.client",
-                  stocks: { 
-                      $push: { 
-                          i_mgr: '$_id.imgr',
-                          num_shares:{$abs: '$qty'},
-                          pos_amt:'$net_amt'
-                      }
-                  }
-          }},
-          {$unwind: "$stocks"}, 
-          {$match: {'stocks.pos_amt': {$gt: 0}}},
-          {$sort: {'stocks.pos_amt': -1}},
-          {$limit:3},
-          {$group: {_id:"$_id", top_performers: {$push:"$stocks"}}},
-        ], function (err, result) {
-            if (err) {
-                console.log(err);
-                return;
+exports.getMostActive = (req, res) => {
+    var date = moment('2014-12-12');
+    console.log( date.toISOString());
+    Transaction.aggregate([
+        { $group: {
+            _id: "$Ticker_Symbol",
+            count: { $sum: 1  }
+        }},
+        { $sort: {'count': -1}},
+        { $limit : 5 }
+    ], function (err, result) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.send(result);
+    });
+}
+
+exports.getTopPerformers = (req, res) => {
+    var client = req.query.client;
+    Transaction.aggregate([
+        { $project: {'Ticker_Symbol':1, 'Net_Settlement_Amount':1, 'Quantity':1, 'Counterparty_Name':1,
+            'Security_Type_Description':1,
+            'Investment_Manager_Name':1} },
+        { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
+        { $group : {_id:{'client':'$Counterparty_Name', 'imgr':'$Investment_Manager_Name'},
+            'net_amt': { $sum: '$Net_Settlement_Amount' },
+            'qty':{$sum:'$Quantity'}}},
+        { $group : { _id :  "$_id.client",
+            stocks: {
+                $push: {
+                    i_mgr: '$_id.imgr',
+                    num_shares:{$abs: '$qty'},
+                    pos_amt:'$net_amt'
+                }
             }
-            res.send(result[0]);
-        });
-  };
+        }},
+        {$unwind: "$stocks"},
+        {$match: {'stocks.pos_amt': {$gt: 0}}},
+        {$sort: {'stocks.pos_amt': -1}},
+        {$limit:3},
+        {$group: {_id:"$_id", top_performers: {$push:"$stocks"}}},
+    ], function (err, result) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.send(result[0]);
+    });
+};
