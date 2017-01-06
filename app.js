@@ -132,6 +132,7 @@ app.get('/api/snapshot', quotesController.snapshot);
 
 app.get('/api/categories/currencies', categoriesController.settlementCurrency);
 app.get('/api/categories/securityType', categoriesController.securityType);
+app.get('/api/categories/securityTypeByAmt', categoriesController.securityTypeByAmt);
 
 /**
  * Primary app routes.
