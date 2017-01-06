@@ -190,7 +190,7 @@ exports.getPositionsByClient = (req, res) => {
                       $push: { 
                           ticker:'$_id.ticker',
                           sector:'$_id.sector',
-                          num_shares:'$qty',
+                          num_shares:{ $abs: '$qty'},
                           pos_amt:'$net_amt'
                       }
                   }
