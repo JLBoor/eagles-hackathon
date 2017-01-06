@@ -30,7 +30,8 @@ exports.securityType = (req, res) => {
           { $project: {'Security_Type_Description': 1, 'Counterparty_Name':1, 'Net_Settlement_Amount': 1} },
           { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
           { $group : {_id:'$Security_Type_Description', count:{$sum:'$Net_Settlement_Amount'}}},
-          { $match: {'count': {$lt: 0}}}],
+          { $match: {'count': {$lt: 0}}},
+          { $limit: 5}],
         function (err, result) {
           if (err) {
             console.log(err);
@@ -48,7 +49,8 @@ exports.securityTypeByAmt = (req, res) => {
           { $project: {'Security_Type_Description': 1, 'Counterparty_Name':1, 'Net_Settlement_Amount': 1} },
           { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
           { $group : {_id:'$Security_Type_Description', count:{$sum:'$Net_Settlement_Amount'}}},
-          { $match: {'count': {$gt: 0}}}],
+          { $match: {'count': {$gt: 0}}},
+          { $limit: 5 }],
         function (err, result) {
           if (err) {
             console.log(err);
