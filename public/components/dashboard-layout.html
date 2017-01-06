@@ -55,10 +55,10 @@
           </div>
         </div>
 
-        <div class="col-sm-4">
-          <transaction-positions client="{{client}}"></transaction-positions>
+        <div class="col-sm-5">
+          <transaction-positions ticker="{{symbol}}" client="{{client}}"></transaction-positions>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
         </div>
         <div class="col-sm-4">
@@ -77,7 +77,6 @@
       is: 'dashboard-layout',
 
       ready: function() {
-          this.symbol = 'AAPL';
           this.fromDate = moment().format('YYYY-MM-DD');
           this.toDate = moment().format('YYYY-MM-DD');
       },

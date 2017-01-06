@@ -19,6 +19,10 @@
         color: red;
       }
 
+      paper-item {
+        font-size: 12px;
+      }
+
     </style>
 
     <iron-ajax
@@ -30,27 +34,34 @@
 
         <div>
           <h2>{{client}}: Positions</h2>
-          <div class="card-content">
-            <table class="table table-hover table-condensed">
-                <tbody><tr>
-                  <th style="width: 10px">#</th>
-                  <th>Symbol</th>
-                  <th>Sector</th>
-                  <th class="text-right">Postion</th>
-                  <th class="text-right">Total $</th>
-                </tr>
-                <template is="dom-repeat" items="{{positions}}" as="p">
-                        <tr >
-                          <td>[[addOne(index)]].</td>
-                          <td>[[p.ticker]]</td>
-                          <td>[[p.sector]]</td>
-                          <td><p class="text-right">[[p.num_shares]]</p></td>
-                          <td class$="{{getClasses(p.pos_amt)}}"><p class="text-right">
-                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency></p></td>
-                        </tr>
-                    </template>
-                
-              </tbody></table>
+          <div class="card-content container-fluid">
+
+              <div class="row">
+                <div class="col-sm-1">#</div>
+                <div class="col-sm-2">Symbol</div>
+                <div class="col-sm-3">Sector</div>
+                <div class="col-sm-2">Postion</div>
+                <div class="col-sm-4">Total $</div>
+              </div>
+
+                <paper-listbox selected="{{ticker}}" attr-for-selected="ticker">
+                  <template is="dom-repeat" items="{{positions}}" as="p">
+
+                    <paper-item ticker="[[p.ticker]]">
+                      <div class="row">
+                        <div class="col-sm-1">[[addOne(index)]].</div>
+                        <div class="col-sm-2">[[p.ticker]]</div>
+                        <div class="col-sm-3">[[p.sector]]</div>
+                        <div class="col-sm-2"><p class="text-right">[[p.num_shares]]</p></div>
+                        <div class="col-sm-4">
+                          <p class="text-right" class$="{{getClasses(p.pos_amt)}}">
+                           <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
+                         </p>
+                         </div>
+                      </div>
+                  </paper-item>
+                </template>
+              </paper-listbox>
           </div>
           <div class="card-actions"></div>
         </div>
@@ -59,7 +70,7 @@
 </dom-module>
 
   <script>
- 
+
     Polymer({
       is: 'transaction-positions',
       properties: {
@@ -69,15 +80,26 @@
         client: {
           type: String,
           observer: '_clientChanged'
-        }
+        },
+        ticker : {
+          type: String,
+          notify: true
+        },
+      },
+
+      a: function() {
+        console.log('aa');
+      },
+
+      ready: function() {
+        this.selected = 0;
+        this.params = {client: 'Billy Speno'};
       },
 
       _clientChanged: function() {
         this.params = { "client": this.client }
       },
-      ready: function() {
-        this.params = {client: 'Billy Speno'};
-      },
+
       handleResponse: function(response) {
         this.positions = response.detail.response.stocks;
         this.client = response.detail.response._id;
