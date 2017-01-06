@@ -48,15 +48,21 @@
       <app-datepicker-dialog id="toDatepicker" with-backdrop date="{{toDate}}"></app-datepicker-dialog>
 
     </div>
-    <div class="row">
+    <div class="row dashboard-row">
       <div class="col-sm-10">
-        <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+        <div class="card">
+          <h2 style="margin-bottom: 0;">Candlestick chart</h5>
+          <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+        </div>
       </div>
       <div class="col-sm-2">
-        <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+        <div class="card">
+          <h2>52-week</h5>
+          <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+        </div>
       </div>
     </div>
-      <div class="row">
+      <div class="row dashboard-row">
         <div class="col-sm-12">
           <news-list symbol="{{symbol}}"></news-list>
         </div>
