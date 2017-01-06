@@ -188,7 +188,7 @@ function getLeastPositions(req, res, client){
                       $push: {
                           ticker:'$_id.ticker',
                           sector:'$_id.sector',
-                          num_shares:{ $abs: '$qty'},
+                          num_shares: '$qty',
                           pos_amt:'$net_amt'
                       }
                   }
@@ -230,7 +230,7 @@ exports.getPositionsByClient = (req, res) => {
                       $push: { 
                           ticker:'$_id.ticker',
                           sector:'$_id.sector',
-                          num_shares:{ $abs: '$qty'},
+                          num_shares: '$qty',
                           pos_amt:'$net_amt'
                       }
                   }
@@ -294,7 +294,7 @@ exports.getTopPerformers = (req, res) => {
             stocks: {
                 $push: {
                     i_mgr: '$_id.imgr',
-                    num_shares:{$abs: '$qty'},
+                    num_shares:'$qty',
                     pos_amt:'$net_amt'
                 }
             }
