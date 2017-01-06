@@ -19,8 +19,17 @@
         color: red;
       }
 
+      .row-header {
+        border-bottom: 1px solid black;
+        font-weight: bold;
+      }
+
       paper-item {
         font-size: 12px;
+        padding: 0;
+        --paper-item-selected: {
+          background-color: #D0DBE5;
+        }
       }
 
     </style>
@@ -36,29 +45,27 @@
           <h2>{{client}}: Positions</h2>
           <div class="card-content container-fluid">
 
-              <div class="row">
+              <div class="row row-header">
                 <div class="col-sm-1">#</div>
                 <div class="col-sm-2">Symbol</div>
-                <div class="col-sm-3">Sector</div>
-                <div class="col-sm-2">Postion</div>
-                <div class="col-sm-4">Total $</div>
+                <div class="col-sm-4">Sector</div>
+                <div class="col-sm-2 text-right">Postion</div>
+                <div class="col-sm-3 text-right">Total $</div>
               </div>
 
-                <paper-listbox selected="{{ticker}}" attr-for-selected="ticker">
+                <paper-listbox class="row" selected="{{ticker}}" attr-for-selected="ticker">
                   <template is="dom-repeat" items="{{positions}}" as="p">
 
                     <paper-item ticker="[[p.ticker]]">
-                      <div class="row">
-                        <div class="col-sm-1">[[addOne(index)]].</div>
+                        <div class="col-sm-1 text-left">[[addOne(index)]].</div>
                         <div class="col-sm-2">[[p.ticker]]</div>
-                        <div class="col-sm-3">[[p.sector]]</div>
-                        <div class="col-sm-2"><p class="text-right">[[p.num_shares]]</p></div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4">[[p.sector]]</div>
+                        <div class="col-sm-2 text-right"><p class="text-right">[[p.num_shares]]</p></div>
+                        <div class="col-sm-3 text-right">
                           <p class="text-right" class$="{{getClasses(p.pos_amt)}}">
                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
                          </p>
                          </div>
-                      </div>
                   </paper-item>
                 </template>
               </paper-listbox>
