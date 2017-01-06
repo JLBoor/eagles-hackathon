@@ -14,6 +14,7 @@
 <link rel="import" href="/components/fifty-two-week.html">
 <link rel="import" href="/components/categories-pie-chart.html">
 <link rel="import" href="./transaction-clients.html">
+<link rel="import" href="./active-stock.html">
 <link rel="import" href="./transaction-performers.html">
 
 <dom-module id="dashboard-layout">
@@ -51,7 +52,7 @@
           </div>
 
           <div class="col-sm-4">
-              <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+              <categories-pie-chart title="Diversity" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
@@ -64,7 +65,7 @@
           <div class="col-sm-5">
             <transaction-positions ticker="{{symbol}}" client="{{client}}" pos-type="Gainers"></transaction-positions>
             <br>
-            <transaction-positions client="{{client}}" least="true" pos-type="Losers"></transaction-positions>
+            <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" pos-type="Losers"></transaction-positions>
           </div>
           <div class="col-sm-3">
             <div class="card">
@@ -75,8 +76,13 @@
               <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-2">
             <news-list symbol="{{symbol}}"></news-list>
+          </div>
+          <div class="col-sm-2">
+            <div class="card">
+            <active-stock symbol="{{symbol}}"></active-stock>
+              </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,72 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/paper-button/paper-button.html">
+
+<dom-module id="active-stock">
+
+  <template>
+
+    <style>
+
+      .text-top{
+        font-weight: bold;
+        color: green;
+      }
+
+      .text-nor{
+        font-weight: normal;
+        color: black;
+      }
+
+      .items > li {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <iron-ajax
+        auto
+        url="/api/transactions/active"
+        params='{{params}}'
+        handle-as="json"
+        on-response="handleResponse"></iron-ajax>
+
+        <div>
+          <h2>Most Active Stocks</h2>
+          <div class="card-content text-top items">
+            <ul>
+            <template is="dom-repeat" items="{{stock}}" as="stock-item">
+              <li class='text-left'> {{stock-item._id}} - <small>{{stock-item.count}}</small></li>
+            </template>
+              </ul>
+          </div>
+          <div class="card-actions"></div>
+        </div>
+
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'active-stock',
+      properties: {
+        symbol : {
+          type: String,
+          observer: '_symbolChanged'
+        }
+      },
+
+      _symbolChanged: function() {
+        this.params = { "symbol": this.symbol }
+      },
+
+      handleResponse: function(response) {
+        this.stock = response.detail.response;
+      },
+
+      getClasses: function (amt) {
+        var classes = 'text-loss';
+        if(amt > 0) classes = 'text-gain';
+        return classes;
+      }
+    });
+  </script>

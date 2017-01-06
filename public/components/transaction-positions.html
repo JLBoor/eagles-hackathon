@@ -29,10 +29,10 @@
         font-size: 12px;
         padding: 0;
         --paper-item-selected: {
-          background-color: #EDF1F5;
-        };
+          background-color: #dae9ff;
+        }
         --paper-item-focused: {
-          background-color: #EDF1F5;
+          background-color: #dae9ff;
         }
       }
 
@@ -101,12 +101,7 @@
         },
       },
 
-      a: function() {
-        console.log('aa');
-      },
-
       ready: function() {
-        this.selected = 0;
         this.params = {client: this.client, least: this.least};
       },
 
@@ -117,6 +112,9 @@
       handleResponse: function(response) {
         this.positions = response.detail.response.stocks;
         this.client = response.detail.response._id;
+        if(this.posType === 'Gainers') {
+          this.ticker = this.positions[0].ticker;
+        }
       },
       addOne: function(idx) {
         return idx+1;
