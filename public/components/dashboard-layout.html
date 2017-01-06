@@ -51,7 +51,7 @@
           </div>
 
           <div class="col-sm-4">
-              <categories-pie-chart title="Diversity" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+              <categories-pie-chart title="Diversity by sector" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
@@ -71,7 +71,7 @@
               <h2>Quote: {{symbol}}</h2>
               <h5 class=text-center>52-week</h5>
               <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
-              <h5 class=text-center>Last month</h5>
+              <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
               <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
             </div>
           </div>
