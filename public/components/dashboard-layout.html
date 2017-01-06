@@ -47,7 +47,7 @@
           </div>
 
           <div class="col-sm-4">
-            <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+              <categories-pie-chart label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
           </div>
 
           <div class="col-sm-4">
@@ -58,11 +58,13 @@
           <transaction-positions ticker="{{symbol}}" client="{{client}}"></transaction-positions>
         </div>
         <div class="col-sm-3">
+          <div class="card">
             <h2>Quote: {{symbol}}</h2>
             <h5 class=text-center>52-week</h5>
             <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
             <h5 class=text-center>Last month</h5>
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+          </div>
         </div>
         <div class="col-sm-4">
           <news-list symbol="{{symbol}}"></news-list>
