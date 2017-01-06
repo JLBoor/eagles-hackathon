@@ -12,6 +12,7 @@
 <link rel="import" href="/components/news-list.html">
 <link rel="import" href="/components/quote-chart.html">
 <link rel="import" href="/components/fifty-two-week.html">
+<link rel="import" href="./transaction-clients.html">
 
 <dom-module id="dashboard-layout">
 
@@ -41,13 +42,14 @@
 
       <div class="row">
         <div class="col-sm-4">
+          <transaction-clients client="{{client}}"></transaction-clients>
           <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
         </div>
         <div class="col-sm-4">
             <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
         </div>
         <div class="col-sm-4">
-            <transaction-positions></transaction-positions>
+            <transaction-positions client="{{client}}"></transaction-positions>
         </div>
       </div>
       <div class="row">
