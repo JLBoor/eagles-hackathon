@@ -1,6 +1,7 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/cpol-currency/cpol-currency.html">
+<link rel="import" href="./quote-ss.html">
 
 
 <dom-module id="transaction-positions">
@@ -46,11 +47,10 @@
 
                 <paper-listbox selected="{{ticker}}" attr-for-selected="ticker">
                   <template is="dom-repeat" items="{{positions}}" as="p">
-
                     <paper-item ticker="[[p.ticker]]">
                       <div class="row">
                         <div class="col-sm-1">[[addOne(index)]].</div>
-                        <div class="col-sm-2">[[p.ticker]]</div>
+                        <div class="col-sm-2">[[p.ticker]] <quote-ss symbol=[[p.ticker]]></quote-ss></div>
                         <div class="col-sm-3">[[p.sector]]</div>
                         <div class="col-sm-2"><p class="text-right">[[p.num_shares]]</p></div>
                         <div class="col-sm-4">

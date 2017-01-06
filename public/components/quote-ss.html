@@ -1,0 +1,60 @@
+<link rel="import" href="/iron-ajax/iron-ajax.html">
+<link rel="import" href="/google-chart/google-chart.html">
+
+<dom-module id="quote-ss">
+
+  <template>
+    <style>
+
+      .text-up{
+        color: green;
+      }
+
+      .text-down{
+        color: red;
+      }
+
+    </style>
+    <iron-ajax
+        auto
+        url="/api/snapshot"
+        params='{{params}}'
+        handle-as="json"
+        debounce="500"
+        on-response="handleResponse"></iron-ajax>
+
+        <template is="dom-if" if="{{quote}}">
+          <p class$="{{getClasses(quote)}}">[[quote]]%</p>
+        </template>
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'quote-ss',
+      properties: {
+        symbol : {
+          type: String,
+        },
+        quote: {
+          type: Number
+        }
+      },
+
+      ready: function() {
+        this.params = {symbol: this.symbol};
+      },
+
+      handleResponse: function(response) {
+        var r = response.detail.response;
+        var cip = (r.changeInPercent != null)?r.changeInPercent:0;
+        this.quote = (cip * 100).toFixed(2);
+      },
+
+      getClasses: function (amt) {
+        var classes = 'text-down';
+        if(amt > 0) classes = 'text-up';
+        return classes;
+      }
+    });
+  </script>
