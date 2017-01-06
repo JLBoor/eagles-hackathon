@@ -49,18 +49,22 @@
     Polymer({
       is: 'active-stock',
       properties: {
-        symbol : {
+         client: {
           type: String,
-          observer: '_symbolChanged'
+          observer: '_clientChanged'
         }
       },
 
-      _symbolChanged: function() {
-        this.params = { "symbol": this.symbol }
+      _clientChanged: function() {
+        this.params = { "client": this.client}
       },
 
       handleResponse: function(response) {
         this.stock = response.detail.response;
+      },
+
+      ready: function() {
+        this.params = {client: this.client};
       },
 
       getClasses: function (amt) {

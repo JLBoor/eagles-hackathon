@@ -262,7 +262,9 @@ exports.getPositionsByClient = (req, res) => {
 exports.getMostActive = (req, res) => {
     var date = moment('2014-12-12');
     console.log( date.toISOString());
+    var client = req.query.client;
     Transaction.aggregate([
+        { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
         { $group: {
             _id: "$Ticker_Symbol",
             count: { $sum: 1  }
