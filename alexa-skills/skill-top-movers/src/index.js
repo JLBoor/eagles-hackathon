@@ -18,14 +18,14 @@
  *
  * Examples:
  * One-shot model:
- * User:  "Alexa, ask Top Mover what happened on August thirtieth."
+ * User:  "Alexa, ask Eagle Statistics what happened on August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Do you want to hear more?"
  * User: "No."
  * Alexa: "Good bye!"
  *
  * Dialog model:
- * User:  "Alexa, open Top Mover"
- * Alexa: "Top Mover. What day do you want transcations for?"
+ * User:  "Alexa, open Eagle Statistics"
+ * Alexa: "Eagle Statistics. What day do you want transcations for?"
  * User:  "August thirtieth."
  * Alexa: "For August thirtieth, in 2003, [...] . Wanna go deeper in history?"
  * User:  "Yes."
@@ -50,11 +50,18 @@ var AlexaSkill = require('./AlexaSkill');
 
 var dateFormat = require('dateformat');
 
+var currencyFormatter = require('currency-formatter');
+
 /**
  * URL prefix to download transactions content from Eagles Dashboard
  */
 
 var transUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions?date=';
+var _CLIENT = 'Shawnee Blocker LTD';
+var transPosUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions/positions?client='+_CLIENT+'&least=';
+var transPerfUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions/performers?client='+_CLIENT;
+
+var numberNames = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
 
 
 /**
@@ -111,7 +118,7 @@ TopMoversSkill.prototype.intentHandlers = {
     },
 
     "AMAZON.HelpIntent": function (intent, session, response) {
-        var speechText = "With Top Mover, you can get historical events for any day of the year.  " +
+        var speechText = "With Eagle Statistics, you can get historical events for any day of the year.  " +
             "For example, you could say today, or August thirtieth, or you can say exit. Now, which day do you want?";
         var repromptText = "Which day do you want?";
         var speechOutput = {
@@ -148,10 +155,10 @@ TopMoversSkill.prototype.intentHandlers = {
 
 function getWelcomeResponse(response) {
     // If we wanted to initialize the session to have some attributes we could add those here.
-    var cardTitle = "Top Movers";
-    var repromptText = "With Top Mover, you can get transactions for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
-    var speechText = "<p>Top Mover.</p> <p>What day do you want transactions for?</p>";
-    var cardOutput = "Top Mover. What day do you want transactions for?";
+    var cardTitle = "Eagle Statistics";
+    var repromptText = "With Eagle Statistics, you can get statistics from your portfolio. For example, you could say Top Gainers, or Top Investors. Now, which stat do you want?";
+    var speechText = "<p>Eagle Statistics.</p> <p>What statistics do you want to hear?  Top Gainers, Top Losers or Top Investors</p>";
+    var cardOutput = "Eagle Statistics. What statistics do you want to hear?  Top Gainers, Top Losers or Top Investors?";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
 
@@ -171,7 +178,8 @@ function getWelcomeResponse(response) {
  */
 function handleFirstEventRequest(intent, session, response) {
     var daySlot = intent.slots.day;
-    var repromptText = "With Top Mover, you can get historical events for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+    var metric = (intent.slots.metric && intent.slots.metric.value)?intent.slots.metric.value:'Gainers';
+    var repromptText = "With Eagle Statistics, you can get statistics from your portfolio. For example, you could say Top Gainers, or Top Investors. Now, which stat do you want?";
     var monthNames = ["January", "February", "March", "April", "May", "June",
                       "July", "August", "September", "October", "November", "December"
     ];
@@ -188,53 +196,92 @@ function handleFirstEventRequest(intent, session, response) {
         date = new Date();
     }
 
-    var prefixContent = "<p>The top movers on " + monthNames[date.getMonth()] + " " + date.getDate() + ", </p>";
-    var cardContent = "The top movers on " + monthNames[date.getMonth()] + " " + date.getDate() + ", ";
+    var prefixContent = "<p>The top " + metric + " on " + monthNames[date.getMonth()] + " " + date.getDate() + ", </p>";
+    var cardContent = "The top " + metric + " on " + monthNames[date.getMonth()] + " " + date.getDate() + ", ";
 
-    var cardTitle = "Events on " + monthNames[date.getMonth()] + " " + date.getDate();
+    var cardTitle = "Statistics on " + monthNames[date.getMonth()] + " " + date.getDate();
 
-    getTransactions(date, function (results) {
-        var speechText = "", i;
-        if(results.length == 0){
-            speechText = "There is a problem connecting to the Eagles Dashboard at this time. Please try again later.";
-            cardContent = speechText;
-            response.tell(speechText);
-        }else{
-            for (i = 0; i < paginationSize; i++) {
-                cardContent = cardContent + results[i].Security_Short_Name + " ";
-                speechText = speechText + "<p>" + results[i].Security_Short_Name + "</p> ";
+    if(metric.toUpperCase() === 'PERFORMERS'||metric.toUpperCase() === 'INVESTORS'){
+        getTopPerformers(date, function (results) {
+            var speechText = "", i;
+            if(results.length == 0){
+                speechText = "There is a problem connecting to the Eagles Dashboard at this time. Please try again later.";
+                cardContent = speechText;
+                response.tell(speechText);
+            }else{
+                //console.log('results: '+results);
+                for (i = 0; i < 3; i++) {
+                    cardContent = cardContent + results.top_performers[i].i_mgr + " ";
+                    var intro = (i === 0)? 'Your Top Investor, coming in '+numberNames[i] + ', ': 'Coming in '+numberNames[i] + ', ';
+                    var amt = currencyFormatter.format(results.top_performers[i].pos_amt, { code: 'USD' });
+                    var mgr = results.top_performers[i].i_mgr;
+                    speechText = speechText + "<p>" + intro + mgr + ", total net revenue: "+ amt +"</p> ";
+                }
+
+                var speechOutput = {
+                    speech: "<speak>" + prefixContent + speechText + "</speak>",
+                    type: AlexaSkill.speechOutputType.SSML
+                };
+                
+                response.tellWithCard(speechOutput, cardTitle, cardContent); 
             }
-            speechText = speechText + "<p>Do you want to get the next " + paginationSize + " results?</p>";
-            var speechOutput = {
-                speech: "<speak>" + prefixContent + speechText + "</speak>",
-                type: AlexaSkill.speechOutputType.SSML
-            };
-            var repromptOutput = {
-                speech: repromptText,
-                type: AlexaSkill.speechOutputType.PLAIN_TEXT
-            };
-            response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
-        }
-    });
+        });
+    }else{
+        getTransactions(date, metric, function (results) {
+            var speechText = "", i;
+            var losers = (metric.toUpperCase() === 'LOSERS');
+            if(results.length == 0){
+                speechText = "There is a problem connecting to the Eagles Dashboard at this time. Please try again later.";
+                cardContent = speechText;
+                response.tell(speechText);
+            }else{
+                var getSpeechText = (text, ticker, a, lFlag) => {
+                        var totalText = (lFlag)?'loss':'net revenue';
+                        return text + "<p>" + ticker + ", total "+totalText+": "+ a +"</p> ";
+                    };
+                for (i = 0; i < paginationSize; i++) {
+                    var s = results.stocks[i];
+                    var amt = currencyFormatter.format(s.pos_amt, { code: 'USD' });
+                    cardContent = cardContent + s.ticker + " ";
+                    speechText = getSpeechText(speechText, s.ticker, amt, losers);
+                    // if(losers){
+                    //     speechText = speechText + "<p>" + s.ticker + ", total net revenue: "+ amt +"</p> ";    
+                    // }else{
+                    //     speechText = speechText + "<p>" + s.ticker + ", total net revenue: "+ amt +"</p> ";
+                    // }
+                }
+
+                //speechText = speechText + "<p>Do you want to get the next " + paginationSize + " results?</p>";
+
+                var speechOutput = {
+                    speech: "<speak>" + prefixContent + speechText + "</speak>",
+                    type: AlexaSkill.speechOutputType.SSML
+                };
+                
+                //response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent); 
+                response.tellWithCard(speechOutput, cardTitle, cardContent); 
+            }
+        });
+    }
 }
 
 /**
  * Gets a poster prepares the speech to reply to the user.
  */
 function handleNextEventRequest(intent, session, response) {
-    var cardTitle = "More events on this date",
+    var cardTitle = "More stats",
         sessionAttributes = session.attributes,
         result = sessionAttributes.text,
         speechText = "",
         cardContent = "",
-        repromptText = "Do you want to know more about what happened on this date?",
+        repromptText = "Do you want to hear more statistics?",
         i;
     if (!result) {
-        speechText = "With Top Mover, you can get your top moving positions for any day of the year. For example, you could say today, or August thirtieth. Now, which day do you want?";
+        speechText = "With Eagle Statistics, you can get statistics from your portfolio. For example, you could say Top Gainers, or Top Investors. Now, which stat do you want?";
         cardContent = speechText;
     } else if (sessionAttributes.index >= result.length) {
-        speechText = "There are no more transactions for this date. Try another date by saying <break time = \"0.3s\"/> get events for august thirtieth.";
-        cardContent = "There are no more transactions for this date. Try another date by saying, get top performers for august thirtieth.";
+        speechText = "Nothing more to tell you.";
+        cardContent = "Nothing more to tell you.";
     } else {
         for (i = 0; i < paginationSize; i++) {
             if (sessionAttributes.index>= result.length) {
@@ -260,12 +307,34 @@ function handleNextEventRequest(intent, session, response) {
     response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
 }
 
-function getTransactions(date, eventCallback) {
+function getTransactions(date, metric, eventCallback) {
     var day =dateFormat(date, "yyyymmdd");
-    var url = transUrlPrefix + day;
+
+    var losers = (metric.toUpperCase() === 'LOSERS');
+
+    //var url = transUrlPrefix + day;
+    var url = transPosUrlPrefix + losers;
 
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
+//            console.log(JSON.parse(body));
+            eventCallback(JSON.parse(body));
+        }else{
+            console.log("Got error: "+response.statusCode, error);
+        }
+    });
+}
+
+function getTopPerformers(date, eventCallback) {
+    var day = dateFormat(date, "yyyymmdd");
+
+    var url = transPerfUrlPrefix + '&date=' + date;
+
+    console.log(url);
+
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(JSON.parse(body));
             eventCallback(JSON.parse(body));
         }else{
             console.log("Got error: "+response.statusCode, error);

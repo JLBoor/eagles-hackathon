@@ -6,6 +6,10 @@
         {
           "name": "day",
           "type": "AMAZON.DATE"
+        },
+        {
+          "name": "metric",
+          "type": "LIST_OF_METRICS"
         }
       ]
     },

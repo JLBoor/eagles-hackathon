@@ -1,7 +1,9 @@
-GetFirstEventIntent get top performers {day}
-GetFirstEventIntent get top performers for {day}
-GetFirstEventIntent get top performers
-GetFirstEventIntent {day}
+GetFirstEventIntent get {metric} {day}
+GetFirstEventIntent get {metric} for {day}
+GetFirstEventIntent get {metric}
+GetFirstEventIntent get top {metric}
+GetFirstEventIntent top {metric}
+GetFirstEventIntent {metric}
 
 GetNextEventIntent yes
 GetNextEventIntent yup
