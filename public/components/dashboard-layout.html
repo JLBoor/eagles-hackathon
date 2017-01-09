@@ -16,6 +16,7 @@
 <link rel="import" href="./transaction-clients.html">
 <link rel="import" href="./active-stock.html">
 <link rel="import" href="./transaction-performers.html">
+<link rel="import" href="./card-title.html">
 
 <dom-module id="dashboard-layout">
 
@@ -34,6 +35,13 @@
         }
       }
 
+      .sortable-ghost{
+        background: #DFE6ED;
+        border: #ccc dashed 3px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
     </style>
 
     <paper-tabs id="tabs" class="row" selected="2" on-iron-select="_onTabChanged">
@@ -44,8 +52,7 @@
     </paper-tabs>
 
       <div class="row">
-        <section class="col-lg-8 connectedSortable ui-sortable">
-
+        <section id="sortableList" class="col-lg-8">
           <div class="row dashboard-row">
             <div class="col-sm-6">
               <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
@@ -65,28 +72,22 @@
           </div>
 
           <div class="row dashboard-row">
-            <div class="col-sm-12">
-              <news-list symbol="{{symbol}}"></news-list>
-              </div>
+              <div class="col-sm-12"><news-list symbol="{{symbol}}"></news-list></div>
             </div>
-
-
         </section>
 
-        <section class="col-lg-4 connectedSortable ui-sortable">
+        <section id="sortableList2" class="col-lg-4">
           <div class="row dashboard-row">
             <transaction-perfromers client="{{client}}"></transaction-perfromers>
           </div>
           <div class="row dashboard-row">
             <div class="card">
-              <h2>Quote: {{symbol}}</h2>
+              <card-title title$="Quote: {{symbol}}"></card-title>
               <h5 class=text-center>52-week</h5>
               <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
               <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
               <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
             </div>
-
-
           </div>
 
           <div class="row dashboard-row">
@@ -115,6 +116,9 @@
           addEventListener('client-selected', function(e) {
               that.client = e.detail.client;
           });
+          var sortableList = document.getElementById("sortableList");
+          Sortable.create(sortableList, { group: "sList", animation: 150, handle:".fa-arrows", ghostClass: "sortable-ghost", });
+          Sortable.create(sortableList2, { group: "sList", animation: 150, handle:".fa-arrows", ghostClass: "sortable-ghost", });
       },
 
       _onTabChanged: function() {

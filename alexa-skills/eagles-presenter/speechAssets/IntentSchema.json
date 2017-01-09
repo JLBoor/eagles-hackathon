@@ -1,0 +1,25 @@
+{
+  "intents": [
+    {
+      "intent": "GetChapterIntent",
+      "slots": [
+        {
+          "name": "chapter",
+          "type": "LIST_OF_CHAPTERS"
+        }
+      ]
+    },
+    {
+      "intent": "GetNextEventIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

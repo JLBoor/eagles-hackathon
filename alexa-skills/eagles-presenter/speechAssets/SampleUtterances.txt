@@ -1,0 +1,20 @@
+GetChapterIntent start {chapter}
+GetChapterIntent get {chapter}
+GetChapterIntent go {chapter}
+GetChapterIntent {chapter}
+GetChapterIntent Ok start us off
+GetChapterIntent Start us off
+GetChapterIntent Kick it off
+
+GetNextEventIntent yes
+GetNextEventIntent yup
+GetNextEventIntent sure
+GetNextEventIntent ok
+GetNextEventIntent why not
+GetNextEventIntent yes please
+
+AMAZON.StopIntent no
+AMAZON.StopIntent nope
+AMAZON.StopIntent nah
+AMAZON.StopIntent no thanks
+AMAZON.StopIntent no thank you

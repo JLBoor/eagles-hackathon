@@ -1,0 +1,21 @@
+<dom-module id="card-title">
+  <template>
+    <style>
+      :root { display: inline-block; }
+    </style>
+     
+    <h2><i class="fa fa-arrows" aria-hidden="true"></i> {{title}}</h2>
+    
+  </template>
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'card-title',
+      properties: {
+        title : {
+          type: String,
+        },
+      },
+    });
+  </script>
