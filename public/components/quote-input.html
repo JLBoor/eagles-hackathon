@@ -1,0 +1,33 @@
+<link rel="import" href="/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-tabs/paper-tabs.html">
+
+<dom-module id="quote-input">
+
+  <template>
+    <paper-input label="Symbol" id="symbol" on-input="_handleChange">
+      <paper-icon-button suffix icon="clear"></paper-icon-button>
+    </paper-input>
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'quote-input',
+
+      symbol : {
+        type: String
+      },
+
+      ready: function() {
+        this.symbol = this.$.symbol.value = 'RY';
+      },
+
+      _handleChange: function() {
+        this.symbol = this.$.symbol.value;
+        this.fire('symbol-changed', {symbol: this.symbol})
+      }
+
+    });
+  </script>

@@ -14,9 +14,12 @@
           a(href='/') Dashboard
         li(class=(title == 'Quick Quote') ? 'active' : undefined)
           a(href='/quick-quote') Quick Quote
+        li(class=(title == 'Customized') ? 'active' : undefined)
+          a(href='/customized') Customized
       ul.nav.navbar-nav.navbar-right
         if !user
           transaction-clients
+          paper-icon-button(icon="menu", paper-drawer-toggle, style="color: white; margin-left: 100px; vertical-align: top;")
 
         else
           li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
