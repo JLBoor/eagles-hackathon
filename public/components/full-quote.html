@@ -1,0 +1,32 @@
+<link rel="import" href="/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-tabs/paper-tabs.html">
+
+<dom-module id="full-quote">
+
+  <template>
+    <div class="card">
+      <card-header title$="Quote: {{symbol}}"></card-header>
+      <h5 class=text-center>52-week</h5>
+      <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
+      <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
+      <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
+    </div>
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'full-quote',
+
+      symbol : {
+        type: String
+      },
+
+      ready: function() {
+        this.toDate = moment().format('YYYY-MM-DD');
+        this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
+      }
+    });
+  </script>
