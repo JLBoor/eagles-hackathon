@@ -8972,7 +8972,7 @@ textarea {
   client-greetings {
     display: none; }
   .card-extra-top-margin {
-    margin-top: 15px !important; }
+    margin-bottom: 15px !important; }
   .navbar > .container-fluid .navbar-brand {
     opacity: 1; }
   .navbar-default .navbar-toggle {
