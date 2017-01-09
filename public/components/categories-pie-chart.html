@@ -13,8 +13,8 @@
         last-response="{{securityTypes}}"
         debounce="500"></iron-ajax>
 
-        <div class="card" style="overflow: hidden;">
-          <h2 style="padding-top: 0; padding-bottom: 0; margin: 0;">{{title}}</h2>
+        <div class="card card-extra-top-margin" style="overflow: hidden;">
+          <card-header title$="{{title}}"></card-header>
           <google-chart
             type='pie'
             cols='{{cols}}'

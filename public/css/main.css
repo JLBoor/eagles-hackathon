@@ -8966,6 +8966,40 @@ textarea {
   height: 30px;
   margin: -15px 15px -15px; }
 
+@media (max-width: 767px) {
+  .eagles-hidden-small {
+    display: none; }
+  client-greetings {
+    display: none; }
+  .card-extra-top-margin {
+    margin-top: 15px !important; }
+  .navbar > .container-fluid .navbar-brand {
+    opacity: 1; }
+  .navbar-default .navbar-toggle {
+    background-color: white;
+    border-color: #002144; }
+  .navbar-default .navbar-toggle .icon-bar {
+    background-color: #002144; }
+  .navbar.navbar-default {
+    z-index: 999; }
+  .navbar-collapse {
+    background: white;
+    margin-top: 49px;
+    border-bottom: 1px solid #002144;
+    box-shadow: 0 0px 10px; }
+  .navbar.navbar-default .navbar-nav-main > li.active > a,
+  .navbar.navbar-default .navbar-nav-main > li > a {
+    padding-top: 45px;
+    font-size: 16px;
+    margin-right: 25px;
+    color: #002144;
+    border-bottom: 0; }
+    .navbar.navbar-default .navbar-nav-main > li.active > a:hover,
+    .navbar.navbar-default .navbar-nav-main > li > a:hover {
+      color: #002144;
+      font-weight: bold;
+      border-bottom: 0; } }
+
 .alert {
   margin-top: 20px; }
 

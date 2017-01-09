@@ -54,6 +54,30 @@ textarea {
   margin: -15px 15px -15px;
 }
 
+@media (max-width: 767px) {
+  .eagles-hidden-small { display: none; }
+  client-greetings { display: none; }
+  .card-extra-top-margin { margin-top: 15px !important; }
+  .navbar > .container-fluid .navbar-brand { opacity: 1; }
+  .navbar-default .navbar-toggle { background-color: white; border-color: $dark-blue; }
+  .navbar-default .navbar-toggle .icon-bar { background-color: $dark-blue; }
+  .navbar.navbar-default { z-index: 999; }
+  .navbar-collapse { background: white; margin-top: 49px; border-bottom: 1px solid $dark-blue; box-shadow: 0 0px 10px;}
+  .navbar.navbar-default .navbar-nav-main > li.active > a,
+  .navbar.navbar-default .navbar-nav-main > li > a {
+    padding-top: 45px;
+    font-size: 16px;
+    margin-right: 25px;
+    color: $dark-blue;
+    border-bottom: 0;
+    &:hover {
+      color: $dark-blue;
+      font-weight: bold;
+      border-bottom: 0;
+    }
+  }
+}
+
 // Alerts
 // -------------------------
 

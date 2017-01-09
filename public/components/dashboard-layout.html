@@ -55,19 +55,19 @@
         <section id="sortableList" class="col-lg-8">
           <div class="row dashboard-row">
             <div class="col-sm-6">
-              <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
+              <categories-pie-chart title="Top 5 performing by sector (revenue)" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
             </div>
             <div class="col-sm-6">
-             <categories-pie-chart title="Top 5 performing by sector (revenue)" label="Sector" api="/api/categories/securityTypeByAmt" client="{{client}}"></categories-pie-chart>
+              <transaction-positions ticker="{{symbol}}" client="{{client}}" title="Gainers"></transaction-positions>
             </div>
           </div>
 
           <div class="row dashboard-row">
             <div class="col-sm-6">
-              <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
+              <categories-pie-chart title="Top 5 losing sectors (revenue)" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
             </div>
             <div class="col-sm-6">
-             <categories-pie-chart title="Top 5 losing sectors (revenue)" label="Sector" api="/api/categories/securityType" client="{{client}}"></categories-pie-chart>
+             <transaction-positions ticker="{{symbol}}" client="{{client}}" least="true" title="Losers"></transaction-positions>
             </div>
           </div>
 
@@ -80,7 +80,7 @@
           <div class="row dashboard-row">
             <transaction-perfromers client="{{client}}"></transaction-perfromers>
           </div>
-          <div class="row dashboard-row">
+          <div class="row dashboard-row eagles-hidden-small">
             <div class="card">
               <card-header title$="Quote: {{symbol}}"></card-header>
               <h5 class=text-center>52-week</h5>
@@ -104,12 +104,12 @@
 
   <script>
     var sortOptions = (groupName) => {
-                      return { group: { name: groupName, put: true }, 
-                              animation: 150, 
-                              handle:".fa-arrows", 
-                              ghostClass: "sortable-drag", 
+                      return { group: { name: groupName, put: true },
+                              animation: 150,
+                              handle:".fa-arrows",
+                              ghostClass: "sortable-drag",
                               chosenClass: "sortable-drag",
-                              }}; 
+                              }};
     Polymer({
       is: 'dashboard-layout',
 
@@ -120,7 +120,7 @@
           addEventListener('client-selected', function(e) {
               that.client = e.detail.client;
           });
-          
+
           Sortable.create(sortableList, sortOptions("sList"));
           Sortable.create(sortableList2, sortOptions("sList"));
       },
