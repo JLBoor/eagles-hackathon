@@ -35,6 +35,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const transactionsController = require('./controllers/transactions');
+const mongoController = require('./controllers/mongoupload')
 const newsController = require('./controllers/news');
 const quotesController = require('./controllers/quotes');
 const categoriesController = require('./controllers/categories');
@@ -123,6 +124,7 @@ app.get('/api/transactions/active', transactionsController.getMostActive);
 app.get('/api/transactions/performers', transactionsController.getTopPerformers);
 app.get('/api/transactions/clients', transactionsController.getClients);
 app.post('/api/transactions', transactionsController.save);
+app.post('/api/mongoupload', mongoController.save);
 app.delete('/api/transactions', transactionsController.delete);
 
 app.get('/api/news', newsController.get);
