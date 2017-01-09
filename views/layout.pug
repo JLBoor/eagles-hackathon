@@ -15,19 +15,31 @@ html
 
     script(src='/moment/min/moment.min.js')
 
+    link(rel='import', href='/paper-drawer-panel/paper-drawer-panel.html')
+    link(rel='import', href='/paper-icon-button/paper-icon-button.html')
+    link(rel='import', href='/iron-icons/iron-icons.html')
+
+    link(rel='import', href='/components/catalog-list.html')
     link(rel='import', href='/components/transaction-clients.html')
     link(rel='import', href='/components/dashboard-layout.html')
     link(rel='import', href='/components/quick-quote-layout.html')
+    link(rel='import', href='/components/custom-layout.html')
 
   body
-    app-layout(client="{{client}}")
-      include partials/header
+    eagles-styles
+      paper-drawer-panel(right-drawer,force-narrow)
+        div(drawer)
+          catalog-list
 
-      .container-fluid
-        include partials/flash
-        block content
+        div(main, style="overflow: scroll;")
 
-      include partials/footer
+          include partials/header
+
+          .container-fluid
+            include partials/flash
+            block content
+
+          include partials/footer
 
     script(src='/webcomponentsjs/webcomponents.min.js')
     script(src='/js/lib/jquery-2.2.4.min.js')

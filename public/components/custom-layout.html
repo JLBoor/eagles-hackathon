@@ -1,0 +1,76 @@
+<link rel="import" href="/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-tabs/paper-tabs.html">
+
+<dom-module id="custom-layout">
+
+  <template>
+
+    <style>
+
+      :root { --paper-tab-ink: #002144; padding: 0 25px; }
+
+      .col-custom {
+        min-height: 100px;
+        outline: 1px dashed #707478;
+      }
+
+      paper-tabs {
+        background: #DFE6ED;
+        --paper-tabs-selection-bar-color: #002144;
+        --paper-tabs-selection-bar {
+          height: 5px;
+          color: red;
+        }
+      }
+
+    </style>
+
+    <paper-tabs id="tabs" class="row" selected="0" on-iron-select="_onTabChanged">
+      <paper-tab><iron-icon icon="icons:view-array"></iron-icon></paper-tab>
+      <paper-tab><iron-icon icon="icons:view-headline"></iron-icon></paper-tab>
+      <paper-tab><iron-icon icon="icons:view-column"></iron-icon></paper-tab>
+    </paper-tabs>
+
+      <div class="row dashboard-row">
+        <div id="custom-layout" class="col-custom" class$="{{col1Class}}"></div>
+        <div class="col-custom" class$="{{col2Class}}"></div>
+        <div class="col-custom" class$="{{col3Class}}"></div>
+      </div>
+
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'custom-layout',
+
+      ready: function() {
+        this.$.tabs.selected = 0;
+        this._onTabChanged();
+      },
+
+      _onTabChanged: function() {
+
+        switch(this.$.tabs.selected) {
+          case 0:
+            this.col1Class= "col-custom col-sm-3";
+            this.col2Class= "col-custom col-sm-6";
+            this.col3Class= "col-custom col-sm-3";
+            break;
+          case 1:
+            this.col1Class= "col-custom col-sm-12";
+            this.col2Class= "col-custom col-sm-12";
+            this.col3Class= "col-custom col-sm-12";
+            break;
+          case 2:
+            this.col1Class= "col-custom col-sm-4";
+            this.col2Class= "col-custom col-sm-4";
+            this.col3Class= "col-custom col-sm-4";
+            break;
+        }
+      }
+
+    });
+  </script>
