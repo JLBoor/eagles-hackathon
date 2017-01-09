@@ -63,17 +63,17 @@
           <div class="card-content container-fluid">
 
               <div class="row row-header">
-                <div class="col-sm-1">#.</div>
-                <div class="col-sm-6">Investment Mgr</div>
-                <div class="col-sm-5 text-right">Net Settled $</div>
+                <div class="col-xs-1">#.</div>
+                <div class="col-xs-6">Investment Mgr</div>
+                <div class="col-xs-5 text-right">Net Settled $</div>
               </div>
 
                 <paper-listbox class="row">
                   <template is="dom-repeat" items="{{performers}}" as="p">
                     <paper-item>
-                        <div class$="text-{{index}} col-sm-1 text-left">[[addOne(index)]].</div>
-                        <div class$="text-{{index}} col-sm-6">[[p.i_mgr]]</div>
-                        <div class$="text-{{index}} col-sm-5 text-right" style="white-space: nowrap">
+                        <div class$="text-{{index}} col-xs-1 text-left">[[addOne(index)]].</div>
+                        <div class$="text-{{index}} col-xs-6">[[p.i_mgr]]</div>
+                        <div class$="text-{{index}} col-xs-5 text-right" style="white-space: nowrap">
                           <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
                          </div>
                   </paper-item>
