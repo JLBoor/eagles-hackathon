@@ -140,6 +140,7 @@ app.get('/api/categories/securityTypeByAmt', categoriesController.securityTypeBy
  */
 app.get('/', homeController.dashboard);
 app.get('/quick-quote', homeController.quickQuote);
+app.get('/customized', homeController.customized);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

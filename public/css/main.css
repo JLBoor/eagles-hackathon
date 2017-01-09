@@ -8981,6 +8981,9 @@ textarea {
   color: #707478;
   margin-bottom: 40px; }
 
+#scrim {
+  background: rgba(0, 81, 165, 0.25) !important; }
+
 .dashboard-row {
   margin-top: 15px; }
 
