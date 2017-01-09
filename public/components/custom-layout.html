@@ -24,6 +24,9 @@
         }
       }
 
+      .sortable-drag { background: red; min-height: 100px; }
+      .sortable-drop {background: green; min-height: 100px; }
+
     </style>
 
     <paper-tabs id="tabs" class="row" selected="0" on-iron-select="_onTabChanged">
@@ -33,9 +36,9 @@
     </paper-tabs>
 
       <div class="row dashboard-row">
-        <div id="custom-layout" class="col-custom" class$="{{col1Class}}"></div>
-        <div class="col-custom" class$="{{col2Class}}"></div>
-        <div class="col-custom" class$="{{col3Class}}"></div>
+        <div id="customLayout1" class="col-custom" class$="{{col1Class}}"></div>
+        <div id="customLayout2" class="col-custom" class$="{{col2Class}}"></div>
+        <div id="customLayout3" class="col-custom" class$="{{col3Class}}"></div>
       </div>
 
   </template>
@@ -49,6 +52,19 @@
       ready: function() {
         this.$.tabs.selected = 0;
         this._onTabChanged();
+
+        var sortOptions = (groupName) => {
+            return {
+                    group: groupName,
+                    animation: 150,
+                    handle:".fa-arrows",
+                    ghostClass: "sortable-drag",
+                    chosenClass: "sortable-drop",
+                    }};
+
+        Sortable.create(customLayout1, sortOptions("col1"));
+        Sortable.create(customLayout2, sortOptions("col1"));
+        Sortable.create(customLayout3, sortOptions("col1"));
       },
 
       _onTabChanged: function() {

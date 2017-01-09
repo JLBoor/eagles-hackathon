@@ -22,8 +22,6 @@
 
     <h3>Catalog</h3>
 
-    - {{symbol}} -
-
     <paper-listbox>
       <paper-item on-click="_handleQuickQuote">Quick Quote</paper-item>
       <paper-item on-click="_handleNewsClick">News Feed</paper-item>
@@ -49,14 +47,23 @@
         if(!this.quote) {
           this.quote = document.createElement("quote-input");
           this.quote.symbol = this.symbol;
-          document.querySelector('#custom-layout').appendChild(this.quote);
+
+          var divWrapper = document.createElement("div");
+          divWrapper.appendChild(this.quote);
+
+          document.querySelector('#customLayout1').appendChild(divWrapper);
+
         }
       },
       _handleNewsClick: function() {
         if(!this.newsList) {
           this.newsList = document.createElement("news-list");
           this.newsList.symbol = this.symbol;
-          document.querySelector('#custom-layout').appendChild(this.newsList);
+
+          var divWrapper = document.createElement("div");
+          divWrapper.appendChild(this.newsList);
+
+          document.querySelector('#customLayout1').appendChild(divWrapper);
         }
       },
 
@@ -64,7 +71,11 @@
         if(!this.fiftyTwo) {
           this.fiftyTwo = document.createElement("fifty-two-week");
           this.fiftyTwo.symbol = this.symbol;
-          document.querySelector('#custom-layout').appendChild(this.fiftyTwo);
+
+          var divWrapper = document.createElement("div");
+          divWrapper.appendChild(this.fiftyTwo);
+
+          document.querySelector('#customLayout1').appendChild(divWrapper);
         }
       }
 
