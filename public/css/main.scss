@@ -131,5 +131,8 @@ textarea {
   padding: 10px;
 }
 
+card-header .fa-arrows { transition: 1s; opacity: 0; }
+.card:hover card-header .fa-arrows {  opacity: 1; }
+
 .sortable-chosen { opacity: .50; }
 .sortable-ghost { filter: grayscale(100%); -webkit-filter: grayscale(100%); }

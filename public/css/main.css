@@ -9014,6 +9014,13 @@ textarea {
     margin-top: 0;
     margin-bottom: 20px; }
 
+card-header .fa-arrows {
+  transition: 1s;
+  opacity: 0; }
+
+.card:hover card-header .fa-arrows {
+  opacity: 1; }
+
 .sortable-chosen {
   opacity: .50; }
 

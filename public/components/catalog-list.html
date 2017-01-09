@@ -1,6 +1,9 @@
 
 <link rel="import" href="/paper-input/paper-input.html">
 <link rel="import" href="/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/paper-item/paper-icon-item.html">
+<link rel="import" href="/paper-item/paper-item-body.html">
+
 <link rel="import" href="/components/quote-input.html">
 
 <link rel="import" href="/components/full-quote.html">
@@ -17,9 +20,16 @@
           font-weight: 400;
           font-size: 20px;
         }
-        paper-item {
+
+
+
+        paper-item { color: #0051A5; }
+        paper-icon-item {
+          --paper-item-icon: { display: none; }
+          overflow: hidden;
           color: #0051A5;
         }
+
     </style>
 
     <h3>Impersonate</h3>
@@ -31,7 +41,10 @@
     <paper-listbox>
       <paper-item on-click="_handleQuickQuote">Quote Input</paper-item>
       <paper-item on-click="_handleFullQuote">Quote Details</paper-item>
-      <paper-item on-click="_handleNewsClick">News Feed</paper-item>
+      <paper-icon-item on-click="_handleNewsClick">
+        <paper-item-body>News List</paper-item-body>
+        <paper-icon-button icon="icons:record-voice-over"></paper-icon-button>
+      </paper-icon-item>
     </paper-listbox>
 
   </template>

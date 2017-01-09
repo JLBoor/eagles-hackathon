@@ -15,11 +15,11 @@
         li(class=(title == 'Quick Quote') ? 'active' : undefined)
           a(href='/quick-quote') Quick Quote
         li(class=(title == 'Customized') ? 'active' : undefined)
-          a(href='/customized') Customized
+          a(href='/customized') Personalized
       ul.nav.navbar-nav.navbar-right
         if !user
           client-greetings
-          paper-icon-button(icon="menu", paper-drawer-toggle, style="color: white; margin-left: 100px; vertical-align: top;")
+          paper-icon-button(icon="menu", paper-drawer-toggle, style="color: white; margin-left: 40px; vertical-align: top;")
 
         else
           li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
