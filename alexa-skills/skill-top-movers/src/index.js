@@ -57,7 +57,7 @@ var currencyFormatter = require('currency-formatter');
  */
 
 var transUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions?date=';
-var _CLIENT = 'Shawnee Blocker LTD';
+var _CLIENT = 'Aleta Girardin FUND'; //'Shawnee Blocker LTD';
 var transPosUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions/positions?client='+_CLIENT+'&least=';
 var transPerfUrlPrefix = 'https://eagles-app.mybluemix.net/api/transactions/performers?client='+_CLIENT;
 

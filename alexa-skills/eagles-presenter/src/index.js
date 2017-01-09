@@ -195,6 +195,8 @@ function handleChapterRequest(intent, session, response) {
                     "<p>The aim of this project was to focus on best performing equities, highlight the best investment managers in our client’s organization, and provide insight, and "+
                     "analysis of a client’s stock portfolio that reach actionable conclusions.<break time='1s'/></p>"+
                     "<p>This dashboard utilizes external sources to compile important stock information that is critical to a company’s bottom line. <break time='1s'/>We hope you enjoy our demo.</p>"
+    } else if(chapter.toUpperCase() === 'CONCLUSION'){
+        speakText = "<p>On behalf of Team Eagle, we thank you for taking the time to listen to our presentation.  If you have any questions, any of my team members would be happy to anwser them.  Thank you.</p>"
     }
 
     var cardTitle = "Chapter on " + chapter;          
@@ -204,11 +206,12 @@ function handleChapterRequest(intent, session, response) {
         speech: "<speak>" + speakText + "</speak>",
         type: AlexaSkill.speechOutputType.SSML
     };
-    var repromptOutput = {
-        speech: repromptText,
-        type: AlexaSkill.speechOutputType.PLAIN_TEXT
-    };
-    response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
+    // var repromptOutput = {
+    //     speech: repromptText,
+    //     type: AlexaSkill.speechOutputType.PLAIN_TEXT
+    // };
+    // response.askWithCard(speechOutput, repromptOutput, cardTitle, cardContent);
+    response.tellWithCard(speechOutput, cardTitle, cardContent); 
 }
 
 /**
