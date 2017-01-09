@@ -1,11 +1,10 @@
 {
-  "name": "topmovers",
+  "name": "presenter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "alexa-sdk": "^1.0.6",
-    "currency-formatter": "^1.0.8",
     "dateformat": "^2.0.0",
     "request": "^2.79.0"
   },
@@ -13,6 +12,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "RBC Eagles",
+  "author": "R1 Eagles",
   "license": "ISC"
 }

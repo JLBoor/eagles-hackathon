@@ -20,11 +20,15 @@
       from: req.query.from,
       to: req.query.to
     }, function (err, quotes) {
-      res.send(quotes);
+      if(!err){
+       res.send(quotes);
+      }
     });
   };
 
 
 exports.snapshot = (req, res) => {
-  yahooFinance.snapshot({symbol: req.query.symbol, fields: ['p2']}, (err, quotes) => res.send(quotes));
+  yahooFinance.snapshot({symbol: req.query.symbol, fields: ['p2']}, (err, quotes) => { 
+    if(!err){ res.send(quotes) }
+  });
 };

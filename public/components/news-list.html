@@ -1,5 +1,6 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="./card-header.html">
 
 <dom-module id="news-list">
 
@@ -13,7 +14,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <div class="card">
-          <h2>News: {{symbol}}</h2>
+          <card-header title$="News: {{symbol}}"></card-header>
           <div class="card-content">
             <template is="dom-repeat" items="{{news}}" as="news-item">
               <h5><a href={{news-item.link}} target="_blank">{{news-item.title}} - {{news-item.symbol}}</a></h5>

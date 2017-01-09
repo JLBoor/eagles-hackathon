@@ -1,15 +1,11 @@
 {
   "intents": [
     {
-      "intent": "GetFirstEventIntent",
+      "intent": "GetChapterIntent",
       "slots": [
         {
-          "name": "day",
-          "type": "AMAZON.DATE"
-        },
-        {
-          "name": "metric",
-          "type": "LIST_OF_METRICS"
+          "name": "chapter",
+          "type": "LIST_OF_CHAPTERS"
         }
       ]
     },

@@ -1,9 +1,10 @@
-GetFirstEventIntent get {metric} {day}
-GetFirstEventIntent get {metric} for {day}
-GetFirstEventIntent get {metric}
-GetFirstEventIntent get top {metric}
-GetFirstEventIntent top {metric}
-GetFirstEventIntent {metric}
+GetChapterIntent start {chapter}
+GetChapterIntent get {chapter}
+GetChapterIntent go {chapter}
+GetChapterIntent {chapter}
+GetChapterIntent Ok start us off
+GetChapterIntent Start us off
+GetChapterIntent Kick it off
 
 GetNextEventIntent yes
 GetNextEventIntent yup

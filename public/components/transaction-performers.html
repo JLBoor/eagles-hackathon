@@ -1,6 +1,7 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/cpol-currency/cpol-currency.html">
+<link rel="import" href="./card-header.html">
 
 
 <dom-module id="transaction-perfromers">
@@ -58,7 +59,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <div class="card">
-          <h2>Top Investors (revenue)</h2>
+          <card-header title="Top Investors (revenue)"></card-header>
           <div class="card-content container-fluid">
 
               <div class="row row-header">
