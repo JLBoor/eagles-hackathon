@@ -5,9 +5,12 @@
 <dom-module id="quote-input">
 
   <template>
-    <paper-input label="Symbol" id="symbol" on-input="_handleChange">
-      <paper-icon-button suffix icon="clear"></paper-icon-button>
-    </paper-input>
+    <div class="card">
+      <card-header title$="Quote Input: {{symbol}}"></card-header>
+      <paper-input label="Symbol" id="symbol" on-input="_handleChange">
+        <paper-icon-button suffix icon="clear"></paper-icon-button>
+      </paper-input>
+    </div>
   </template>
 
 </dom-module>

@@ -12,7 +12,6 @@
 
       .col-custom {
         min-height: 100px;
-        outline: 1px dashed #707478;
       }
 
       paper-tabs {
@@ -23,9 +22,6 @@
           color: red;
         }
       }
-
-      .sortable-drag { background: red; min-height: 100px; }
-      .sortable-drop {background: green; min-height: 100px; }
 
     </style>
 
@@ -54,13 +50,8 @@
         this._onTabChanged();
 
         var sortOptions = (groupName) => {
-            return {
-                    group: groupName,
-                    animation: 150,
-                    handle:".fa-arrows",
-                    ghostClass: "sortable-drag",
-                    chosenClass: "sortable-drop",
-                    }};
+          return { group: groupName, animation: 150, handle:".fa-arrows" }
+        };
 
         Sortable.create(customLayout1, sortOptions("col1"));
         Sortable.create(customLayout2, sortOptions("col1"));
