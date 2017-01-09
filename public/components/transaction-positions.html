@@ -56,19 +56,19 @@
           <div class="card-content container-fluid">
 
               <div class="row row-header">
-                <div class="col-sm-3">#. Symbol</div>
-                <div class="col-sm-4">Sector</div>
-                <div class="col-sm-2 text-right">Quantity</div>
-                <div class="col-sm-3 text-right">Net Settled $</div>
+                <div class="col-xs-6 col-md-3">#. Symbol</div>
+                <div class="col-md-4 hidden-xs hidden-sm">Sector</div>
+                <div class="col-md-2 text-right hidden-xs hidden-sm">Quantity</div>
+                <div class="col-xs-6 col-md-3 text-right">Net Settled $</div>
               </div>
 
                 <paper-listbox class="row" selected="{{ticker}}" attr-for-selected="ticker">
                   <template is="dom-repeat" items="{{positions}}" as="p">
                     <paper-item ticker="[[p.ticker]]">
-                        <div class="col-sm-3 text-left">[[addOne(index)]]. [[p.ticker]] <quote-ss symbol=[[p.ticker]]></quote-ss></div>
-                        <div class="col-sm-4">[[p.sector]]</div>
-                        <div class="col-sm-2 text-right"><p class="text-right">[[abs(p.num_shares)]]</p></div>
-                        <div class="col-sm-3 text-right">
+                        <div class="col-xs-6 col-md-3 text-left">[[addOne(index)]]. [[p.ticker]] <quote-ss symbol=[[p.ticker]]></quote-ss></div>
+                        <div class="col-md-4 hidden-xs hidden-sm">[[p.sector]]</div>
+                        <div class="col-md-2 text-right hidden-xs hidden-sm"><p class="text-right">[[abs(p.num_shares)]]</p></div>
+                        <div class="col-xs-6 col-md-3 text-right">
                           <p class="text-right" class$="{{getClasses(p.pos_amt)}}">
                            <cpol-currency amount=[[p.pos_amt]]></cpol-currency>
                          </p>

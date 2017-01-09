@@ -8987,6 +8987,19 @@ textarea {
 .dashboard-row {
   margin-top: 15px; }
 
+.card-wrapper {
+  margin: 10px 0;
+  animation: reveal .5s; }
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    background: red;
+    transform: scale(1.5); }
+  100% {
+    opacity: 100%;
+    transform: scale(1); } }
+
 .card {
   margin-top: 15px;
   background: white;
@@ -9000,3 +9013,10 @@ textarea {
     font-size: 20px;
     margin-top: 0;
     margin-bottom: 20px; }
+
+.sortable-chosen {
+  opacity: .50; }
+
+.sortable-ghost {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%); }

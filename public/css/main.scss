@@ -97,6 +97,23 @@ textarea {
 
 .dashboard-row { margin-top: 15px; }
 
+.card-wrapper {
+  margin: 10px 0;
+  animation: reveal .5s;
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    background: red;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
 .card {
   $card-color: $bright-blue-3;
   h2 {
@@ -113,3 +130,6 @@ textarea {
   border-top-width: 4px;
   padding: 10px;
 }
+
+.sortable-chosen { opacity: .50; }
+.sortable-ghost { filter: grayscale(100%); -webkit-filter: grayscale(100%); }
