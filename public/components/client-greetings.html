@@ -1,0 +1,34 @@
+
+<dom-module id="client-greetings">
+
+  <template>
+
+    <style>
+      span {
+        color: #FEDF01;
+        font-size: 18px;
+      }
+    </style>
+
+    <span>
+      <iron-icon icon="icons:perm-identity"></iron-icon>
+      Hi {{client}}
+    </span>
+
+  </template>
+
+</dom-module>
+
+  <script>
+    Polymer({
+      is: 'client-greetings',
+
+      ready: function() {
+          var that = this;
+          addEventListener('client-selected', function(e) {
+              that.client = e.detail.client;
+          });
+      }
+
+    });
+  </script>

@@ -16,6 +16,17 @@
       --paper-input-container-focus-color: #FEDF01;
     }
   }
+
+  paper-listbox {
+    padding: 0;
+    max-height: 150px;
+    overflow: scroll;
+  }
+
+  paper-item {
+    color: #0051A5;
+  }
+
 </style>
 
 
@@ -27,13 +38,12 @@
         last-response="{{clients}}"></iron-ajax>
 
         <template is="dom-if" if="{{clients}}">
-          <paper-dropdown-menu label="Clients" no-animations selected-item="null" on-iron-select="clientChanged">
-            <paper-listbox class="dropdown-content"  selected="{{selected}}">
+
+            <paper-listbox class="dropdown-content" selected="{{selected}}">
               <template is="dom-repeat" items="[[clients]]">
                 <paper-item>[[item]]</paper-item>
               </template>
             </paper-listbox>
-          </paper-dropdown-menu>
         </template>
 
   </template>
@@ -42,10 +52,18 @@
   <script>
     Polymer({
       is: 'transaction-clients',
+      properties: {
+        selected: {
+          type: String,
+          observer: 'clientChanged'
+        }
+      },
+
       clientChanged: function(event) {
         this.client = this.clients[this.selected];
         this.fire('client-selected', {client: this.client})
       },
+
       _handleResponse: function() {
         this.selected = 0;
         this.clientChanged();
