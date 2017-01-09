@@ -16,7 +16,7 @@
 <link rel="import" href="./transaction-clients.html">
 <link rel="import" href="./active-stock.html">
 <link rel="import" href="./transaction-performers.html">
-<link rel="import" href="./card-title.html">
+<link rel="import" href="./card-header.html">
 
 <dom-module id="dashboard-layout">
 
@@ -35,7 +35,7 @@
         }
       }
 
-      .sortable-ghost{
+      .sortable-drag{
         background: #DFE6ED;
         border: #ccc dashed 3px;
         padding: 10px;
@@ -82,7 +82,7 @@
           </div>
           <div class="row dashboard-row">
             <div class="card">
-              <card-title title$="Quote: {{symbol}}"></card-title>
+              <card-header title$="Quote: {{symbol}}"></card-header>
               <h5 class=text-center>52-week</h5>
               <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
               <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
@@ -106,6 +106,13 @@
 </dom-module>
 
   <script>
+    var sortOptions = (groupName) => {
+                      return { group: groupName, 
+                              animation: 150, 
+                              handle:".fa-arrows", 
+                              ghostClass: "sortable-drag", 
+                              chosenClass: "sortable-drag",
+                              }}; 
     Polymer({
       is: 'dashboard-layout',
 
@@ -117,8 +124,9 @@
               that.client = e.detail.client;
           });
           var sortableList = document.getElementById("sortableList");
-          Sortable.create(sortableList, { group: "sList", animation: 150, handle:".fa-arrows", ghostClass: "sortable-ghost", });
-          Sortable.create(sortableList2, { group: "sList", animation: 150, handle:".fa-arrows", ghostClass: "sortable-ghost", });
+          
+          Sortable.create(sortableList, sortOptions("sList"));
+          Sortable.create(sortableList2, sortOptions("sList"));
       },
 
       _onTabChanged: function() {

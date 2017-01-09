@@ -1,6 +1,6 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
-<link rel="import" href="./card-title.html">
+<link rel="import" href="./card-header.html">
 
 <dom-module id="active-stock">
 
@@ -32,7 +32,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <div>
-          <card-title title="Most Active Stocks"></card-title>
+          <card-header title="Most Active Stocks"></card-header>
           <div class="card-content text-top items">
             <ul>
             <template is="dom-repeat" items="{{stock}}" as="stock-item">

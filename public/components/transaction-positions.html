@@ -2,7 +2,7 @@
 <link rel="import" href="/paper-button/paper-button.html">
 <link rel="import" href="/cpol-currency/cpol-currency.html">
 <link rel="import" href="./quote-ss.html">
-<link rel="import" href="./card-title.html">
+<link rel="import" href="./card-header.html">
 
 
 <dom-module id="transaction-positions">
@@ -47,7 +47,7 @@
         on-response="handleResponse"></iron-ajax>
 
         <div class="card">
-          <card-title title$="Top 5 {{title}}"></card-title>
+          <card-header title$="Top 5 {{title}}"></card-header>
           <!--<div class="row">
             <div class="col-sm-1"><i class="fa fa-arrows" aria-hidden="true"></i></div>
             <div class="col-sm-11"><h2>Top 5 {{title}}</h2></div>
