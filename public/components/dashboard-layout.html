@@ -98,9 +98,6 @@
 
         </section>
         </div>
-
-
-
   </template>
 
 </dom-module>
@@ -123,7 +120,6 @@
           addEventListener('client-selected', function(e) {
               that.client = e.detail.client;
           });
-          var sortableList = document.getElementById("sortableList");
           
           Sortable.create(sortableList, sortOptions("sList"));
           Sortable.create(sortableList2, sortOptions("sList"));
