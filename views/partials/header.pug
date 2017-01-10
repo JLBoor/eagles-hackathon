@@ -10,12 +10,10 @@
         i.fa.fa-cubes
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-nav-main
-        li(class=(title == 'Dashboard') ? 'active' : undefined)
-          a(href='/') Dashboard
-        li(class=(title == 'Quick Quote') ? 'active' : undefined)
-          a(href='/quick-quote') Quick Quote
         li(class=(title == 'Customized') ? 'active' : undefined)
-          a(href='/customized') Personalized
+          a(href='/') Personalized
+        li(class=(title == 'Dashboard') ? 'active' : undefined)
+          a(href='/dashboard') Dashboard
       ul.nav.navbar-nav.navbar-right
         if !user
           client-greetings

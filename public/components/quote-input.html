@@ -5,12 +5,9 @@
 <dom-module id="quote-input">
 
   <template>
-    <div class="card">
-      <card-header title$="Quote Input: {{symbol}}"></card-header>
       <paper-input label="Symbol" id="symbol" on-input="_handleChange">
         <paper-icon-button suffix icon="clear"></paper-icon-button>
       </paper-input>
-    </div>
   </template>
 
 </dom-module>
@@ -24,12 +21,14 @@
       },
 
       ready: function() {
-        this.symbol = this.$.symbol.value = 'RY';
+        var quoteInput = this;
+        addEventListener('symbol-changed', function(e) {
+          quoteInput.symbol = e.detail.symbol;  
+        });
       },
-
       _handleChange: function() {
         this.symbol = this.$.symbol.value;
-        this.fire('symbol-changed', {symbol: this.symbol})
+        this.fire('symbol-changed', {symbol: this.symbol});
       }
 
     });

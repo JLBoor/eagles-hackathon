@@ -39,8 +39,21 @@
     <h3>Catalog</h3>
 
     <paper-listbox>
-      <paper-item on-click="_handleQuickQuote">Quote Input</paper-item>
-      <paper-item on-click="_handleFullQuote">Quote Details</paper-item>
+      <paper-icon-item on-click="_handleTopInvestors">
+        <paper-item-body>Top 3 Investors</paper-item-body>
+        <paper-icon-button icon="icons:record-voice-over"></paper-icon-button>
+      </paper-icon-item>
+
+      <paper-item on-click="_handleQuickQuote">Quick Quote</paper-item>
+
+      <paper-item on-click="_handleTopSectors">Top 5 by Sector</paper-item>
+      <paper-item on-click="_handleBottomSectors">Bottom 5 by Sector</paper-item>
+
+      <paper-item on-click="_handleTopGainers">Top 5 Gainers</paper-item>
+      <paper-item on-click="_handleTopLosers">Top 5 Losers</paper-item>
+
+      <paper-item on-click="_handleMostActiveStocks">Most Active Stocks</paper-item>
+
       <paper-icon-item on-click="_handleNewsClick">
         <paper-item-body>News List</paper-item-body>
         <paper-icon-button icon="icons:record-voice-over"></paper-icon-button>
@@ -55,16 +68,47 @@
       is: 'catalog-list',
       ready: function() {
         this.symbol = 'RY';
-        var that = this;
+
+        var catalogList = this;
+
         addEventListener('symbol-changed', function(e) {
-            if(that.newsList) { that.newsList.symbol = e.detail.symbol; }
-            if(that.fullQuote) { that.fullQuote.symbol = e.detail.symbol; }
+            if(catalogList.newsList) { catalogList.newsList.symbol = e.detail.symbol; }
+            if(catalogList.fullQuote) { catalogList.fullQuote.symbol = e.detail.symbol; }
+
+            if(catalogList.topSectors) { catalogList.fullQuote.symbol = e.detail.symbol; }
+            if(catalogList.bottomSectors) { catalogList.fullQuote.symbol = e.detail.symbol; }
+
+            if(catalogList.topGainers) { catalogList.topGainers.ticker = e.detail.symbol; }
+            if(catalogList.topLosers) { catalogList.topLosers.ticker = e.detail.symbol; }
         });
+
+        addEventListener('client-selected', function(e) {
+
+            catalogList.client = e.detail.client;
+
+            if(catalogList.mostActiveStocks) { catalogList.mostActiveStocks.client = catalogList.client; }
+            if(catalogList.topPerformers) { catalogList.topPerformers.client = catalogList.client; }
+
+            if(catalogList.bottomSectors) { catalogList.bottomSectors.client = catalogList.client; }
+            if(catalogList.topSectors) { catalogList.topSectors.client = catalogList.client; }
+
+            if(catalogList.topLosers) { catalogList.topLosers.client = catalogList.client; }
+            if(catalogList.topGainers) { catalogList.topGainers.client = catalogList.client; }
+        });
+
+      },
+
+      _wrapAndAppend: function(el) {
+        var divWrapper = document.createElement("div");
+        divWrapper.className = "card-wrapper";
+        divWrapper.appendChild(el);
+
+        document.querySelector('#customLayout1').appendChild(divWrapper);
       },
 
       _handleQuickQuote: function() {
         if(!this.quote) {
-          this.quote = document.createElement("quote-input");
+          this.quote = document.createElement("full-quote");
           this.quote.symbol = this.symbol;
 
           var divWrapper = document.createElement("div");
@@ -88,18 +132,71 @@
         }
       },
 
-      _handleFullQuote: function() {
-        if(!this.fullQuote) {
-          this.fullQuote = document.createElement("full-quote");
-          this.fullQuote.symbol = this.symbol;
+      _handleTopSectors: function() {
+        if(!this.topSectors) {
+          this.topSectors = document.createElement("categories-pie-chart");
+          this.topSectors.client = this.client;
+          this.topSectors.title = "Top 5 performing by sector (revenue)";
+          this.topSectors.label = "Sector"
+          this.topSectors.api = "/api/categories/securityTypeByAmt";
 
-          var divWrapper = document.createElement("div");
-          divWrapper.className = "card-wrapper";
-          divWrapper.appendChild(this.fullQuote);
+          this._wrapAndAppend(this.topSectors);
+        }
+      },
 
-          document.querySelector('#customLayout1').appendChild(divWrapper);
+      _handleBottomSectors: function() {
+        if(!this.bottomSectors) {
+          this.bottomSectors = document.createElement("categories-pie-chart");
+          this.bottomSectors.client = this.client;
+          this.bottomSectors.title = "Top 5 losing sectors (revenue)";
+          this.bottomSectors.label = "Sector"
+          this.bottomSectors.api = "/api/categories/securityType";
+
+          this._wrapAndAppend(this.bottomSectors);
+        }
+      },
+
+      _handleTopLosers: function() {
+        if(!this.topLosers) {
+          this.topLosers = document.createElement("transaction-positions");
+          this.topLosers.client = this.client;
+          this.topLosers.ticker = this.symbol;
+          this.topLosers.least = "true";
+          this.topLosers.title = "Losers"
+
+          this._wrapAndAppend(this.topLosers);
+        }
+      },
+
+      _handleTopGainers: function() {
+        if(!this.topGainers) {
+          this.topGainers = document.createElement("transaction-positions");
+          this.topGainers.client = this.client;
+          this.topGainers.ticker = this.symbol;
+          this.topGainers.title = "Gainers"
+
+          this._wrapAndAppend(this.topGainers);
+        }
+      },
+
+      _handleTopInvestors: function() {
+        if(!this.topPerformers) {
+          this.topPerformers = document.createElement("transaction-perfromers");
+          this.topPerformers.client = this.client;
+
+          this._wrapAndAppend(this.topPerformers);
+        }
+      },
+
+      _handleMostActiveStocks: function() {
+        if(!this.mostActiveStocks) {
+          this.mostActiveStocks = document.createElement("active-stock");
+          this.mostActiveStocks.client = this.client;
+
+          this._wrapAndAppend(this.mostActiveStocks);
         }
       }
+
 
   });
   </script>

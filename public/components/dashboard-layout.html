@@ -81,21 +81,12 @@
             <transaction-perfromers client="{{client}}"></transaction-perfromers>
           </div>
           <div class="row dashboard-row eagles-hidden-small">
-            <div class="card">
-              <card-header title$="Quote: {{symbol}}"></card-header>
-              <h5 class=text-center>52-week</h5>
-              <fifty-two-week symbol="{{symbol}}"></fifty-two-week>
-              <h5 class=text-center style="padding-top: 25px; padding-bottom: 0;">Last month</h5>
-              <quote-chart symbol="{{symbol}}" from-date="{{fromDate}}" to-date="{{toDate}}" ></quote-chart>
-            </div>
+            <full-quote contextmenu=""symbol="{{symbol}}"></full-quote>
           </div>
 
           <div class="row dashboard-row">
-              <div class="card">
-                <active-stock client="{{client}}"></active-stock>
-              </div>
-            </div>
-
+              <active-stock client="{{client}}"></active-stock>
+          </div>
         </section>
         </div>
   </template>
