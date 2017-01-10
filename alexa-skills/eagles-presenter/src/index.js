@@ -188,7 +188,7 @@ function handleChapterRequest(intent, session, response) {
 
     var speakText = "";
     if(chapter.toUpperCase() === 'INTRODUCTION'){
-        speakText = "<p>Good Morning, I would like to introduce you to Team Eagle, and it’s five distinguished members: Mina,<break time='1s'/> Bohao,<break time='1s'/> <phoneme alphabet='ipa' ph='ʒɑ̃n'>Jean</phoneme>,<break time='1s'/> Marius,<break time='1s'/> Steve,<break time='1s'/> Ryan<break time='1s'/>.</p>" +
+        speakText = "<p>Good Morning, I would like to introduce you to Team Eagle, and it’s six distinguished members: Mina,<break time='1s'/> Bohao,<break time='1s'/> <phoneme alphabet='ipa' ph='ʒɑ̃n'>Jean</phoneme>,<break time='1s'/> Marius,<break time='1s'/> Steve,<break time='1s'/> Ryan<break time='1s'/>.</p>" +
                     "<p>Team Eagle’s idea for the Hackathon initiative is to find a viable option to consolidate, and, present important C-Suite metrics in a simplified "+
                     "dashboard from your laptop or mobile phone.<break time='1s'/></p>"+
                     "<p>This information will be available to users who prefer to communicate with smart voice assistants, such as the Amazon Echo.<break time='1s'/></p>"+

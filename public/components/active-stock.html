@@ -1,5 +1,7 @@
 <link rel="import" href="/iron-ajax/iron-ajax.html">
 <link rel="import" href="/paper-button/paper-button.html">
+<link rel="import" href="/paper-listbox/paper-listbox.html">
+<link rel="import" href="/paper-item/paper-item.html">
 <link rel="import" href="./card-header.html">
 
 <dom-module id="active-stock">
@@ -8,18 +10,20 @@
 
     <style>
 
-      .text-top{
+      .row-header {
+        border-bottom: 1px solid black;
         font-weight: bold;
-        color: green;
       }
 
-      .text-nor{
-        font-weight: normal;
-        color: black;
-      }
-
-      .items > li {
-        font-weight: bold;
+      paper-item {
+        font-size: 12px;
+        padding: 0;
+        --paper-item-selected: {
+          background-color: #dae9ff;
+        }
+        --paper-item-focused: {
+          background-color: #dae9ff;
+        }
       }
 
     </style>
@@ -33,13 +37,28 @@
 
         <div class="card">
           <card-header title="Most Active Stocks"></card-header>
-          <div class="card-content text-top items">
-            <ul>
-            <template is="dom-repeat" items="{{stock}}" as="stock-item">
-              <li class='text-left'> {{stock-item._id}} - <small>{{stock-item.count}}</small></li>
-            </template>
-              </ul>
+          
+
+          <div class="card-content container-fluid">
+              <div class="row row-header">
+                <div class="col-xs-2">Symbol</div>
+                <div class="col-xs-7">Name</div>
+                <div class="col-xs-3 text-right">Volume</div>
+              </div>
+
+                <paper-listbox class="row" selected="{{ticker}}" attr-for-selected="ticker">
+                  <template is="dom-repeat" items="{{stock}}" as="s">
+                    <paper-item ticker="[[s._id.symbol]]">
+                        <div class="col-xs-2">[[s._id.symbol]]</div>
+                        <div class="col-xs-7">[[s._id.name]]</div>
+                        <div class="col-xs-3 text-right" style="white-space: nowrap">
+                            [[s.count]]
+                        </div>
+                  </paper-item>
+                </template>
+              </paper-listbox>
           </div>
+
           <div class="card-actions"></div>
         </div>
 
@@ -53,7 +72,16 @@
          client: {
           type: String,
           observer: '_clientChanged'
-        }
+        },
+        ticker : {
+          type: String,
+          notify: true,
+          observer: '_handleSelected'
+        },
+      },
+
+      _handleSelected: function() {
+        this.fire('symbol-changed', {symbol: this.ticker});
       },
 
       _clientChanged: function() {

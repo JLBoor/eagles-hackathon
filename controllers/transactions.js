@@ -266,8 +266,9 @@ exports.getMostActive = (req, res) => {
     Transaction.aggregate([
         { $match: { 'Counterparty_Name': {$exists: true, $nin: ['']}, 'Counterparty_Name': client}},
         { $group: {
-            _id: "$Ticker_Symbol",
-            count: { $sum: 1  }
+            _id: { symbol: "$Ticker_Symbol",
+            name: "$Security_Short_Name"} ,
+            count: { $sum: { $cond: [ { $lt: ['$Quantity', 0]}, { $multiply: ['$Quantity', -1]}, '$Quantity' ] }  }
         }},
         { $sort: {'count': -1}},
         { $limit : 5 }
