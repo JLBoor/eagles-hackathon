@@ -28,7 +28,7 @@
         });
       },
       _handleChange: function() {
-        this.symbol = this.$.symbol.value;
+        this.symbol = this.$.symbol.value.toUpperCase();
         this.fire('symbol-changed', {symbol: this.symbol});
       }
 
