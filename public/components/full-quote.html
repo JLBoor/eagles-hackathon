@@ -6,9 +6,17 @@
 <dom-module id="full-quote">
 
   <template>
+
+    <iron-ajax
+        auto
+        url="/api/symbol"
+        params='{{params}}'
+        handle-as="json"
+        on-response="_handleResponse"></iron-ajax>
+
     <div class="card">
 
-      <card-header title$="Quote: {{symbol}}"></card-header>
+      <card-header title$="Quote: {{title}}"></card-header>
 
       <quote-input symbol="{{symbol}}"></quote-input>
 
@@ -32,8 +40,18 @@
 
       ready: function() {
         this.symbol = 'RY';
+        this.params = { symbol: this.symbol };
         this.toDate = moment().format('YYYY-MM-DD');
         this.fromDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
+
+        var that = this;
+        addEventListener('symbol-changed', function(e) {
+          that.params = { symbol: e.detail.symbol };
+        });
+      },
+
+      _handleResponse: function(r) {
+        this.title = r.detail.response.name;
       }
     });
   </script>

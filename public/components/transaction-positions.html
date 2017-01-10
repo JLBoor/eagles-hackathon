@@ -103,8 +103,13 @@
         },
         ticker : {
           type: String,
-          notify: true
+          notify: true,
+          observer: '_handleSelected'
         },
+      },
+
+      _handleSelected: function() {
+        this.fire('symbol-changed', {symbol: this.ticker});
       },
 
       ready: function() {

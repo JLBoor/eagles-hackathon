@@ -5,6 +5,15 @@
 
   var yahooFinance = require('yahoo-finance');
 
+  exports.name = (req, res) => {
+    yahooFinance.snapshot({
+      symbol: req.query.symbol,
+      fields: ['n']
+    }, function (err, quotes) {
+      res.send(quotes);
+    });
+  };
+
   exports.fiftytwoweeks = (req, res) => {
     yahooFinance.snapshot({
       symbol: req.query.symbol,
@@ -28,7 +37,7 @@
 
 
 exports.snapshot = (req, res) => {
-  yahooFinance.snapshot({symbol: req.query.symbol, fields: ['p2']}, (err, quotes) => { 
+  yahooFinance.snapshot({symbol: req.query.symbol, fields: ['p2']}, (err, quotes) => {
     if(!err){ res.send(quotes) }
   });
 };

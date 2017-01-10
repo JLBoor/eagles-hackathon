@@ -131,6 +131,8 @@ app.get('/api/news', newsController.get);
 
 app.get('/api/quotes', quotesController.quotes);
 app.get('/api/52w', quotesController.fiftytwoweeks);
+app.get('/api/symbol', quotesController.name);
+
 app.get('/api/snapshot', quotesController.snapshot);
 
 app.get('/api/categories/currencies', categoriesController.settlementCurrency);

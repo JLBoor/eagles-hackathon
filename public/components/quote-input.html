@@ -23,7 +23,8 @@
       ready: function() {
         var quoteInput = this;
         addEventListener('symbol-changed', function(e) {
-          quoteInput.symbol = e.detail.symbol;  
+          quoteInput.symbol = e.detail.symbol;
+          quoteInput.$.symbol.value = e.detail.symbol;
         });
       },
       _handleChange: function() {
