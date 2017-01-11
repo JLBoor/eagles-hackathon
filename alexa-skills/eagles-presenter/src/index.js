@@ -171,7 +171,7 @@ function getWelcomeResponse(response) {
  */
 function handleChapterRequest(intent, session, response) {
     var chapterSlot = intent.slots.chapter;
-    var repromptText = "With Presenter, you can get information about the Eagles Dashboard. Now, which chapter do you want?";
+    var repromptText = "With Presenter, you can get information about the Eagles Dashboard. The options are Intro, Dashboard, or Conclusion";
     
     var sessionAttributes = {};
     // Read the first 5 events, then set the count to 5
@@ -183,7 +183,7 @@ function handleChapterRequest(intent, session, response) {
     if (chapterSlot && chapterSlot.value) {
         chapter = chapterSlot.value;
     } else {
-        chapter = 'Introduction';
+        chapter = 'INTRO';
     }
 
     var speakText = "";
@@ -194,7 +194,17 @@ function handleChapterRequest(intent, session, response) {
                     "<p>This information will be available to users who prefer to communicate with smart voice assistants, such as the Amazon Echo.<break time='1s'/></p>"+
                     "<p>The aim of this project was to focus on best performing equities, highlight the best investment managers in our client’s organization, and provide insight, and "+
                     "analysis of a client’s stock portfolio that reach actionable conclusions.<break time='1s'/></p>"+
-                    "<p>This dashboard utilizes external sources to compile important stock information that is critical to a company’s bottom line. <break time='1s'/>We hope you enjoy our demo.</p>"
+                    "<p>This dashboard utilizes external sources to compile important stock information that is critical to a company’s bottom line. <break time='1s'/>We hope you enjoy our demo.</p>";
+
+    } else if(chapter.toUpperCase() === 'INTRO'){
+        speakText = "<p>Good Morning, I would like to introduce you to Team Eagle, and it’s six distinguished members: Mina,<break time='1s'/> Bohao,<break time='1s'/> <phoneme alphabet='ipa' ph='ʒɑ̃n'>Jean</phoneme>,<break time='1s'/> Marius,<break time='1s'/> Steve,<break time='1s'/> Ryan<break time='1s'/>.</p>";
+    } else if(chapter.toUpperCase() === 'DASHBOARD'){
+        speakText = "<p>Team Eagle’s idea for the Hackathon initiative is to find a viable option to consolidate, and, present important C-Suite metrics in a simplified "+
+                    "dashboard from your laptop or mobile phone.<break time='1s'/></p>"+
+                    "<p>This information will be available to users who prefer to communicate with smart voice assistants, such as the Amazon Echo.<break time='1s'/></p>"+
+                    "<p>The aim of this project was to focus on best performing equities, highlight the best investment managers in our client’s organization, and provide insight, and "+
+                    "analysis of a client’s stock portfolio that reach actionable conclusions.<break time='1s'/></p>"+
+                    "<p>This dashboard utilizes external sources to compile important stock information that is critical to a company’s bottom line.</p>"; 
     } else if(chapter.toUpperCase() === 'CONCLUSION'){
         speakText = "<p>On behalf of Team Eagle, we thank you for taking the time to listen to our presentation.  If you have any questions, any of my team members would be happy to anwser them.  Thank you.</p>"
     }
